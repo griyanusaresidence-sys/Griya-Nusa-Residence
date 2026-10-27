@@ -5,19 +5,17 @@
 -- CARA PAKAI: Supabase Dashboard > SQL Editor > New query > tempel seluruh
 -- file ini > Run. Aman dijalankan ulang (idempotent).
 --
--- Prinsip keamanan:
---  * Customer TIDAK punya akun. Customer membuka unit lewat fungsi
---    customer_progress(unit, kode) — kode akses disimpan sebagai hash bcrypt,
---    diperiksa di server, dan percobaan salah dibatasi.
---  * Data pribadi customer tidak disimpan di tabel yang bisa dibaca customer.
---  * Semua tabel memakai Row Level Security; admin harus login (Supabase Auth)
---    dan terdaftar di tabel public.admins.
---  * Foto disimpan di bucket PRIVAT 'progress-photos'. Customer hanya bisa
---    membaca foto unit yang sudah lolos verifikasi (izin berlaku 2 jam).
---  * Tidak ada password / service_role key di kode situs.
+-- Prinsip:
+--  * Progres yang SUDAH DITERBITKAN dapat dilihat siapa saja yang tahu nomor
+--    kavlingnya (tanpa kode akses). Draf admin tidak pernah terlihat publik.
+--  * Hanya admin (login Supabase Auth + terdaftar di public.admins) yang dapat
+--    mengubah data. Semua tabel memakai Row Level Security.
+--  * Publik hanya memanggil fungsi public_progress() dan public_units().
+--  * Foto di bucket 'progress-photos'; publik hanya bisa membaca foto unit yang
+--    sedang dibuka lewat fungsi di atas (izin sementara 2 jam).
+--  * Tidak ada data pribadi customer yang disimpan, tidak ada password / service_role
+--    key di kode situs.
 -- =====================================================================
-
-create extension if not exists pgcrypto with schema extensions;
 
 -- ---------------------------------------------------------------------
 -- 1. Tabel
@@ -58,24 +56,20 @@ create table if not exists public.units (
   team_notes          text check (char_length(team_notes) <= 2000),
   next_estimate       text check (char_length(next_estimate) <= 300),
   next_estimate_date  date,
-  customer_visible    boolean not null default true,
+  customer_visible    boolean not null default true,   -- false = unit disembunyikan dari publik
   content_changed_at  timestamptz not null default now(),
   last_published_at   timestamptz,
-  code_set_at         timestamptz,                                     -- kapan kode akses terakhir dibuat (hash-nya tersimpan terpisah)
   created_by          uuid default auth.uid(),
   created_at          timestamptz not null default now(),
   updated_at          timestamptz not null default now()
 );
 
--- (aman untuk instalasi lama) kolom yang ditambahkan belakangan
-alter table public.units add column if not exists code_set_at timestamptz;
-
--- Hash kode akses dipisah agar tidak pernah ikut terbaca lewat API tabel.
-create table if not exists public.unit_secrets (
-  unit_id          uuid primary key references public.units(id) on delete cascade,
-  access_code_hash text not null,
-  set_at           timestamptz not null default now()
-);
+-- bersihkan objek versi lama (kode akses) bila ada
+drop function if exists public.customer_progress(text, text);
+drop function if exists public.reset_access_code(uuid);
+drop table if exists public.unit_secrets;
+drop table if exists public.access_attempts;
+alter table public.units drop column if exists code_set_at;
 
 create table if not exists public.unit_stages (
   unit_id uuid not null references public.units(id) on delete cascade,
@@ -134,15 +128,7 @@ create table if not exists public.audit_log (
 );
 create index if not exists audit_log_unit_idx on public.audit_log (unit_id, at desc);
 
--- Pembatasan percobaan kode salah + izin baca foto sementara (tanpa kebijakan = tertutup)
-create table if not exists public.access_attempts (
-  id        bigint generated always as identity primary key,
-  at        timestamptz not null default now(),
-  unit_code text,
-  ip        text
-);
-create index if not exists access_attempts_idx on public.access_attempts (at);
-
+-- Izin baca foto sementara (tanpa kebijakan = tertutup)
 create table if not exists public.photo_grants (
   path       text primary key,
   expires_at timestamptz not null
@@ -419,29 +405,7 @@ create trigger admins_audit after insert or update or delete on public.admins
 -- 4. Fungsi yang dipanggil aplikasi
 -- ---------------------------------------------------------------------
 
--- 4a. ADMIN: buat kode akses baru untuk satu unit. Kode asli hanya dikembalikan sekali.
-create or replace function public.reset_access_code(p_unit uuid) returns text
-language plpgsql security definer set search_path = public, extensions as $$
-declare alphabet constant text := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-        b bytea; raw text := ''; i int; code text; ucode text;
-begin
-  if not public.is_admin() then raise exception 'Tidak berwenang.' using errcode = '42501'; end if;
-  select unit_code into ucode from public.units where id = p_unit;
-  if ucode is null then raise exception 'Unit tidak ditemukan.'; end if;
-  b := gen_random_bytes(10);
-  for i in 0..9 loop
-    raw := raw || substr(alphabet, (get_byte(b, i) % 32) + 1, 1);
-  end loop;
-  code := substr(raw, 1, 5) || '-' || substr(raw, 6, 5);
-  insert into public.unit_secrets (unit_id, access_code_hash, set_at)
-    values (p_unit, crypt(raw, gen_salt('bf', 8)), now())
-  on conflict (unit_id) do update set access_code_hash = excluded.access_code_hash, set_at = now();
-  update public.units set code_set_at = now() where id = p_unit;
-  perform public.log_change(p_unit, ucode, 'kode_akses', 'Kode akses baru dibuat (kode lama tidak berlaku lagi)');
-  return code;
-end $$;
-
--- 4b. ADMIN: terbitkan keadaan unit saat ini agar terlihat oleh customer
+-- 4a. ADMIN: terbitkan keadaan unit saat ini agar terlihat oleh customer
 create or replace function public.publish_unit(p_unit uuid, p_note text default null) returns integer
 language plpgsql security definer set search_path = public as $$
 declare u public.units%rowtype; v_ver int; v_stg jsonb; v_pho jsonb; v_pct numeric; v_lbl text; v_d date;
@@ -467,41 +431,17 @@ begin
   return v_ver;
 end $$;
 
--- 4c. CUSTOMER: buka progres unit dengan nomor unit + kode akses
-create or replace function public.customer_progress(p_unit text, p_code text) returns jsonb
-language plpgsql security definer set search_path = public, extensions as $$
+-- 4b. PUBLIK: buka progres satu unit (hanya data yang sudah diterbitkan)
+create or replace function public.public_progress(p_unit text) returns jsonb
+language plpgsql security definer set search_path = public as $$
 declare
-  v_ucode text; v_ncode text; u public.units%rowtype; v_hash text; v_ok boolean := false; v_ip text; v_hdr text;
-  v_fail_unit int; v_fail_ip int; pub public.unit_publications%rowtype; v_hist jsonb; v_photos jsonb;
+  v_ucode text; u public.units%rowtype; pub public.unit_publications%rowtype; v_hist jsonb; v_photos jsonb;
 begin
   v_ucode := public.normalize_unit_code(p_unit);
-  v_ncode := upper(regexp_replace(coalesce(p_code, ''), '[^A-Za-z0-9]', '', 'g'));
-  v_hdr := nullif(current_setting('request.headers', true), '');
-  begin
-    v_ip := coalesce(nullif(btrim(split_part(coalesce(v_hdr::json ->> 'x-forwarded-for', ''), ',', 1)), ''), 'tidak-diketahui');
-  exception when others then v_ip := 'tidak-diketahui';
-  end;
-
-  delete from public.access_attempts a where a.at < now() - interval '1 day';
   delete from public.photo_grants g where g.expires_at < now();
-
-  select count(*) into v_fail_ip   from public.access_attempts a where a.ip = v_ip and a.at > now() - interval '15 minutes';
-  select count(*) into v_fail_unit from public.access_attempts a where a.unit_code = v_ucode and a.at > now() - interval '15 minutes';
-  if v_fail_ip >= 15 or (v_ucode is not null and v_fail_unit >= 8) then
-    return jsonb_build_object('ok', false, 'error', 'terlalu_banyak_percobaan');
-  end if;
-
-  if v_ucode is not null then
-    select * into u from public.units x where x.unit_code = v_ucode and x.customer_visible;
-    if found then select s.access_code_hash into v_hash from public.unit_secrets s where s.unit_id = u.id; end if;
-  end if;
-  -- selalu jalankan satu perbandingan hash agar waktu respons tidak membocorkan keberadaan unit
-  v_ok := (crypt(v_ncode, coalesce(v_hash, '$2a$08$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ01234')) = coalesce(v_hash, '#'))
-          and v_hash is not null and length(v_ncode) >= 6;
-  if not v_ok then
-    insert into public.access_attempts (unit_code, ip) values (v_ucode, v_ip);
-    return jsonb_build_object('ok', false, 'error', 'tidak_cocok');
-  end if;
+  if v_ucode is null then return jsonb_build_object('ok', false, 'error', 'tidak_ditemukan'); end if;
+  select * into u from public.units x where x.unit_code = v_ucode and x.customer_visible;
+  if not found then return jsonb_build_object('ok', false, 'error', 'tidak_ditemukan'); end if;
 
   select * into pub from public.unit_publications p where p.unit_id = u.id order by p.version desc limit 1;
   if not found then
@@ -509,7 +449,6 @@ begin
       'unit', jsonb_build_object('code', u.unit_code, 'block', u.block, 'plot', u.plot_no, 'house_type', u.house_type));
   end if;
 
-  -- hanya foto yang masih ada; beri izin baca 2 jam
   select coalesce(jsonb_agg(t.e order by (t.e ->> 'taken_on'), t.ord), '[]'::jsonb) into v_photos
   from jsonb_array_elements(pub.photos) with ordinality as t(e, ord)
   where exists (select 1 from public.progress_photos pp where pp.id = (t.e ->> 'id')::uuid);
@@ -533,6 +472,18 @@ begin
     'history', v_hist);
 end $$;
 
+-- 4c. PUBLIK: daftar unit yang sudah punya pembaruan terbit (kode, persen, status)
+create or replace function public.public_units() returns jsonb
+language sql stable security definer set search_path = public as $$
+  select coalesce(jsonb_agg(jsonb_build_object('code', x.unit_code, 'block', x.block, 'plot', x.plot_no, 'percent', x.percent, 'status', x.status_label, 'update_date', x.update_date)
+                            order by x.block, x.plot_no::int), '[]'::jsonb)
+  from (select u.unit_code, u.block, u.plot_no, p.percent, p.status_label, p.update_date,
+               row_number() over (partition by u.id order by p.version desc) rn
+        from public.units u join public.unit_publications p on p.unit_id = u.id
+        where u.customer_visible) x
+  where x.rn = 1;
+$$;
+
 -- ---------------------------------------------------------------------
 -- 5. Hak akses tabel + Row Level Security
 -- ---------------------------------------------------------------------
@@ -540,16 +491,14 @@ end $$;
 alter table public.admins            enable row level security;
 alter table public.stage_templates   enable row level security;
 alter table public.units             enable row level security;
-alter table public.unit_secrets      enable row level security;
 alter table public.unit_stages       enable row level security;
 alter table public.progress_photos   enable row level security;
 alter table public.unit_publications enable row level security;
 alter table public.audit_log         enable row level security;
-alter table public.access_attempts   enable row level security;
 alter table public.photo_grants      enable row level security;
 
-revoke all on public.admins, public.stage_templates, public.units, public.unit_secrets, public.unit_stages,
-              public.progress_photos, public.unit_publications, public.audit_log, public.access_attempts,
+revoke all on public.admins, public.stage_templates, public.units, public.unit_stages,
+              public.progress_photos, public.unit_publications, public.audit_log,
               public.photo_grants from anon, authenticated;
 
 grant select, insert, update, delete on public.admins          to authenticated;
@@ -559,7 +508,7 @@ grant select, insert, update, delete on public.unit_stages     to authenticated;
 grant select, insert, update, delete on public.progress_photos to authenticated;
 grant select                         on public.unit_publications to authenticated;
 grant select                         on public.audit_log       to authenticated;
--- unit_secrets, access_attempts, photo_grants: tidak ada hak untuk anon/authenticated
+-- photo_grants: tidak ada hak untuk anon/authenticated
 
 drop policy if exists admins_read   on public.admins;
 drop policy if exists admins_write  on public.admins;
@@ -604,10 +553,10 @@ create policy pubs_read on public.unit_publications for select to authenticated 
 drop policy if exists audit_read on public.audit_log;
 create policy audit_read on public.audit_log for select to authenticated using (public.is_admin());
 
--- Fungsi: tutup untuk publik, buka hanya sesuai kebutuhan
-revoke all on function public.reset_access_code(uuid)         from public, anon, authenticated;
+-- Fungsi: tutup untuk publik, buka hanya sesuai kebutuhan (publik hanya public_progress & public_units)
 revoke all on function public.publish_unit(uuid, text)        from public, anon, authenticated;
-revoke all on function public.customer_progress(text, text)   from public, anon, authenticated;
+revoke all on function public.public_progress(text)           from public, anon, authenticated;
+revoke all on function public.public_units()                  from public, anon, authenticated;
 revoke all on function public.log_change(uuid, text, text, text, jsonb) from public, anon, authenticated;
 revoke all on function public.mark_unit_changed(uuid)         from public, anon, authenticated;
 revoke all on function public.unit_percent(uuid)              from public, anon, authenticated;
@@ -616,9 +565,9 @@ revoke all on function public.is_admin()                      from public, anon,
 revoke all on function public.is_owner()                      from public, anon, authenticated;
 revoke all on function public.has_photo_grant(text)           from public, anon, authenticated;
 
-grant execute on function public.reset_access_code(uuid)       to authenticated;
 grant execute on function public.publish_unit(uuid, text)      to authenticated;
-grant execute on function public.customer_progress(text, text) to anon, authenticated;
+grant execute on function public.public_progress(text)         to anon, authenticated;
+grant execute on function public.public_units()                to anon, authenticated;
 grant execute on function public.unit_percent(uuid)            to authenticated;
 grant execute on function public.unit_status_label(uuid)       to authenticated;
 grant execute on function public.is_admin()                    to anon, authenticated;
@@ -637,7 +586,8 @@ on conflict (id) do update set public = false, file_size_limit = 5242880,
 drop policy if exists "gnr foto admin baca"    on storage.objects;
 drop policy if exists "gnr foto admin unggah"  on storage.objects;
 drop policy if exists "gnr foto admin hapus"   on storage.objects;
-drop policy if exists "gnr foto customer baca" on storage.objects;
+drop policy if exists "gnr foto customer baca"   on storage.objects;
+drop policy if exists "gnr foto publik baca" on storage.objects;
 
 create policy "gnr foto admin baca"   on storage.objects for select to authenticated
   using (bucket_id = 'progress-photos' and public.is_admin());
@@ -647,7 +597,7 @@ create policy "gnr foto admin unggah" on storage.objects for insert to authentic
 create policy "gnr foto admin hapus"  on storage.objects for delete to authenticated
   using (bucket_id = 'progress-photos' and public.is_admin()
          and not exists (select 1 from public.progress_photos p where p.storage_path = name));
-create policy "gnr foto customer baca" on storage.objects for select to anon
+create policy "gnr foto publik baca" on storage.objects for select to anon
   using (bucket_id = 'progress-photos' and public.has_photo_grant(name));
 
 -- ---------------------------------------------------------------------

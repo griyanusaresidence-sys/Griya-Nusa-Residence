@@ -30,23 +30,22 @@ Buka `…/#admin` (atau tautan kecil "Masuk admin proyek" di footer), login.
    Bobot bawaan (5/15/20/10/12/15/15/8) hanyalah **titik awal**: sesuaikan dengan RAB/pembobotan resmi proyek Anda. Template untuk unit baru: tombol **Template tahap**.
 3. Tab **Foto**: pilih foto asli dari lapangan, isi tanggal, tahap, dan keterangan (wajib). Foto dikompres otomatis dan disimpan di bucket privat.
 4. Tab **Info & catatan**: tipe rumah, tanggal pembaruan, catatan tim, estimasi tahap berikutnya.
-5. **Simpan perubahan**, lalu **Terbitkan ke customer**. Customer hanya melihat apa yang sudah *diterbitkan* (draf Anda tidak terlihat).
-6. **Buat kode akses** (tab Info). Kode tampil **sekali**; salin atau kirim lewat WhatsApp (pesan siap pakai). Kode disimpan sebagai hash, tidak bisa dilihat lagi; lupa = buat baru (kode lama langsung mati).
+5. **Simpan perubahan**, lalu **Terbitkan ke customer**. Customer hanya melihat apa yang sudah *diterbitkan* (draf Anda tidak terlihat). Untuk menyembunyikan satu unit dari publik, hilangkan centang "Unit dapat dibuka customer".
+6. Tab **Info & catatan** menyediakan **tautan progres** unit (mis. `…/#progres/D-9`) beserta pesan WhatsApp siap kirim. Tautan ini terbuka untuk siapa saja.
 7. Tab **Riwayat**: seluruh perubahan beserta waktu dan akun yang melakukannya, plus daftar versi yang pernah diterbitkan.
 
 ## 3. Cara customer memakai
 
-Buka `…/#progres` (atau menu **Progres Pembangunan**) → isi blok/kavling (mis. `D-9`, `Blok D9`) + kode akses → lihat ringkasan, timeline 8 tahap, galeri foto, riwayat, catatan, estimasi, dan tombol **Hubungi Admin** (WhatsApp).
-Tautan `…/#progres/D-9` mengisi nomor unit otomatis (kode tetap diketik customer).
+Buka `…/#progres` (atau menu **Progres Pembangunan**) → ketik blok/kavling (mis. `D-9`, `Blok D9`) atau pilih dari daftar unit yang sudah punya pembaruan → lihat ringkasan, timeline 8 tahap, galeri foto, riwayat, catatan, estimasi, dan tombol **Hubungi Admin** (WhatsApp). Tautan `…/#progres/D-9` langsung membuka unit tersebut.
+**Tidak ada kode akses**: progres yang sudah diterbitkan bersifat publik. Karena itu jangan menulis data pribadi pembeli di catatan tim atau keterangan foto.
 
 ## 4. Keamanan: apa yang dijaga di mana
 
 | Hal | Dijaga oleh |
 |---|---|
 | Hanya admin yang bisa mengubah data | Supabase Auth + tabel `admins` + RLS di setiap tabel |
-| Customer hanya melihat unitnya | Fungsi `customer_progress(unit, kode)` memeriksa hash bcrypt di server; tabel tidak bisa dibaca langsung oleh publik |
-| Tebak-tebak kode | Maks. 8 percobaan salah/15 menit per unit dan 15 per IP; kode 10 karakter acak (≈50 bit) |
-| Foto | Bucket privat; customer baru boleh membaca foto unit setelah verifikasi, izin 2 jam; link foto kedaluwarsa 1 jam |
+| Yang bisa dilihat publik | Hanya lewat fungsi `public_progress(unit)` dan `public_units()`: data yang **sudah diterbitkan**, tanpa catatan internal, tanpa email admin. Tabel tidak bisa dibaca langsung oleh publik |
+| Foto | Bucket tidak publik; link foto dibuat sementara (1 jam) dan hanya untuk unit yang sedang dibuka |
 | Data pribadi customer | Tidak disimpan. Kolom "catatan internal" (opsional) hanya terbaca admin |
 | Kredensial | Tidak ada password/service key di kode situs; hanya URL + anon key publik |
 | Jejak perubahan | `audit_log`, tidak bisa diubah/dihapus dari aplikasi |
@@ -61,11 +60,11 @@ Tautan `…/#progres/D-9` mengisi nomor unit otomatis (kode tetap diketik custom
 
 ## 6. Status pengujian (jujur)
 
-Sudah diuji otomatis di mesin lokal dengan **PostgreSQL 16 + PostgREST sungguhan + pustaka supabase-js sungguhan**: skema & RLS, kode akses (benar/salah/lintas unit/dibatasi), hak owner vs editor, foto privat + izin sementara, audit, publikasi versi, login admin, unggah/hapus foto, persistensi setelah muat ulang, kondisi offline, tampilan HP.
+Sudah diuji otomatis di mesin lokal dengan **PostgreSQL 16 + PostgREST sungguhan + pustaka supabase-js sungguhan**: skema & RLS, akses publik hanya ke data terbit, hak owner vs editor, foto + izin sementara, audit, publikasi versi, login admin, unggah/hapus foto, persistensi setelah muat ulang, kondisi offline, tampilan HP.
 Yang **ditiru** dalam uji lokal: layanan Auth (GoTrue) dan Storage Supabase (bentuk API sama, tetapi bukan server aslinya). Karena itu setelah Anda menghubungkan proyek Supabase sungguhan, lakukan daftar periksa singkat ini:
 
 1. Login admin berhasil; akun non-admin ditolak.
-2. Buat unit, unggah 1 foto, buat kode, terbitkan.
-3. Di jendela penyamaran: buka `#progres`, masuk dengan kode → foto tampil.
-4. Kode salah → ditolak. Tanpa kode, foto tidak bisa dibuka.
+2. Buat unit, unggah 1 foto, terbitkan.
+3. Di jendela penyamaran: buka `#progres/D-9` → ringkasan dan foto tampil.
+4. Di jendela yang sama pastikan tidak ada tombol/ubah apa pun; hanya login admin yang bisa mengedit.
 Jika ada yang gagal, kirimkan pesan galatnya ke saya.

@@ -590,6 +590,11 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
   .ad-tbl td:nth-child(2) .pin{font-weight:700}
 }
 
+.pc-uchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pc-uchip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border:1.5px solid var(--rule);border-radius:999px;background:var(--paper);color:var(--ink);font-weight:700;font-size:13.5px;cursor:pointer}
+.pc-uchip:hover{border-color:var(--gold)}
+.pc-uchip i{font-style:normal;font-weight:800;color:var(--r-ink)}
+
 </style>
 
 <header class="nav">
@@ -784,9 +789,9 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
         <div class="pv">
           <div>
             <p class="pg-eyebrow">Cek progres unit</p>
-            <h2>Masukkan nomor kavling dan kode akses</h2>
+            <h2>Masukkan blok dan nomor kavling</h2>
             <ul class="pv-list">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Kode akses bersifat pribadi dan diberikan oleh tim marketing. Anda hanya dapat melihat unit milik Anda.</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Cukup masukkan blok dan nomor kavling. Informasi progres terbuka untuk umum dan tidak memuat data pribadi pembeli.</span></li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="m21 16-5-4-7 6"/></svg><span>Setiap pembaruan disertai foto dokumentasi aktual dari lapangan, bukan gambar ilustrasi.</span></li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg><span>Persentase progres dihitung dari bobot pekerjaan yang ditetapkan pengelola proyek.</span></li>
             </ul>
@@ -794,13 +799,11 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
           <div>
             <div id="pc-notice" hidden></div>
             <form class="pv-form" id="pc-form" novalidate>
-              <div class="pv-row">
-                <div class="pg-field"><label for="pc-unit">Blok dan nomor kavling</label><input class="pin" id="pc-unit" name="unit" inputmode="text" autocomplete="off" autocapitalize="characters" placeholder="Contoh: D-9" maxlength="24" required></div>
-                <div class="pg-field"><label for="pc-code">Kode akses</label><input class="pin code" id="pc-code" name="code" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXXX-XXXXX" maxlength="24" required></div>
-              </div>
+              <div class="pg-field"><label for="pc-unit">Blok dan nomor kavling</label><input class="pin" id="pc-unit" name="unit" inputmode="text" autocomplete="off" autocapitalize="characters" placeholder="Contoh: D-9" maxlength="24" required></div>
               <div id="pc-err" class="pg-msg err" role="alert" hidden></div>
               <button class="pbtn primary" id="pc-go" type="submit" style="min-height:52px">Lihat progres</button>
-              <p class="pg-hint">Belum punya kode akses atau lupa kodenya? <a class="pg-link" id="pc-wa-help" href="#" target="_blank" rel="noopener">Hubungi marketing via WhatsApp</a>.</p>
+              <div id="pc-units" hidden><p class="pg-lbl" style="margin-top:6px">Unit yang sudah memiliki pembaruan</p><div class="pc-uchips" id="pc-uchips"></div></div>
+              <p class="pg-hint">Unit Anda belum tampil? Pembaruan baru muncul setelah diterbitkan tim proyek. <a class="pg-link" id="pc-wa-help" href="#" target="_blank" rel="noopener">Tanya marketing via WhatsApp</a>.</p>
             </form>
           </div>
         </div>
@@ -1980,7 +1983,8 @@ window.__GNR = {
 <script>
 /* ================= PROGRES PEMBANGUNAN: customer + admin =================
    Semua data & aturan akses ada di Supabase (lihat sql/schema.sql). Kode di sini hanya memanggil
-   layanan itu dengan kunci publik (anon key). TIDAK ADA password, kode akses, atau service key di sini. */
+   layanan itu dengan kunci publik (anon key). TIDAK ADA password atau service key di sini.
+   Progres yang sudah diterbitkan bersifat publik; perubahan data hanya untuk admin yang login. */
 (function(){
 'use strict';
 const G = window.__GNR || {};
@@ -2136,7 +2140,7 @@ window.addEventListener('resize', () => { if(window.innerWidth > 900 && !mnav.hi
 $('m-map').addEventListener('click', e => { if(G.navTo){ if(inProg) leaveProg(); G.navTo('map', e); } });
 $('m-list').addEventListener('click', e => { if(G.navTo){ if(inProg) leaveProg(); G.navTo('list', e); } });
 $('m-wa').href = waLink('Halo, saya ingin bertanya tentang Griya Nusa Residence.');
-$('pc-wa-help').href = waLink('Halo, saya ingin menanyakan kode akses untuk memantau progres pembangunan rumah di Griya Nusa Residence.');
+$('pc-wa-help').href = waLink('Halo, saya ingin menanyakan progres pembangunan unit saya di Griya Nusa Residence.');
 document.addEventListener('keydown', e => {
   if(e.key !== 'Escape') return;
   if(!$('pg-lb').hidden) closeLB(); else if(!$('pg-modal').hidden) closeModal(); else if(!mnav.hidden){ mnav.hidden = true; burger.setAttribute('aria-expanded', 'false'); }
@@ -2146,46 +2150,50 @@ document.addEventListener('keydown', e => {
 const C = { last: null, data: null, urls: {}, newest: true, lbList: [], lbI: 0 };
 function custEnter(unitHint){
   const notice = $('pc-notice'), form = $('pc-form');
-  if(!configured){ notice.hidden = false; notice.innerHTML = notConfigured('cust'); form.hidden = true; }
-  else { notice.hidden = true; form.hidden = false; }
-  if(unitHint && !C.data){ $('pc-unit').value = unitHint.toUpperCase(); setTimeout(() => $('pc-code').focus(), 50); }
+  if(!configured){ notice.hidden = false; notice.innerHTML = notConfigured('cust'); form.hidden = true; return; }
+  notice.hidden = true; form.hidden = false;
+  if(unitHint && !C.data){ $('pc-unit').value = unitHint.toUpperCase(); lookup(unitHint); }
+  else if(!C.data) loadUnitChips();
 }
-$('pc-form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const unitRaw = $('pc-unit').value.trim(), code = $('pc-code').value.trim(), err = $('pc-err');
-  setMsg(err, '', false);
+async function loadUnitChips(){
+  try{
+    const c = await client(); const { data, error } = await c.rpc('public_units'); if(error) throw error;
+    const list = data || [];
+    $('pc-units').hidden = !list.length;
+    $('pc-uchips').innerHTML = list.map(u => '<button class="pc-uchip" type="button" data-u="' + esc(u.code) + '">' + esc(u.code) + ' <i>' + num1(u.percent) + '%</i></button>').join('');
+  }catch(e){ $('pc-units').hidden = true; }
+}
+$('pc-uchips').addEventListener('click', e => { const b = e.target.closest('.pc-uchip'); if(b){ $('pc-unit').value = b.dataset.u; lookup(b.dataset.u); } });
+$('pc-form').addEventListener('submit', e => { e.preventDefault(); lookup($('pc-unit').value); });
+async function lookup(unitRaw){
+  const err = $('pc-err'); setMsg(err, '', false);
   const u = normUnit(unitRaw);
   if(!u){ setMsg(err, 'Nomor blok dan kavling belum sesuai format. Contoh penulisan: D-9 atau Blok D9.', true); $('pc-unit').focus(); return; }
-  if(code.replace(/[^A-Za-z0-9]/g, '').length < 6){ setMsg(err, 'Kode akses belum lengkap. Periksa kembali kode dari tim marketing.', true); $('pc-code').focus(); return; }
-  const btn = $('pc-go'); btn.disabled = true; btn.textContent = 'Memeriksa…';
+  const btn = $('pc-go'); btn.disabled = true; btn.textContent = 'Memuat…';
   try{
-    const d = await fetchProgress(u, code);
-    if(!d.ok){
-      setMsg(err, d.error === 'terlalu_banyak_percobaan'
-        ? 'Terlalu banyak percobaan yang tidak cocok. Silakan coba lagi sekitar 15 menit lagi atau hubungi marketing.'
-        : 'Nomor kavling atau kode akses tidak cocok. Periksa kembali, lalu coba lagi.', true);
-      return;
-    }
-    C.last = { unit: u, code };
+    const d = await fetchProgress(u);
+    if(!d.ok){ setMsg(err, 'Unit ' + u + ' tidak ditemukan atau belum memiliki progres. Periksa kembali nomornya atau hubungi marketing.', true); return; }
+    C.last = { unit: u };
     await showResult(d);
   }catch(ex){ setMsg(err, errText(ex), true); }
   finally{ btn.disabled = false; btn.textContent = 'Lihat progres'; }
-});
-async function fetchProgress(u, code){
+}
+async function fetchProgress(u){
   const c = await client();
-  const { data, error } = await c.rpc('customer_progress', { p_unit: u, p_code: code });
+  const { data, error } = await c.rpc('public_progress', { p_unit: u });
   if(error) throw error;
-  return data || { ok: false, error: 'tidak_cocok' };
+  return data || { ok: false, error: 'tidak_ditemukan' };
 }
 $('pc-other').addEventListener('click', () => {
   C.last = null; C.data = null; $('pc-result').hidden = true; $('pc-verify').hidden = false;
-  $('pc-code').value = ''; $('pc-unit').focus(); window.scrollTo(0, 0);
+  $('pc-unit').value = ''; $('pc-unit').focus(); window.scrollTo(0, 0); loadUnitChips();
+  if(/^#progres\//.test(location.hash)){ try{ history.replaceState(null, '', '#progres'); }catch(e){} }
 });
 $('pc-refresh').addEventListener('click', async function(){
   if(!C.last) return; const btn = this; btn.disabled = true; btn.textContent = 'Memperbarui…'; setMsg($('pc-err2'), '', false);
   try{
-    const d = await fetchProgress(C.last.unit, C.last.code);
-    if(!d.ok){ setMsg($('pc-err2'), 'Sesi akses berakhir. Masukkan kode akses kembali.', true); return; }
+    const d = await fetchProgress(C.last.unit);
+    if(!d.ok){ setMsg($('pc-err2'), 'Unit ini tidak lagi tersedia untuk dilihat.', true); return; }
     await showResult(d, true); toast('Data diperbarui');
   }catch(ex){ setMsg($('pc-err2'), errText(ex) + ' Data yang tampil adalah yang terakhir berhasil dimuat.', true); }
   finally{ btn.disabled = false; btn.textContent = 'Perbarui data'; }
@@ -2198,7 +2206,7 @@ async function showResult(d, keepScroll){
   const u = d.unit;
   $('pc-proj').textContent = d.project || 'Griya Nusa Residence';
   $('pc-title').textContent = 'Blok ' + u.block + ' · Kavling ' + u.plot;
-  $('pc-chips').innerHTML = '<span class="pchip ok">✓ Akses terverifikasi</span>' + (u.house_type ? '<span class="pchip gold">' + esc(u.house_type) + '</span>' : '');
+  $('pc-chips').innerHTML = (u.house_type ? '<span class="pchip gold">' + esc(u.house_type) + '</span>' : '');
   $('pc-wa').href = waLink('Halo admin Griya Nusa Residence, saya ingin bertanya tentang progres pembangunan unit Blok ' + u.block + ' Kavling ' + u.plot + '.');
   const pub = d.published !== false;
   $('pc-main').hidden = !pub; $('pc-unpub').hidden = pub;
@@ -2298,7 +2306,7 @@ $('plb-prev').addEventListener('click', () => openLB(C.lbI - 1));
 $('plb-next').addEventListener('click', () => openLB(C.lbI + 1));
 
 /* ================= ADMIN ================= */
-const A = { user: null, role: null, units: [], sel: null, orig: null, u: null, stages: [], origStages: [], delPos: [], photos: [], audit: [], pubs: [], tab: 'progres', urls: {}, newCode: null, tmpl: [], inited: false, publishOpen: false };
+const A = { user: null, role: null, units: [], sel: null, orig: null, u: null, stages: [], origStages: [], delPos: [], photos: [], audit: [], pubs: [], tab: 'progres', urls: {}, tmpl: [], inited: false, publishOpen: false };
 const INFO = ['house_type','update_date','team_notes','next_estimate','next_estimate_date','customer_ref','customer_visible'];
 const STATUS_TXT = { belum: 'Belum dimulai', proses: 'Sedang dikerjakan', selesai: 'Selesai' };
 const isOwner = () => A.role === 'owner';
@@ -2380,7 +2388,7 @@ async function adminAfterLogin(user){
 }
 
 /* ----- daftar unit ----- */
-const UNIT_COLS = 'id,unit_code,block,plot_no,house_type,update_date,team_notes,next_estimate,next_estimate_date,customer_visible,customer_ref,content_changed_at,last_published_at,code_set_at,unit_stages(pos,weight,pct,status)';
+const UNIT_COLS = 'id,unit_code,block,plot_no,house_type,update_date,team_notes,next_estimate,next_estimate_date,customer_visible,customer_ref,content_changed_at,last_published_at,unit_stages(pos,weight,pct,status)';
 function unitSortKey(u){ return u.block + String(1000 + Number(u.plot_no)); }
 async function loadUnits(){
   const c = await client();
@@ -2424,7 +2432,7 @@ function trySelect(id){
   selectUnit(id);
 }
 async function selectUnit(id){
-  A.sel = id; A.newCode = null; A.publishOpen = false; A.tab = 'progres';
+  A.sel = id; A.publishOpen = false; A.tab = 'progres';
   renderUnitList(); $('ad-cols').classList.add('show-edit');
   $('ad-edit').innerHTML = '<div class="sk" style="height:220px"></div>';
   await guard(loadUnitDetail)();
@@ -2444,7 +2452,7 @@ async function loadUnitDetail(){
   for(const r of [u, st, ph, au, pu]) if(r.error) throw r.error;
   const row = u.data; const idx = A.units.findIndex(x => x.id === id); if(idx >= 0) A.units[idx] = row;
   A.orig = {}; A.u = {}; INFO.forEach(k => { A.orig[k] = row[k] ?? null; A.u[k] = row[k] ?? null; });
-  A.meta = { unit_code: row.unit_code, block: row.block, plot_no: row.plot_no, last_published_at: row.last_published_at, content_changed_at: row.content_changed_at, code_set_at: row.code_set_at };
+  A.meta = { unit_code: row.unit_code, block: row.block, plot_no: row.plot_no, last_published_at: row.last_published_at, content_changed_at: row.content_changed_at };
   A.stages = (st.data || []).map(s => Object.assign({}, s)); A.origStages = (st.data || []).map(s => Object.assign({}, s)); A.delPos = [];
   A.photos = ph.data || []; A.audit = au.data || []; A.pubs = pu.data || [];
   renderUnitList(); renderEditor();
@@ -2520,9 +2528,7 @@ function paneFoto(){
 }
 function paneInfo(){
   const u = A.u, m = A.meta, own = isOwner();
-  const codeBox = A.newCode
-    ? '<div class="ad-code"><code id="ad-newcode">' + esc(A.newCode) + '</code><button class="pbtn sm" type="button" id="cd-copy">Salin kode</button><button class="pbtn sm" type="button" id="cd-copymsg">Salin pesan</button><a class="pbtn sm wa" id="cd-wa" target="_blank" rel="noopener" href="' + esc('https://wa.me/?text=' + encodeURIComponent(codeMsg())) + '">Kirim via WhatsApp</a></div><p class="pg-hint" style="margin-top:8px"><b>Salin sekarang.</b> Demi keamanan kode tidak dapat ditampilkan lagi setelah halaman ini ditutup. Jika lupa, buat kode baru (kode lama langsung tidak berlaku).</p>'
-    : '<p class="pg-hint">' + (m.code_set_at ? 'Kode akses dibuat ' + fmtDT(m.code_set_at) + '. Kode asli tidak tersimpan dan tidak dapat ditampilkan lagi.' : '<b>Belum ada kode akses.</b> Customer belum dapat membuka unit ini.') + '</p>';
+  const link = shareLink();
   return '<div class="ad-grid">'
     + '<div class="pg-field"><label for="in-type">Tipe rumah</label><input class="pin" id="in-type" data-k="house_type" maxlength="60" value="' + esc(u.house_type || '') + '" placeholder="Contoh: Tipe 36/72"></div>'
     + '<div class="pg-field"><label for="in-date">Tanggal pembaruan (tampil ke customer)</label><input class="pin" id="in-date" data-k="update_date" type="date" value="' + esc(u.update_date || '') + '"><span class="pg-hint">Kosong = tanggal saat diterbitkan.</span></div>'
@@ -2530,10 +2536,9 @@ function paneInfo(){
     + '<div class="pg-field"><label for="in-next">Estimasi pekerjaan berikutnya</label><input class="pin" id="in-next" data-k="next_estimate" maxlength="300" value="' + esc(u.next_estimate || '') + '" placeholder="Contoh: Pemasangan dinding bata"></div>'
     + '<div class="pg-field"><label for="in-nextd">Perkiraan tanggal</label><input class="pin" id="in-nextd" data-k="next_estimate_date" type="date" value="' + esc(u.next_estimate_date || '') + '"></div>'
     + '<div class="pg-field full"><label for="in-ref">Catatan internal (tidak pernah tampil ke customer)</label><input class="pin" id="in-ref" data-k="customer_ref" maxlength="80" value="' + esc(u.customer_ref || '') + '" placeholder="Contoh: inisial pembeli / nomor SPR"></div>'
-    + '<div class="pg-field full"><label style="display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink)"><input type="checkbox" id="in-vis" data-k="customer_visible"' + (u.customer_visible ? ' checked' : '') + ' style="width:20px;height:20px;accent-color:var(--navy)"> Unit dapat dibuka customer (matikan untuk menarik akses sementara)</label></div>'
+    + '<div class="pg-field full"><label style="display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink)"><input type="checkbox" id="in-vis" data-k="customer_visible"' + (u.customer_visible ? ' checked' : '') + ' style="width:20px;height:20px;accent-color:var(--navy)"> Unit dapat dibuka customer (matikan untuk menyembunyikan unit dari publik)</label></div>'
     + '</div>'
-    + '<div class="ad-actions" style="flex-direction:column;align-items:stretch"><div class="pg-lbl">Kode akses customer</div>' + codeBox
-    + '<div><button class="pbtn sm" type="button" id="cd-new">' + (m.code_set_at ? 'Buat kode baru' : 'Buat kode akses') + '</button></div></div>'
+    + '<div class="ad-actions" style="flex-direction:column;align-items:stretch"><div class="pg-lbl">Tautan progres untuk dibagikan ke customer</div><div class="ad-code"><code style="font-size:14px;letter-spacing:0;word-break:break-all">' + esc(link) + '</code></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pbtn sm" type="button" id="cd-copy">Salin tautan</button><button class="pbtn sm" type="button" id="cd-copymsg">Salin pesan WhatsApp</button><a class="pbtn sm wa" target="_blank" rel="noopener" href="' + esc('https://wa.me/?text=' + encodeURIComponent(shareMsg())) + '">Kirim via WhatsApp</a></div><p class="pg-hint">Tautan ini terbuka untuk siapa saja. Customer melihat apa yang sudah Anda terbitkan.</p></div>'
     + (own ? '<div class="ad-actions"><button class="pbtn sm danger" type="button" id="ad-del">Hapus unit ini…</button></div>' : '');
 }
 function paneRiwayat(){
@@ -2563,9 +2568,8 @@ ed.addEventListener('click', e => {
   if(t.closest('#ad-addstage')) return addStage();
   const del = t.closest('[data-del]'); if(del){ return removeStage(+del.dataset.del); }
   const dp = t.closest('[data-delphoto]'); if(dp) return deletePhoto(dp);
-  if(t.closest('#cd-new')) return void guard(() => withBusy($('cd-new'), 'Membuat…', makeCode))();
-  if(t.closest('#cd-copy')) return void copyText(A.newCode, 'Kode disalin');
-  if(t.closest('#cd-copymsg')) return void copyText(codeMsg(), 'Pesan disalin');
+  if(t.closest('#cd-copy')) return void copyText(shareLink(), 'Tautan disalin');
+  if(t.closest('#cd-copymsg')) return void copyText(shareMsg(), 'Pesan disalin');
   if(t.closest('#ad-del')) return confirmDelUnit();
 });
 ed.addEventListener('input', e => {
@@ -2626,15 +2630,10 @@ async function publishNow(){
   if(error) throw error;
   A.publishOpen = false; await loadUnitDetail(); toast('Pembaruan #' + data + ' diterbitkan ke customer');
 }
-function codeMsg(){
-  const m = A.meta, link = location.origin + location.pathname + '#progres/' + m.unit_code;
-  return 'Halo, berikut akses untuk memantau progres pembangunan rumah Anda di Griya Nusa Residence.\n\nUnit: Blok ' + m.block + ', Kavling ' + m.plot_no + '\nKode akses: ' + A.newCode + '\nBuka: ' + link + '\n\nMohon kode ini tidak dibagikan kepada orang lain.';
-}
-async function makeCode(){
-  const c = await client();
-  const { data, error } = await c.rpc('reset_access_code', { p_unit: A.sel });
-  if(error) throw error;
-  A.newCode = data; await loadUnitDetail(); A.tab = 'info'; renderEditor();
+function shareLink(){ return location.origin + location.pathname + '#progres/' + A.meta.unit_code; }
+function shareMsg(){
+  const m = A.meta;
+  return 'Halo, berikut tautan untuk memantau progres pembangunan rumah Anda di Griya Nusa Residence (Blok ' + m.block + ', Kavling ' + m.plot_no + '):\n' + shareLink();
 }
 
 /* ----- unggah foto ----- */
@@ -2733,7 +2732,7 @@ $('ad-import').addEventListener('click', () => {
     const b = $('m-go'); b.disabled = true; b.textContent = 'Membuat…';
     try{
       const c = await client(); const { error } = await c.from('units').insert(ids.map(id => ({ unit_code: id })));
-      if(error) throw error; closeModal(); await loadUnits(); toast(ids.length + ' unit dibuat. Atur bobot, kode akses, dan foto per unit.');
+      if(error) throw error; closeModal(); await loadUnits(); toast(ids.length + ' unit dibuat. Atur bobot, foto, dan catatan per unit.');
     }catch(ex){ setMsg($('m-err'), errText(ex), true); b.disabled = false; b.textContent = 'Buat unit terpilih'; }
   };
 });
