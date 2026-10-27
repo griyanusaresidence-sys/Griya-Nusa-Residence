@@ -438,7 +438,7 @@ const DATA_DATE = '17 Okt 2026';
 const PRICE_JT  = 182;                      /* harga semua kavling rumah, juta rupiah */
 const GSB_DEPAN = '2,3 m';                  /* dari siteplan: GSB 2,3 meter */
 /* kavling yang bertanda X (terjual) di siteplan */
-const SOLD = ['D-10','D-9','D-7','D-5','D-4','D-2','D-1','A-10','A-9','A-8','A-7','A-6','A-5','A-4','A-3','A-2','A-1','C-11','C-10','C-9','C-8','C-7','C-2','C-1','B-10','B-9','B-8','B-7','B-6','B-5','B-4','B-3','B-2','B-1'];
+const SOLD = ['D-10','D-8','D-6','D-5','D-4','D-3','D-2','D-1','A-10','A-9','A-8','A-7','A-6','A-5','A-4','A-3','A-2','A-1','C-11','C-10','C-9','C-8','C-7','C-6','C-5','C-4','C-3','C-2','C-1','B-10','B-9','B-8','B-7','B-6','B-5','B-4','B-3','B-2','B-1'];
 /* opsional per kavling: {'D-10':{luas:'72 m²', tipe:'30/72'}} */
 const EXTRA = {};
 /* ========================================================== */
@@ -485,7 +485,7 @@ function lokasi(p){
 const priceShort = p => p.kind === 'ruko' ? 'Hubungi marketing' : 'Rp ' + PRICE_JT + ' jt';
 
 /* ---------- state ---------- */
-const state = {st:'ALL', sel:'D-8', view:'map', mode:'3d'};
+const state = {st:'ALL', sel:'D-9', view:'map', mode:'3d'};
 const match = p => state.st === 'ALL' || p.status === state.st;
 
 /* ---------- header summary ---------- */
