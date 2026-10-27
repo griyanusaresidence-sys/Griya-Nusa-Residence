@@ -9,7 +9,7 @@
 <body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: navigasi atas, hero (judul + statistik kavling), filter, kartu siteplan 3D (kiri) dan panel detail kavling (kanan; di HP menjadi panel bawah). Tema terang premium: putih bersih, navy #173746, aksen emas lembut. */
 :root{
@@ -24,6 +24,7 @@
   --shadow-sheet:0 -6px 28px rgba(15,35,48,.14);
   --f-display:'Plus Jakarta Sans','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --f-body:'Plus Jakarta Sans','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-tagline:'Montserrat','Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --f-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
   --gutter:max(16px, env(safe-area-inset-left, 0px));
   --gutter-r:max(16px, env(safe-area-inset-right, 0px));
@@ -90,7 +91,7 @@ h1{margin:0;font:800 clamp(36px,5.4vw,60px)/1.04 var(--f-display);letter-spacing
 .tagline{display:flex;align-items:stretch;gap:14px;margin-top:20px}
 .tag-bar{flex:0 0 3px;border-radius:3px;background:linear-gradient(180deg,#E2C892,rgba(226,200,146,.15));transform-origin:top;animation:bar 4.2s linear infinite}
 .tag-stage{display:grid;min-width:0}
-.tag{grid-area:1/1;margin:0;align-self:center;font:700 clamp(18px,2.2vw,24px)/1.35 var(--f-display);letter-spacing:-.01em;color:#F3E4C3;opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.tag{grid-area:1/1;margin:0;align-self:center;font:600 clamp(18px,2.2vw,24px)/1.35 var(--f-tagline);letter-spacing:-.01em;color:#F3E4C3;opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
 .tag.on{opacity:1;transform:none}
 .tag.out{transform:translateY(-14px)}
 .lede{margin:18px 0 0;max-width:46ch;font-size:17px;line-height:1.6;color:rgba(255,255,255,.82)}
