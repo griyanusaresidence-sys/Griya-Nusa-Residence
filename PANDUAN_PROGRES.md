@@ -15,7 +15,7 @@ Selama langkah di bawah belum dilakukan, situs menampilkan "belum terhubung" dan
    insert into public.admins (user_id, email, role)
    select id, email, 'owner' from auth.users where email = 'email-admin@contoh.com';
    ```
-   `owner` = akses penuh. Untuk staf lapangan pakai `'editor'` (hanya ubah status/persen tahap, unggah foto, buat kode, terbitkan; tidak bisa mengubah bobot, menghapus unit, atau menghapus foto orang lain).
+   `owner` = akses penuh. Untuk staf lapangan pakai `'editor'` (hanya ubah status/persen tahap, unggah foto, terbitkan; tidak bisa mengubah bobot, menghapus unit, atau menghapus foto orang lain).
 5. **Authentication → Sign In / Providers**: matikan **Allow new users to sign up**, supaya tidak ada orang asing bisa membuat akun.
 6. **Project Settings → API**: salin **Project URL** dan **anon public key**. (Jangan pakai `service_role`.)
 7. Di repo GitHub, edit `progress-config.js`, isi `url` dan `anonKey`, commit. Tunggu ±1 menit, muat ulang situs.
