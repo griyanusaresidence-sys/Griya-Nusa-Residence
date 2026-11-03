@@ -183,17 +183,22 @@ button:focus-visible,a:focus-visible,tr:focus-visible{outline:2px solid var(--ac
 .jump button{flex:0 0 auto;height:34px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap}
 .jump button:hover{border-color:var(--accent);background:var(--row-sel)}
 .view3d{position:relative;height:clamp(400px,58vh,620px);background:linear-gradient(180deg,var(--sky-a),var(--sky-b));overflow:hidden}
-/* matahari dekoratif di langit (di belakang model 3D) */
+/* matahari: posisinya mengikuti arah cahaya di scene; awan tipis bergeser mengikuti putaran kamera */
 .view3d{isolation:isolate}
-.sun{position:absolute;z-index:-1;left:8%;top:7%;width:64px;height:64px;pointer-events:none;--sun-o:1}
+.sun{position:absolute;z-index:-3;left:var(--sx,12%);top:var(--sy,10%);width:64px;height:64px;margin:-32px 0 0 -32px;pointer-events:none;opacity:var(--sv,0);--sun-o:1}
 .sun::before{content:"";position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,140,.62) 0,rgba(255,226,140,.28) 28%,rgba(255,226,140,0) 68%);opacity:var(--sun-o)}
 .sun::after{content:"";position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,214,110,.5) 0 5deg,rgba(255,214,110,0) 5deg 20deg);-webkit-mask:radial-gradient(circle,transparent 0 27%,#000 30%,transparent 70%);mask:radial-gradient(circle,transparent 0 27%,#000 30%,transparent 70%);opacity:var(--sun-o);animation:sunspin 90s linear infinite}
 .sun i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 36%,#FFFBE8 0,#FFE9A0 38%,#FFC94D 100%);box-shadow:0 0 0 6px rgba(255,214,110,.35),0 0 34px 10px rgba(255,200,80,.55)}
 @keyframes sunspin{to{transform:rotate(360deg)}}
+.clouds{position:absolute;left:0;right:0;top:0;height:260px;z-index:-2;pointer-events:none;overflow:hidden;-webkit-mask:linear-gradient(180deg,#000 0,#000 55%,transparent 100%);mask:linear-gradient(180deg,#000 0,#000 55%,transparent 100%)}
+.cl{position:absolute;left:0;right:0;background-repeat:repeat-x;background-size:1200px 200px;filter:blur(1.2px)}
+.cl.far{top:0;height:200px;opacity:.7;background-image:radial-gradient(ellipse 70px 8px at 330px 70px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 45px 7px at 370px 65px,rgba(255,255,255,0.55) 0,rgba(255,255,255,0.3) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 38px 6px at 295px 73px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 80px 9px at 820px 100px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 50px 7px at 870px 95px,rgba(255,255,255,0.55) 0,rgba(255,255,255,0.3) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 42px 6px at 780px 104px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 7px at 1100px 130px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 36px 6px at 1130px 126px,rgba(255,255,255,0.45) 0,rgba(255,255,255,0.25) 45%,rgba(255,255,255,0) 100%)}
+.cl.near{top:6px;height:200px;opacity:.9;background-image:radial-gradient(ellipse 110px 13px at 190px 60px,rgba(255,255,255,0.85) 0,rgba(255,255,255,0.47) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 70px 11px at 250px 52px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 9px at 130px 64px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 45px 7px at 210px 44px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 110px 11px at 194px 73px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 70px 9px at 254px 63px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 130px 15px at 640px 110px,rgba(255,255,255,0.85) 0,rgba(255,255,255,0.47) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 80px 12px at 720px 102px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 70px 10px at 570px 116px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 55px 8px at 670px 92px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 130px 13px at 644px 125px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 80px 10px at 724px 114px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 95px 12px at 1040px 50px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 10px at 1095px 43px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 50px 8px at 990px 55px,rgba(255,255,255,0.7) 0,rgba(255,255,255,0.39) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 95px 10px at 1044px 62px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 60px 8px at 1099px 53px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%)}
 @media (prefers-reduced-motion: reduce){ .sun::after{animation:none} }
-@media (max-width:640px){ .sun{width:40px;height:40px;left:7%;top:6%} .sun::before{width:200px;height:200px;margin:-100px 0 0 -100px} .sun::after{width:100px;height:100px;margin:-50px 0 0 -50px} .sun i{box-shadow:0 0 0 4px rgba(255,214,110,.35),0 0 22px 6px rgba(255,200,80,.5)} }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .sun{--sun-o:.4} }
+@media (max-width:640px){ .sun{width:40px;height:40px;margin:-20px 0 0 -20px} .sun::before{width:200px;height:200px;margin:-100px 0 0 -100px} .sun::after{width:100px;height:100px;margin:-50px 0 0 -50px} .sun i{box-shadow:0 0 0 4px rgba(255,214,110,.35),0 0 22px 6px rgba(255,200,80,.5)} .clouds{height:190px} .cl{background-size:900px 150px} }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .sun{--sun-o:.4} :root:not([data-theme="light"]) .clouds{opacity:.22} }
 :root[data-theme="dark"] .sun{--sun-o:.4}
+:root[data-theme="dark"] .clouds{opacity:.22}
 #gl{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 #gl:active{cursor:grabbing}
 .compass{position:absolute;top:12px;right:12px;width:46px;height:46px;pointer-events:none}
@@ -714,7 +719,8 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
             <button type="button" data-j="gate">Pintu masuk</button>
           </div>
           <div class="view3d" id="view3d">
-            <div class="sun" aria-hidden="true"><i></i></div>
+            <div class="clouds" aria-hidden="true"><div class="cl far" id="cl-far"></div><div class="cl near" id="cl-near"></div></div>
+            <div class="sun" id="sun" aria-hidden="true"><i></i></div>
             <canvas id="gl" role="img" aria-label="Siteplan 3D Griya Nusa Residence, bisa diputar dan diperbesar. Gunakan tab Daftar untuk versi teks."></canvas>
             <div class="compass" aria-hidden="true">
               <svg viewBox="0 0 48 48"><circle class="ring" cx="24" cy="24" r="22"/><g id="needle"><polygon class="tip-n" points="24,12 28.5,24 19.5,24"/><polygon class="tip-s" points="24,37 28.5,24 19.5,24"/><text x="24" y="9.5">U</text></g></svg>
@@ -1185,11 +1191,33 @@ function init3D(){
 
   /* lights */
   scene.add(new THREE.HemisphereLight(0xffffff, 0x9fb0b8, 0.64));
-  const sun = new THREE.DirectionalLight(0xfff0dc, 0.6);
-  sun.position.set(-45, 82, 62); sun.target.position.set(0, 0, 0);
+  const sun = new THREE.DirectionalLight(0xfff0dc, 0.62);
+  sun.position.set(-55, 78, -55); sun.target.position.set(0, 0, 0);
   sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0006;
-  const sc = sun.shadow.camera; sc.left = -118; sc.right = 118; sc.top = 72; sc.bottom = -72; sc.near = 10; sc.far = 260;
+  const sc = sun.shadow.camera; sc.left = -125; sc.right = 125; sc.top = 100; sc.bottom = -100; sc.near = 10; sc.far = 320;
   scene.add(sun); scene.add(sun.target);
+  const fill = new THREE.DirectionalLight(0xdfeaff, 0.34); fill.position.set(40, 55, 90); scene.add(fill);   /* lampu isi dari depan, tanpa bayangan */
+  /* matahari mengikuti arah cahaya; awan bergeser mengikuti putaran kamera */
+  const skySun = $('sun'), skyFar = $('cl-far'), skyNear = $('cl-near');
+  const sunDir = sun.position.clone().sub(sun.target.position).normalize();
+  const sunHx = Math.hypot(sunDir.x, sunDir.z), sunEl = Math.asin(sunDir.y);
+  const _fw = new THREE.Vector3(); let skyKey = '';
+  function updateSky(now){
+    const az = controls.getAzimuthalAngle();
+    const th = Math.atan2(sunDir.x, sunDir.z), d = th - az;            // sudut matahari relatif terhadap kamera
+    const phi = Math.atan2(Math.sin(d), -Math.cos(d));                  // 0 = tepat di depan, -90 = kiri, 90 = kanan
+    const front = Math.max(0, Math.min(1, 1 - (Math.abs(phi) - 1.45) / 0.55));   // memudar saat bergeser ke belakang
+    camera.getWorldDirection(_fw);
+    const pitch = Math.asin(Math.max(-1, Math.min(1, _fw.y)));         // + = kamera menengadah
+    const x = 50 + 46 * Math.sin(Math.max(-1.57, Math.min(1.57, phi)));
+    const y = Math.max(9, Math.min(60, 30 - (sunEl - pitch) * 38 + 14));   // makin menunduk, matahari makin tinggi di tepi atas
+    const drift = reduceMotion ? 0 : now * 0.004;
+    const k = x.toFixed(1) + '|' + y.toFixed(1) + '|' + front.toFixed(2) + '|' + az.toFixed(3) + '|' + Math.round(drift);
+    if(k === skyKey) return; skyKey = k;
+    skySun.style.setProperty('--sx', x.toFixed(1) + '%'); skySun.style.setProperty('--sy', y.toFixed(1) + '%'); skySun.style.setProperty('--sv', front.toFixed(2));
+    skyFar.style.backgroundPositionX = (-az * 120 + drift * 0.5).toFixed(1) + 'px';
+    skyNear.style.backgroundPositionX = (-az * 260 + drift).toFixed(1) + 'px';
+  }
 
   /* ---------- helpers ---------- */
   const redraws = [];
@@ -1881,7 +1909,7 @@ function init3D(){
   function startView(){
     resize(); home(0);
     const p = byId[state.sel]; if(p){ placeSel(p); }
-    started = true;
+    started = true; updateSky(0);
   }
   startView();
 
@@ -1947,6 +1975,7 @@ function init3D(){
       if(k >= 1) tween = null;
     }
     controls.update();
+    updateSky(now);
     if(pin.visible){ pin.position.set(pinX, pinBase + 0.18*Math.sin(now/260), pinZ); }
     const dist = camera.position.distanceTo(controls.target);
     for(let i=0;i<sprites.length;i++){ sprites[i].visible = dist > sprites[i].userData.near; }
