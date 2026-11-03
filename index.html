@@ -183,6 +183,17 @@ button:focus-visible,a:focus-visible,tr:focus-visible{outline:2px solid var(--ac
 .jump button{flex:0 0 auto;height:34px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap}
 .jump button:hover{border-color:var(--accent);background:var(--row-sel)}
 .view3d{position:relative;height:clamp(400px,58vh,620px);background:linear-gradient(180deg,var(--sky-a),var(--sky-b));overflow:hidden}
+/* matahari dekoratif di langit (di belakang model 3D) */
+.view3d{isolation:isolate}
+.sun{position:absolute;z-index:-1;left:8%;top:7%;width:64px;height:64px;pointer-events:none;--sun-o:1}
+.sun::before{content:"";position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,140,.62) 0,rgba(255,226,140,.28) 28%,rgba(255,226,140,0) 68%);opacity:var(--sun-o)}
+.sun::after{content:"";position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,214,110,.5) 0 5deg,rgba(255,214,110,0) 5deg 20deg);-webkit-mask:radial-gradient(circle,transparent 0 27%,#000 30%,transparent 70%);mask:radial-gradient(circle,transparent 0 27%,#000 30%,transparent 70%);opacity:var(--sun-o);animation:sunspin 90s linear infinite}
+.sun i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 36%,#FFFBE8 0,#FFE9A0 38%,#FFC94D 100%);box-shadow:0 0 0 6px rgba(255,214,110,.35),0 0 34px 10px rgba(255,200,80,.55)}
+@keyframes sunspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){ .sun::after{animation:none} }
+@media (max-width:640px){ .sun{width:40px;height:40px;left:7%;top:6%} .sun::before{width:200px;height:200px;margin:-100px 0 0 -100px} .sun::after{width:100px;height:100px;margin:-50px 0 0 -50px} .sun i{box-shadow:0 0 0 4px rgba(255,214,110,.35),0 0 22px 6px rgba(255,200,80,.5)} }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .sun{--sun-o:.4} }
+:root[data-theme="dark"] .sun{--sun-o:.4}
 #gl{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 #gl:active{cursor:grabbing}
 .compass{position:absolute;top:12px;right:12px;width:46px;height:46px;pointer-events:none}
@@ -703,6 +714,7 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
             <button type="button" data-j="gate">Pintu masuk</button>
           </div>
           <div class="view3d" id="view3d">
+            <div class="sun" aria-hidden="true"><i></i></div>
             <canvas id="gl" role="img" aria-label="Siteplan 3D Griya Nusa Residence, bisa diputar dan diperbesar. Gunakan tab Daftar untuk versi teks."></canvas>
             <div class="compass" aria-hidden="true">
               <svg viewBox="0 0 48 48"><circle class="ring" cx="24" cy="24" r="22"/><g id="needle"><polygon class="tip-n" points="24,12 28.5,24 19.5,24"/><polygon class="tip-s" points="24,37 28.5,24 19.5,24"/><text x="24" y="9.5">U</text></g></svg>
