@@ -185,28 +185,72 @@ button:focus-visible,a:focus-visible,tr:focus-visible{outline:2px solid var(--ac
 .view3d{position:relative;height:clamp(400px,58vh,620px);background:linear-gradient(180deg,var(--sky-a),var(--sky-b));overflow:hidden}
 /* matahari: posisinya mengikuti arah cahaya di scene; awan tipis bergeser mengikuti putaran kamera */
 .view3d{isolation:isolate}
-.sun{position:absolute;z-index:-3;left:var(--sx,12%);top:var(--sy,10%);width:64px;height:64px;margin:-32px 0 0 -32px;pointer-events:none;opacity:var(--sv,0);--sun-o:1}
-.sun::before{content:"";position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,140,.62) 0,rgba(255,226,140,.28) 28%,rgba(255,226,140,0) 68%);opacity:var(--sun-o)}
+.sun{position:absolute;z-index:-3;left:var(--sx,12%);top:var(--sy,10%);width:64px;height:64px;margin:-32px 0 0 -32px;pointer-events:none;opacity:var(--sv,0);--sun-o:1;transform:scale(var(--ss,1))}
+.sun::before{content:"";position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;background:radial-gradient(circle,rgba(var(--sg,255,226,140),.62) 0,rgba(var(--sg,255,226,140),.28) 28%,rgba(var(--sg,255,226,140),0) 68%);opacity:var(--sun-o)}
 .sun::after{content:"";position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,214,110,.5) 0 5deg,rgba(255,214,110,0) 5deg 20deg);-webkit-mask:radial-gradient(circle,transparent 0 27%,#000 30%,transparent 70%);mask:radial-gradient(circle,transparent 0 27%,#000 30%,transparent 70%);opacity:var(--sun-o);animation:sunspin 90s linear infinite}
-.sun i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 36%,#FFFBE8 0,#FFE9A0 38%,#FFC94D 100%);box-shadow:0 0 0 6px rgba(255,214,110,.35),0 0 34px 10px rgba(255,200,80,.55)}
+.sun i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 36%,var(--sc1,#FFFBE8) 0,var(--sc2,#FFE9A0) 38%,var(--sc3,#FFC94D) 100%);box-shadow:0 0 0 6px rgba(var(--sg,255,214,110),.35),0 0 34px 10px rgba(var(--sg,255,200,80),.55)}
 @keyframes sunspin{to{transform:rotate(360deg)}}
 .clouds{position:absolute;left:0;right:0;top:0;height:260px;z-index:-2;pointer-events:none;overflow:hidden;-webkit-mask:linear-gradient(180deg,#000 0,#000 55%,transparent 100%);mask:linear-gradient(180deg,#000 0,#000 55%,transparent 100%)}
-.cl{position:absolute;left:0;right:0;background-repeat:repeat-x;background-size:1200px 200px;filter:blur(1.2px)}
-.cl.far{top:0;height:200px;opacity:.7;background-image:radial-gradient(ellipse 70px 8px at 330px 70px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 45px 7px at 370px 65px,rgba(255,255,255,0.55) 0,rgba(255,255,255,0.3) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 38px 6px at 295px 73px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 80px 9px at 820px 100px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 50px 7px at 870px 95px,rgba(255,255,255,0.55) 0,rgba(255,255,255,0.3) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 42px 6px at 780px 104px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 7px at 1100px 130px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 36px 6px at 1130px 126px,rgba(255,255,255,0.45) 0,rgba(255,255,255,0.25) 45%,rgba(255,255,255,0) 100%)}
-.cl.near{top:6px;height:200px;opacity:.9;background-image:radial-gradient(ellipse 110px 13px at 190px 60px,rgba(255,255,255,0.85) 0,rgba(255,255,255,0.47) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 70px 11px at 250px 52px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 9px at 130px 64px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 45px 7px at 210px 44px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 110px 11px at 194px 73px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 70px 9px at 254px 63px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 130px 15px at 640px 110px,rgba(255,255,255,0.85) 0,rgba(255,255,255,0.47) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 80px 12px at 720px 102px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 70px 10px at 570px 116px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 55px 8px at 670px 92px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 130px 13px at 644px 125px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 80px 10px at 724px 114px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 95px 12px at 1040px 50px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 10px at 1095px 43px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 50px 8px at 990px 55px,rgba(255,255,255,0.7) 0,rgba(255,255,255,0.39) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 95px 10px at 1044px 62px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 60px 8px at 1099px 53px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%)}
+.cl{position:absolute;left:0;right:0;background:var(--cloud,#fff);-webkit-mask-repeat:repeat-x;mask-repeat:repeat-x;-webkit-mask-size:1200px 200px;mask-size:1200px 200px;filter:blur(1.2px)}
+.cl.far{top:0;height:200px;opacity:.7;-webkit-mask-image:radial-gradient(ellipse 70px 8px at 330px 70px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 45px 7px at 370px 65px,rgba(255,255,255,0.55) 0,rgba(255,255,255,0.3) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 38px 6px at 295px 73px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 80px 9px at 820px 100px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 50px 7px at 870px 95px,rgba(255,255,255,0.55) 0,rgba(255,255,255,0.3) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 42px 6px at 780px 104px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 7px at 1100px 130px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 36px 6px at 1130px 126px,rgba(255,255,255,0.45) 0,rgba(255,255,255,0.25) 45%,rgba(255,255,255,0) 100%);mask-image:radial-gradient(ellipse 70px 8px at 330px 70px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 45px 7px at 370px 65px,rgba(255,255,255,0.55) 0,rgba(255,255,255,0.3) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 38px 6px at 295px 73px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 80px 9px at 820px 100px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 50px 7px at 870px 95px,rgba(255,255,255,0.55) 0,rgba(255,255,255,0.3) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 42px 6px at 780px 104px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 7px at 1100px 130px,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.28) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 36px 6px at 1130px 126px,rgba(255,255,255,0.45) 0,rgba(255,255,255,0.25) 45%,rgba(255,255,255,0) 100%)}
+.cl.near{top:6px;height:200px;opacity:.9;-webkit-mask-image:radial-gradient(ellipse 110px 13px at 190px 60px,rgba(255,255,255,0.85) 0,rgba(255,255,255,0.47) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 70px 11px at 250px 52px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 9px at 130px 64px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 45px 7px at 210px 44px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 110px 11px at 194px 73px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 70px 9px at 254px 63px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 130px 15px at 640px 110px,rgba(255,255,255,0.85) 0,rgba(255,255,255,0.47) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 80px 12px at 720px 102px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 70px 10px at 570px 116px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 55px 8px at 670px 92px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 130px 13px at 644px 125px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 80px 10px at 724px 114px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 95px 12px at 1040px 50px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 10px at 1095px 43px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 50px 8px at 990px 55px,rgba(255,255,255,0.7) 0,rgba(255,255,255,0.39) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 95px 10px at 1044px 62px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 60px 8px at 1099px 53px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%);mask-image:radial-gradient(ellipse 110px 13px at 190px 60px,rgba(255,255,255,0.85) 0,rgba(255,255,255,0.47) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 70px 11px at 250px 52px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 9px at 130px 64px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 45px 7px at 210px 44px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 110px 11px at 194px 73px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 70px 9px at 254px 63px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 130px 15px at 640px 110px,rgba(255,255,255,0.85) 0,rgba(255,255,255,0.47) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 80px 12px at 720px 102px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 70px 10px at 570px 116px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 55px 8px at 670px 92px,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.33) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 130px 13px at 644px 125px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 80px 10px at 724px 114px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 95px 12px at 1040px 50px,rgba(255,255,255,0.8) 0,rgba(255,255,255,0.44) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 60px 10px at 1095px 43px,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.41) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 50px 8px at 990px 55px,rgba(255,255,255,0.7) 0,rgba(255,255,255,0.39) 45%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 95px 10px at 1044px 62px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%),radial-gradient(ellipse 60px 8px at 1099px 53px,rgba(120,155,185,.16) 0,rgba(120,155,185,0) 100%)}
 @media (prefers-reduced-motion: reduce){ .sun::after{animation:none} }
-@media (max-width:640px){ .sun{width:40px;height:40px;margin:-20px 0 0 -20px} .sun::before{width:200px;height:200px;margin:-100px 0 0 -100px} .sun::after{width:100px;height:100px;margin:-50px 0 0 -50px} .sun i{box-shadow:0 0 0 4px rgba(255,214,110,.35),0 0 22px 6px rgba(255,200,80,.5)} .clouds{height:190px} .cl{background-size:900px 150px} }
+@media (max-width:640px){ .sun{width:40px;height:40px;margin:-20px 0 0 -20px} .sun::before{width:200px;height:200px;margin:-100px 0 0 -100px} .sun::after{width:100px;height:100px;margin:-50px 0 0 -50px} .sun i{box-shadow:0 0 0 4px rgba(var(--sg,255,214,110),.35),0 0 22px 6px rgba(var(--sg,255,200,80),.5)} .clouds{height:190px} .cl{-webkit-mask-size:900px 150px;mask-size:900px 150px} }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .sun{--sun-o:.4} :root:not([data-theme="light"]) .clouds{opacity:.22} }
 :root[data-theme="dark"] .sun{--sun-o:.4}
 :root[data-theme="dark"] .clouds{opacity:.22}
+/* ===== simulasi matahari ===== */
+.sunbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"clock chips play" "slider slider slider" "foot foot foot";gap:12px 16px;align-items:center;padding:14px 20px 16px;border-top:1px solid var(--rule);background:var(--surface)}
+.sb-clock{grid-area:clock;display:flex;align-items:center;gap:12px;min-width:0}
+.sb-ico{flex:0 0 auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--ic-r);color:var(--gold)}
+.sb-ico svg{width:22px;height:22px}
+.sb-time{display:flex;align-items:baseline;gap:6px;font:700 26px/1 var(--f-mono);letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.sb-time small{font:600 11px var(--f-body);letter-spacing:.06em;color:var(--ink-2)}
+.sb-meta{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sb-phase{font-weight:700;font-size:13px;color:var(--ink);line-height:1.2}
+.sb-pos{font-size:12px;color:var(--ink-2);line-height:1.25}
+.sb-chips{grid-area:chips;display:flex;gap:6px}
+.sb-chip{height:36px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);color:var(--ink);font:600 12.5px/1 var(--f-body);cursor:pointer;white-space:nowrap}
+.sb-chip:hover{border-color:var(--accent);background:var(--row-sel)}
+.sb-chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.sb-play{grid-area:play;width:44px;height:44px;border-radius:50%;border:0;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow-sm)}
+.sb-play svg{width:20px;height:20px}
+.sb-play .i-pause{display:none}
+.sb-play[aria-pressed="true"] .i-play{display:none}
+.sb-play[aria-pressed="true"] .i-pause{display:block}
+.sb-slider{grid-area:slider;min-width:0}
+.sb-range{display:block;width:100%;height:28px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer;touch-action:pan-y}
+.sb-range::-webkit-slider-runnable-track{height:8px;border-radius:99px;background:linear-gradient(90deg,#F2A66B 0,#9CC8E8 16%,#8FC3EA 50%,#9CC8E8 84%,#EE8A58 100%)}
+.sb-range::-moz-range-track{height:8px;border-radius:99px;background:linear-gradient(90deg,#F2A66B 0,#9CC8E8 16%,#8FC3EA 50%,#9CC8E8 84%,#EE8A58 100%)}
+.sb-range::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-8px;border-radius:50%;background:#fff;border:4px solid var(--gold);box-shadow:0 1px 5px rgba(15,35,48,.35)}
+.sb-range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--gold);box-shadow:0 1px 5px rgba(15,35,48,.35)}
+.sb-range:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+.sb-ticks{position:relative;height:16px;margin-top:2px;font:600 11px/1 var(--f-mono);color:var(--ink-2)}
+.sb-ticks span{position:absolute;top:0;transform:translateX(-50%)}
+.sb-foot{grid-area:foot;margin:0;font-size:12px;line-height:1.5;color:var(--ink-2)}
+.sb-foot b{color:var(--ink);font-weight:700}
+.sb-chip:focus-visible,.sb-play:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:760px){
+  .sunbar{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"clock play" "slider slider" "chips chips" "foot foot";padding:12px 16px 14px;gap:10px 12px}
+  .sb-chips{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.4fr;gap:5px}
+  .sb-chip{padding:0 2px;font-size:11.5px;height:36px;overflow:hidden}
+}
+@media (max-width:360px){
+  .sb-chip{font-size:10.5px}
+  .sb-time{font-size:24px}
+}
 #gl{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 #gl:active{cursor:grabbing}
-.compass{position:absolute;top:12px;right:12px;width:46px;height:46px;pointer-events:none}
+.compass{position:absolute;top:10px;right:10px;width:64px;height:64px;pointer-events:none;filter:drop-shadow(0 2px 6px rgba(15,35,48,.18))}
 .compass svg{display:block;width:100%;height:100%}
 .compass .ring{fill:var(--surface);stroke:var(--rule);stroke-width:1.5}
 .compass .tip-n{fill:var(--dot-s)} .compass .tip-s{fill:var(--ink-2)}
-.compass text{font:700 9px var(--f-body);fill:var(--ink);text-anchor:middle}
-#needle{transform-origin:24px 24px}
+.compass text{font:700 8px var(--f-body);fill:var(--ink);text-anchor:middle}
+.compass .we{fill:var(--ink)}
+.compass .cp-arc{fill:none;stroke:var(--gold);stroke-width:2.4;stroke-linecap:round;opacity:.9}
+.compass .cp-sun{fill:#FFC94D;stroke:#fff;stroke-width:1.2;transition:opacity .2s}
+@media (max-width:640px){.compass{width:54px;height:54px;top:8px;right:8px}}
+#needle{transform-origin:34px 34px}
 .gl-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--ink-2)}
 .hint{margin:0;padding:10px 16px;font-size:13px;color:var(--ink-2);border-top:1px solid var(--rule);background:var(--surface)}
 .legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:14px 16px;list-style:none;font-size:13px;font-weight:500;color:var(--ink-2);border-top:1px solid var(--rule);background:var(--surface)}
@@ -723,9 +767,29 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
             <div class="sun" id="sun" aria-hidden="true"><i></i></div>
             <canvas id="gl" role="img" aria-label="Siteplan 3D Griya Nusa Residence, bisa diputar dan diperbesar. Gunakan tab Daftar untuk versi teks."></canvas>
             <div class="compass" aria-hidden="true">
-              <svg viewBox="0 0 48 48"><circle class="ring" cx="24" cy="24" r="22"/><g id="needle"><polygon class="tip-n" points="24,12 28.5,24 19.5,24"/><polygon class="tip-s" points="24,37 28.5,24 19.5,24"/><text x="24" y="9.5">U</text></g></svg>
+              <svg viewBox="0 0 68 68"><circle class="ring" cx="34" cy="34" r="32"/><g id="needle"><path id="cp-arc" class="cp-arc" d=""/><polygon class="tip-n" points="34,23 37.8,34 30.2,34"/><polygon class="tip-s" points="34,45 37.8,34 30.2,34"/><text x="34" y="16.8">U</text><text class="we" x="54" y="36.8">T</text><text class="we" x="14" y="36.8">B</text><text x="34" y="56.8">S</text><circle id="cp-sun" class="cp-sun" r="3.5" cx="34" cy="6.5"/></g></svg>
             </div>
             <div class="gl-fallback" id="gl-fallback" hidden><p>Tampilan 3D tidak bisa dibuka di perangkat ini. Silakan pakai tab <b>Daftar</b> untuk melihat semua kavling.</p></div>
+          </div>
+          <div class="sunbar" id="sunbar" role="group" aria-label="Simulasi arah matahari">
+            <div class="sb-clock">
+              <span class="sb-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></span>
+              <div class="sb-time"><span id="sb-time">09:00</span><small>WITA</small></div>
+              <div class="sb-meta"><span class="sb-phase" id="sb-phase">Pagi</span><span class="sb-pos" id="sb-pos"></span></div>
+            </div>
+            <div class="sb-chips" role="group" aria-label="Waktu cepat">
+              <button type="button" class="sb-chip" data-t="6" aria-pressed="false">Terbit</button>
+              <button type="button" class="sb-chip" data-t="8.5" aria-pressed="false">Pagi</button>
+              <button type="button" class="sb-chip" data-t="12" aria-pressed="false">Siang</button>
+              <button type="button" class="sb-chip" data-t="16" aria-pressed="false">Sore</button>
+              <button type="button" class="sb-chip" data-t="17.9" aria-pressed="false">Terbenam</button>
+            </div>
+            <button type="button" class="sb-play" id="sb-play" aria-pressed="false" aria-label="Putar animasi matahari"><svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l11-6.8a1 1 0 0 0 0-1.72l-11-6.8A1 1 0 0 0 8 5.2z"/></svg><svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4.2" height="14" rx="1.2"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.2"/></svg></button>
+            <div class="sb-slider">
+              <input class="sb-range" id="sb-range" type="range" min="300" max="1140" step="5" value="540" aria-label="Waktu simulasi matahari">
+              <div class="sb-ticks" aria-hidden="true"><span style="left:calc(12px + (100% - 24px) * .0714)">06:00</span><span style="left:50%">12:00</span><span style="left:calc(12px + (100% - 24px) * .9286)">18:00</span></div>
+            </div>
+            <p class="sb-foot" id="sb-foot"></p>
           </div>
           <p class="hint" id="hint"></p>
           <ul class="legend" aria-label="Keterangan">
@@ -1190,33 +1254,176 @@ function init3D(){
   if(coarse && THREE.TOUCH){ controls.touches = {ONE: THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_ROTATE}; }
 
   /* lights */
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x9fb0b8, 0.64));
+  const hemi = new THREE.HemisphereLight(0xffffff, 0x9fb0b8, 0.64); scene.add(hemi);
   const sun = new THREE.DirectionalLight(0xfff0dc, 0.62);
   sun.position.set(-55, 78, -55); sun.target.position.set(0, 0, 0);
   sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0006;
-  const sc = sun.shadow.camera; sc.left = -125; sc.right = 125; sc.top = 100; sc.bottom = -100; sc.near = 10; sc.far = 320;
+  const sc = sun.shadow.camera; sc.left = -125; sc.right = 125; sc.top = 100; sc.bottom = -100; sc.near = 10; sc.far = 380;
   scene.add(sun); scene.add(sun.target);
   const fill = new THREE.DirectionalLight(0xdfeaff, 0.34); fill.position.set(40, 55, 90); scene.add(fill);   /* lampu isi dari depan, tanpa bayangan */
-  /* matahari mengikuti arah cahaya; awan bergeser mengikuti putaran kamera */
+  /* ---------- simulasi matahari ----------
+     Arah mengikuti kompas scene: Utara = -Z, Timur = +X, Selatan = +Z, Barat = -X.
+     Posisi matahari dihitung dari jam, tanggal hari ini dan lintang Penajam (1,27° LS),
+     lalu dipakai untuk arah cahaya, bayangan, warna langit, awan dan kompas. */
+  const DEG = Math.PI/180, TAU = Math.PI*2, LAT = -1.27*DEG;
+  const today = new Date();
+  const dayN = Math.round((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(today.getFullYear(), 0, 0))/864e5);
+  const DECL = -23.44*DEG*Math.cos(TAU/365*(dayN + 10));
+  function solarAt(t){                                   // t = jam (desimal), mengembalikan azimut dari Utara (searah jarum jam) dan tinggi, dalam radian
+    const H = (t - 12)*15*DEG;
+    const sinEl = Math.sin(LAT)*Math.sin(DECL) + Math.cos(LAT)*Math.cos(DECL)*Math.cos(H);
+    const az = Math.atan2(Math.sin(H), Math.cos(H)*Math.sin(LAT) - Math.tan(DECL)*Math.cos(LAT)) + Math.PI;
+    return {az:(az + TAU) % TAU, el:Math.asin(Math.max(-1, Math.min(1, sinEl)))};
+  }
+  const H0 = Math.acos(Math.max(-1, Math.min(1, -Math.tan(LAT)*Math.tan(DECL))));
+  const T_RISE = 12 - H0/(15*DEG), T_SET = 12 + H0/(15*DEG), T_MIN = 5, T_MAX = 19, SPEED = 0.35;   // SPEED = jam simulasi per detik
+  const WINDS = ['Utara','Timur Laut','Timur','Tenggara','Selatan','Barat Daya','Barat','Barat Laut'];
+  const windName = a => WINDS[Math.round(a/(TAU/8)) % 8];
+  const hhmm = t => { const m = Math.round(t*60); return String(Math.floor(m/60)).padStart(2,'0') + ':' + String(m % 60).padStart(2,'0'); };
+  const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  function phaseOf(t){
+    return t < 5.5 ? 'Fajar' : t < 6.6 ? 'Matahari terbit' : t < 10 ? 'Pagi' : t < 15 ? 'Siang' : t < 17.5 ? 'Sore' : t < 18.6 ? 'Matahari terbenam' : 'Senja';
+  }
+
+  const _c01 = x => x < 0 ? 0 : x > 1 ? 1 : x;
+  const hex2rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
+  const mixv = (a, b, k) => Array.isArray(a) ? a.map((v, i) => v + (b[i] - v)*k) : a + (b - a)*k;
+  const rgbStr = c => 'rgb(' + c.map(Math.round).join(',') + ')';
+  const stops = list => list.map(e => [e[0], typeof e[1] === 'string' ? hex2rgb(e[1]) : e[1]]);
+  function ramp(list, x){
+    if(x <= list[0][0]) return list[0][1];
+    for(let i = 1; i < list.length; i++){ if(x <= list[i][0]){ const a = list[i-1], b = list[i]; return mixv(a[1], b[1], (x - a[0])/(b[0] - a[0])); } }
+    return list[list.length - 1][1];
+  }
+  /* kurva menurut tinggi matahari (derajat) */
+  const SUN_I = [[-4,0],[0,.30],[10,.55],[45,.72]];
+  const HEMI_I = [[-6,.44],[0,.52],[20,.60],[45,.62]];
+  const FILL_I = [[-6,.14],[0,.20],[20,.30],[45,.34]];
+  const SUN_COL = stops([[0,'#ff8a3d'],[6,'#ffa860'],[14,'#ffd29a'],[28,'#ffecd0'],[50,'#fff4e4']]);
+  const HEMI_SKY = stops([[-6,'#8f86b8'],[4,'#f0c9b0'],[20,'#f5f7ff'],[40,'#ffffff']]);
+  const HEMI_GND = stops([[-6,'#5f5f78'],[4,'#8d8088'],[20,'#9fb0b8']]);
+  const FILL_COL = stops([[-6,'#9aa0e0'],[8,'#d7d2ee'],[25,'#dfeaff']]);
+  const DISC1 = stops([[0,'#fff0c8'],[12,'#fff5d8'],[40,'#fffbe8']]);
+  const DISC2 = stops([[0,'#ffb25e'],[12,'#ffd07a'],[40,'#ffe9a0']]);
+  const DISC3 = stops([[0,'#ff7a38'],[12,'#ffa94a'],[40,'#ffc94d']]);
+  const GLOW  = stops([[0,'#ff9650'],[12,'#ffbe64'],[40,'#ffe28c']]);
+  /* kurva menurut jam */
+  const SKY_TOP = stops([[5,'#1f2a4f'],[5.6,'#3d4f85'],[6,'#6f97c4'],[7,'#86b3da'],[8.5,'#9cc6e6'],[12,'#8fc2e8'],[15.5,'#9cc4e4'],[17,'#86a6cc'],[17.8,'#7673a8'],[18.3,'#4a4a80'],[19,'#1f2748']]);
+  const SKY_BOT = stops([[5,'#8a6a8c'],[5.6,'#e59a82'],[6,'#ffcf9e'],[7,'#ffe8c8'],[8.5,'#fff6e8'],[12,'#f2f8fd'],[15.5,'#fff4e2'],[17,'#ffdca8'],[17.8,'#ff9d68'],[18.3,'#e07f76'],[19,'#7c5a82']]);
+  const CLOUD = stops([[5,'#8f86ad'],[5.7,'#ffc79a'],[6.5,'#ffeedd'],[8,'#ffffff'],[16.5,'#ffffff'],[17.4,'#ffe3c4'],[17.9,'#ffb98f'],[18.4,'#c493a0'],[19,'#6a6a8e']]);
+  const DARK_TOP = [11,26,33], DARK_BOT = [24,48,57];
+  const darkMQ = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  const isDark = () => { const th = document.documentElement.getAttribute('data-theme'); return th === 'dark' || (th !== 'light' && !!(darkMQ && darkMQ.matches)); };
+
+  const sim = {t:9, playing:false, tw:null, last:0, dirty:true, shadowAt:0, shadowDue:true, rev:0, uiKey:''};
+  const simSun = {az:0, el:0, th:0};                    // az/el dalam radian (nilai sebenarnya), th = sudut horizontal di sistem koordinat scene
   const skySun = $('sun'), skyFar = $('cl-far'), skyNear = $('cl-near');
-  const sunDir = sun.position.clone().sub(sun.target.position).normalize();
-  const sunHx = Math.hypot(sunDir.x, sunDir.z), sunEl = Math.asin(sunDir.y);
+  const cpSun = $('cp-sun'), cpArc = $('cp-arc'), R_ARC = 27.5;
+  const sbTime = $('sb-time'), sbPhase = $('sb-phase'), sbPos = $('sb-pos'), sbRange = $('sb-range'), sbPlay = $('sb-play');
+  const chips = Array.prototype.slice.call(document.querySelectorAll('.sb-chip'));
+
+  /* jalur matahari pada cincin kompas (dari terbit ke terbenam) */
+  (function(){
+    const pt = a => (34 + R_ARC*Math.sin(a)).toFixed(2) + ' ' + (34 - R_ARC*Math.cos(a)).toFixed(2);
+    const a1 = solarAt(T_RISE).az, a2 = solarAt(T_SET).az;
+    cpArc.setAttribute('d', 'M' + pt(a1) + ' A' + R_ARC + ' ' + R_ARC + ' 0 0 ' + (a1 < Math.PI/2 ? 0 : 1) + ' ' + pt(a2));
+    $('sb-foot').innerHTML = '<b>Terbit</b> ' + hhmm(T_RISE) + ' di arah ' + windName(solarAt(T_RISE).az) + ' &middot; <b>Terbenam</b> ' + hhmm(T_SET) + ' di arah ' + windName(solarAt(T_SET).az) + ' &middot; dihitung untuk Penajam, ' + today.getDate() + ' ' + MONTHS[today.getMonth()];
+  })();
+
+  function applySim(){
+    const s = solarAt(sim.t), el = s.el/DEG;
+    simSun.az = s.az; simSun.el = s.el; simSun.th = Math.atan2(Math.sin(s.az), -Math.cos(s.az));
+    /* cahaya: arah sebenarnya (Timur = +X, Utara = -Z), tinggi dibatasi agar bayangan tetap terbaca */
+    const elC = el > 50 ? 50 + (el - 50)*0.5 : el, elL = Math.max(elC, 10)*DEG, D = 160;
+    sun.position.set(Math.sin(s.az)*Math.cos(elL)*D, Math.sin(elL)*D, -Math.cos(s.az)*Math.cos(elL)*D);
+    sun.intensity = ramp(SUN_I, el);
+    let c = ramp(SUN_COL, el); sun.color.setRGB(c[0]/255, c[1]/255, c[2]/255);
+    hemi.intensity = ramp(HEMI_I, el);
+    c = ramp(HEMI_SKY, el); hemi.color.setRGB(c[0]/255, c[1]/255, c[2]/255);
+    c = ramp(HEMI_GND, el); hemi.groundColor.setRGB(c[0]/255, c[1]/255, c[2]/255);
+    fill.intensity = ramp(FILL_I, el);
+    c = ramp(FILL_COL, el); fill.color.setRGB(c[0]/255, c[1]/255, c[2]/255);
+    /* langit, awan, cakram matahari */
+    const dark = isDark();
+    let top = ramp(SKY_TOP, sim.t), bot = ramp(SKY_BOT, sim.t);
+    if(dark){ top = mixv(top, DARK_TOP, .75); bot = mixv(bot, DARK_BOT, .72); }
+    box.style.setProperty('--sky-a', rgbStr(top)); box.style.setProperty('--sky-b', rgbStr(bot));
+    box.style.setProperty('--cloud', rgbStr(ramp(CLOUD, sim.t)));
+    skySun.style.setProperty('--sc1', rgbStr(ramp(DISC1, el))); skySun.style.setProperty('--sc2', rgbStr(ramp(DISC2, el))); skySun.style.setProperty('--sc3', rgbStr(ramp(DISC3, el)));
+    skySun.style.setProperty('--sg', ramp(GLOW, el).map(Math.round).join(','));
+    skySun.style.setProperty('--ss', (1 + 0.28*(1 - _c01(el/25))).toFixed(2));
+    /* penanda matahari di kompas */
+    cpSun.setAttribute('cx', (34 + R_ARC*Math.sin(s.az)).toFixed(2)); cpSun.setAttribute('cy', (34 - R_ARC*Math.cos(s.az)).toFixed(2));
+    cpSun.style.opacity = el < -1 ? .25 : 1;
+    sim.rev++; sim.shadowDue = true; syncUI();
+  }
+  function syncUI(){
+    const m = Math.round(sim.t*60), el = simSun.el/DEG;
+    const pos = el < 0 ? 'Di bawah ufuk' : 'Arah ' + windName(simSun.az) + ' · tinggi ' + Math.round(el) + '°';
+    const key = m + '|' + pos;
+    if(key === sim.uiKey) return; sim.uiKey = key;
+    const hm = hhmm(sim.t), ph = phaseOf(sim.t);
+    sbTime.textContent = hm; sbPhase.textContent = ph; sbPos.textContent = pos;
+    sbRange.value = m; sbRange.setAttribute('aria-valuetext', hm + ' WITA, ' + ph + '. ' + pos);
+    chips.forEach(b => b.setAttribute('aria-pressed', Math.abs(sim.t - parseFloat(b.dataset.t)) < 0.02 ? 'true' : 'false'));
+  }
+  function setPlaying(on){
+    sim.playing = !!on; sim.last = 0;
+    sbPlay.setAttribute('aria-pressed', on ? 'true' : 'false');
+    sbPlay.setAttribute('aria-label', on ? 'Jeda animasi matahari' : 'Putar animasi matahari');
+  }
+  function setTime(t, ms){
+    t = Math.max(T_MIN, Math.min(T_MAX, t));
+    if(!ms || reduceMotion){ sim.tw = null; sim.t = t; sim.dirty = true; }
+    else sim.tw = {from:sim.t, to:t, dur:ms, t0:null};
+  }
+  function simTick(now){
+    const ez = k => k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2)/2;
+    if(sim.tw){
+      if(sim.tw.t0 === null) sim.tw.t0 = now;
+      const k = Math.min(1, (now - sim.tw.t0)/sim.tw.dur);
+      sim.t = sim.tw.from + (sim.tw.to - sim.tw.from)*ez(k); sim.dirty = true;
+      if(k >= 1){ sim.t = sim.tw.to; sim.tw = null; }
+    } else if(sim.playing){
+      const dt = sim.last ? Math.min(0.25, (now - sim.last)/1000) : 0;
+      sim.t += dt*SPEED; if(sim.t > T_MAX) sim.t = T_MIN; sim.dirty = true;
+    }
+    sim.last = now;
+    if(sim.dirty){ sim.dirty = false; applySim(); }
+    if(sim.shadowDue && now - sim.shadowAt >= 66){ renderer.shadowMap.needsUpdate = true; sim.shadowAt = now; sim.shadowDue = false; }
+  }
+  chips.forEach(b => b.addEventListener('click', () => { const t = parseFloat(b.dataset.t); setTime(t, Math.max(500, Math.min(1400, Math.abs(t - sim.t)*230))); }));
+  sbRange.addEventListener('input', () => { if(sim.playing) setPlaying(false); sim.tw = null; sim.t = parseInt(sbRange.value, 10)/60; sim.dirty = true; });
+  sbPlay.addEventListener('click', () => {
+    if(sim.playing){ setPlaying(false); return; }
+    sim.tw = null; if(sim.t >= T_MAX - 0.02) sim.t = T_MIN; setPlaying(true); sim.dirty = true;
+  });
+  if(darkMQ){ const f = () => { sim.dirty = true; }; if(darkMQ.addEventListener) darkMQ.addEventListener('change', f); else if(darkMQ.addListener) darkMQ.addListener(f); }
+  if(window.MutationObserver) new MutationObserver(() => { sim.dirty = true; }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  const simApi = {
+    get t(){ return sim.t; }, get playing(){ return sim.playing; }, set:setTime, play:setPlaying, sun:simSun,
+    rise:T_RISE, setT:T_SET, tick:simTick, solarAt:solarAt, decl:DECL, dayN:dayN
+  };
+  applySim();
+
+  /* posisi cakram matahari di layar: mengikuti arah relatif terhadap kamera, tinggi mengikuti ketinggian matahari */
   const _fw = new THREE.Vector3(); let skyKey = '';
   function updateSky(now){
     const az = controls.getAzimuthalAngle();
-    const th = Math.atan2(sunDir.x, sunDir.z), d = th - az;            // sudut matahari relatif terhadap kamera
-    const phi = Math.atan2(Math.sin(d), -Math.cos(d));                  // 0 = tepat di depan, -90 = kiri, 90 = kanan
-    const front = Math.max(0, Math.min(1, 1 - (Math.abs(phi) - 1.45) / 0.55));   // memudar saat bergeser ke belakang
+    const d = simSun.th - az, phi = Math.atan2(Math.sin(d), -Math.cos(d));      // 0 = tepat di depan kamera, +90° = kanan layar
+    const el = simSun.el/DEG, elr = simSun.el;
     camera.getWorldDirection(_fw);
-    const pitch = Math.asin(Math.max(-1, Math.min(1, _fw.y)));         // + = kamera menengadah
-    const x = 50 + 46 * Math.sin(Math.max(-1.57, Math.min(1.57, phi)));
-    const y = Math.max(9, Math.min(60, 30 - (sunEl - pitch) * 38 + 14));   // makin menunduk, matahari makin tinggi di tepi atas
+    const pitch = Math.asin(Math.max(-1, Math.min(1, _fw.y)));
+    const x = 50 + 42*Math.sin(phi)*(0.25 + 0.75*Math.cos(Math.max(elr, 0)));   // di titik tertinggi matahari mendekati tengah
+    const y = 37 - 29*Math.sin(Math.max(elr, -0.1));
+    const vis = Math.max(_c01(1 - (Math.abs(phi) - 1.95)/0.5), _c01((el - 45)/20)) * _c01((el + 4)/6) * _c01((pitch + 1.4)/0.4);
     const drift = reduceMotion ? 0 : now * 0.004;
-    const k = x.toFixed(1) + '|' + y.toFixed(1) + '|' + front.toFixed(2) + '|' + az.toFixed(3) + '|' + Math.round(drift);
+    const k = sim.rev + '|' + x.toFixed(1) + '|' + y.toFixed(1) + '|' + vis.toFixed(2) + '|' + az.toFixed(3) + '|' + Math.round(drift);
     if(k === skyKey) return; skyKey = k;
-    skySun.style.setProperty('--sx', x.toFixed(1) + '%'); skySun.style.setProperty('--sy', y.toFixed(1) + '%'); skySun.style.setProperty('--sv', front.toFixed(2));
-    skyFar.style.backgroundPositionX = (-az * 120 + drift * 0.5).toFixed(1) + 'px';
-    skyNear.style.backgroundPositionX = (-az * 260 + drift).toFixed(1) + 'px';
+    skySun.style.setProperty('--sx', x.toFixed(1) + '%'); skySun.style.setProperty('--sy', y.toFixed(1) + '%'); skySun.style.setProperty('--sv', vis.toFixed(2));
+    const fx = (-az*120 + drift*0.5).toFixed(1) + 'px', nx = (-az*260 + drift).toFixed(1) + 'px';
+    skyFar.style.webkitMaskPositionX = fx; skyFar.style.maskPositionX = fx;
+    skyNear.style.webkitMaskPositionX = nx; skyNear.style.maskPositionX = nx;
   }
 
   /* ---------- helpers ---------- */
@@ -1975,6 +2182,7 @@ function init3D(){
       if(k >= 1) tween = null;
     }
     controls.update();
+    simTick(now);
     updateSky(now);
     if(pin.visible){ pin.position.set(pinX, pinBase + 0.18*Math.sin(now/260), pinZ); }
     const dist = camera.position.distanceTo(controls.target);
@@ -1994,7 +2202,8 @@ function init3D(){
   return {
     select: (p, fly) => { placeSel(p); if(fly) flyToPlot(p); },
     applyFilter: applyFilter, resize: resize, flyToPlot: flyToPlot,
-    debug: {camera:camera, controls:controls, renderer:renderer, scene:scene, plots:plots}
+    debug: {camera:camera, controls:controls, renderer:renderer, scene:scene, plots:plots, sunLight:sun, hemi:hemi},
+    sim: simApi
   };
 }
 
