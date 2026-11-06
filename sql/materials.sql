@@ -24,6 +24,14 @@ create table if not exists public.materials (
 alter table public.materials add column if not exists photo_source text;
 alter table public.materials drop constraint if exists materials_photo_source_chk;
 alter table public.materials add constraint materials_photo_source_chk check (photo_source is null or photo_source in ('proyek','produsen','referensi'));
+-- Foto tambahan per material (galeri di panel detail). photo_path tetap foto utama/kartu carousel.
+create or replace function public.photo_paths_ok(p text[]) returns boolean
+language sql immutable as $$
+  select coalesce(cardinality(p), 0) <= 8 and not exists (select 1 from unnest(p) x where x !~ '^[A-Za-z0-9_-]{1,80}\.jpg$')
+$$;
+alter table public.materials add column if not exists gallery text[] not null default '{}';
+alter table public.materials drop constraint if exists materials_gallery_chk;
+alter table public.materials add constraint materials_gallery_chk check (public.photo_paths_ok(gallery));
 create index if not exists materials_cat_sort on public.materials (category, sort_order);
 
 create or replace function public.trg_materials_touch() returns trigger

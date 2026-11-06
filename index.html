@@ -781,6 +781,12 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 .spm-top{position:relative;aspect-ratio:4/5;max-height:58vh;width:100%;background:linear-gradient(165deg,var(--c1,#14503a),var(--c2,#06211a));overflow:hidden}
 .spm-top img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .sp-x{position:absolute;right:12px;top:12px;z-index:2;display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:rgba(3,13,9,.7);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.spm-th{display:flex;gap:8px;padding:10px 12px;overflow-x:auto;background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.1);scrollbar-width:thin}
+.spm-th button{flex:0 0 auto;width:56px;height:70px;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;background:#0a1f17;cursor:pointer;opacity:.65;transition:opacity .2s,border-color .2s}
+.spm-th button[aria-current="true"]{opacity:1;border-color:#E2C892}
+.spm-th button:hover{opacity:1}
+.spm-th button:focus-visible{outline:3px solid #E2C892;outline-offset:2px}
+.spm-th img{width:100%;height:100%;object-fit:cover;display:block}
 .spm-src{margin:0;padding:12px 16px;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.7);background:rgba(255,255,255,.05);border-top:1px solid rgba(255,255,255,.1)}
 .spm-src b{color:#E2C892}
 .spm-l{min-width:0}
@@ -851,6 +857,13 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 .mt-photo .pv-img img{width:100%;height:100%;object-fit:cover;display:block}
 .mt-photo .ctl{display:grid;gap:10px;flex:1;min-width:220px}
 .pta.s{min-height:72px}
+
+.mt-gal{margin-top:16px;padding-top:14px;border-top:1px dashed var(--rule)}
+.mt-gl{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 12px}
+.mt-gl .gi{position:relative;margin:0;width:96px;display:grid;gap:6px}
+.mt-gl .gi img{width:96px;height:120px;object-fit:cover;border-radius:10px;display:block;background:var(--row-sel)}
+.mt-gl .gi span{position:absolute;left:6px;top:6px;padding:2px 7px;border-radius:99px;background:#E2C892;color:#0A1F17;font-weight:800;font-size:10.5px}
+.mt-gl .gi .pbtn{min-height:0;height:30px;font-size:12px;padding:0 8px}
 
 
 </style>
@@ -2543,7 +2556,7 @@ function errText(e){
   if(e && (e.code === '42501' || /row-level security|permission denied|Tidak berwenang/i.test(m))) return 'Anda tidak memiliki wewenang untuk tindakan ini.';
   if(e && e.code === '23505') return 'Data tersebut sudah ada.';
   if(e && (e.code === 'PGRST205' || e.code === '42P01' || /schema cache|relation .*materials/i.test(m))) return 'Tabel material belum dibuat di Supabase. Jalankan berkas sql/materials.sql (lihat PANDUAN_PROGRES.md).';
-  if(e && (e.code === 'PGRST204' || /photo_source/i.test(m))) return 'Basis data belum diperbarui untuk fitur asal foto. Jalankan ulang berkas sql/materials.sql di Supabase (aman diulang).';
+  if(e && (e.code === 'PGRST204' || /photo_source|gallery/i.test(m))) return 'Basis data belum diperbarui untuk fitur asal foto/galeri. Jalankan ulang berkas sql/materials.sql di Supabase (aman diulang).';
   if(/invalid login credentials/i.test(m)) return 'Email atau kata sandi salah.';
   return m || 'Terjadi kesalahan. Silakan coba lagi.';
 }
@@ -3321,8 +3334,11 @@ async function fetchMaterials(){
   const base = CFG.url.replace(/\/+$/, '') + '/rest/v1/materials?select=', ord = '&order=category.asc,sort_order.asc,name.asc';
   const cols = 'id,category,name,brand,spec,function_desc,quality_note,detail,photo_path,sort_order';
   const h = { apikey: CFG.anonKey, Authorization: 'Bearer ' + CFG.anonKey };
-  let r = await fetch(base + cols + ',photo_source' + ord, { headers: h, cache: 'no-store' });
-  if(r.status === 400) r = await fetch(base + cols + ord, { headers: h, cache: 'no-store' });   // basis data lama tanpa kolom photo_source
+  let r = null;
+  for(const extra of [',photo_source,gallery', ',photo_source', '']){   // basis data lama tanpa kolom baru tetap terbaca
+    r = await fetch(base + cols + extra + ord, { headers: h, cache: 'no-store' });
+    if(r.status !== 400) break;
+  }
   if(!r.ok) throw new Error('Gagal memuat data material (' + r.status + ')');
   const rows = await r.json();
   if(!Array.isArray(rows)) throw new Error('Format data tidak dikenali');
@@ -3555,12 +3571,19 @@ window.addEventListener('resize', () => { if($('spesifikasi').hidden) return; cl
 
 /* ---------- panel detail ---------- */
 function spLock(on){ document.body.style.overflow = on ? 'hidden' : ''; }
+function spShowPh(i){
+  const list = SP.dPh || []; if(!list.length) return; SP.dI = (i + list.length) % list.length;
+  const top = $('sp-modal-in').querySelector('.spm-top img'); if(!top) return;
+  top.src = mUrl(list[SP.dI], false);
+  $('sp-modal-in').querySelectorAll('.spm-th button').forEach((b, k) => b.setAttribute('aria-current', String(k === SP.dI)));
+}
 function spOpen(id){
   const m = SP.items.find(x => x.id === id); if(!m) return;
-  const c = catOf(m.category), full = mUrl(m.photo_path, false);
-  SP.prevFocus = document.activeElement;
+  const c = catOf(m.category), phs = m.photo_path && configured ? [m.photo_path].concat(Array.isArray(m.gallery) ? m.gallery : []) : [], full = phs.length ? mUrl(phs[0], false) : '';
+  SP.prevFocus = document.activeElement; SP.dPh = phs; SP.dI = 0;
   $('sp-modal-in').innerHTML =
     '<div class="spm-l"><div class="spm-top" style="' + colStyle(m.category) + '"><button class="sp-x" type="button" data-close aria-label="Tutup">&times;</button>' + (full ? '<img src="' + esc(full) + '" alt="Foto ' + esc(m.name) + '">' : phHtml(m)) + '</div>'
+    + (phs.length > 1 ? '<div class="spm-th" role="group" aria-label="Galeri foto ' + esc(m.name) + '">' + phs.map((p, k) => '<button type="button" data-ph="' + k + '" aria-current="' + (k === 0) + '" aria-label="Foto ' + (k + 1) + ' dari ' + phs.length + '"><img alt="" loading="lazy" src="' + esc(mUrl(p, true)) + '"></button>').join('') + '</div>' : '')
     + (full ? '<p class="spm-src"><b>' + esc(SRC_LBL[m.photo_source] || SRC_LBL.proyek) + '.</b> ' + esc(SRC_NOTE[m.photo_source] || SRC_NOTE.proyek) + '</p>' : '') + '</div>'
     + '<div class="spm-b"><p class="spm-cat">' + esc(c.k) + ' &middot; ' + esc(c.title) + '</p><h3 id="spm-title">' + esc(m.name) + '</h3><dl class="spm-dl">'
     + '<div><dt>Merek / produsen</dt><dd>' + dd(m.brand) + '</dd></div>'
@@ -3573,10 +3596,10 @@ function spOpen(id){
   const x = $('sp-modal-in').querySelector('[data-close]'); if(x) x.focus();
 }
 function spClose(){ if($('sp-modal').hidden) return; $('sp-modal').hidden = true; $('sp-modal-in').innerHTML = ''; spLock(false); if(SP.prevFocus && SP.prevFocus.isConnected) SP.prevFocus.focus(); }
-$('sp-modal').addEventListener('click', e => { if(e.target.id === 'sp-modal' || e.target.closest('[data-close]')) spClose(); });
+$('sp-modal').addEventListener('click', e => { const t = e.target.closest('[data-ph]'); if(t){ spShowPh(+t.dataset.ph); return; } if(e.target.id === 'sp-modal' || e.target.closest('[data-close]')) spClose(); });
 $('sp-modal-in').addEventListener('error', e => { const t = e.target; if(t && t.tagName === 'IMG'){ const box = t.parentNode, m = SP.items.find(x => x.name && t.alt === 'Foto ' + x.name); t.remove(); if(m) box.insertAdjacentHTML('beforeend', phHtml(m)); } }, true);
 document.addEventListener('keydown', e => {
-  if(!$('sp-modal').hidden){ if(e.key === 'Escape') spClose(); return; }
+  if(!$('sp-modal').hidden){ if(e.key === 'Escape') spClose(); else if(e.key === 'ArrowLeft' && (SP.dPh || []).length > 1){ spShowPh(SP.dI - 1); e.preventDefault(); } else if(e.key === 'ArrowRight' && (SP.dPh || []).length > 1){ spShowPh(SP.dI + 1); e.preventDefault(); } return; }
   if($('spesifikasi').hidden || !SP.list.length) return;
   const t = e.target, tag = t && t.tagName;
   if(tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || (t && t.isContentEditable)) return;
@@ -3587,7 +3610,7 @@ document.addEventListener('keydown', e => {
 function spLeave(){ spClose(); spWatch(false); SP.hover = false; }
 
 /* ================= ADMIN: pengelola material ================= */
-const M = { items: [], sel: null, orig: null, d: null, blob: null, thumb: null, prev: '', rm: false, filter: 'ALL', loaded: false };
+const M = { items: [], sel: null, orig: null, d: null, blob: null, thumb: null, prev: '', rm: false, filter: 'ALL', loaded: false, gNew: [] };
 const MF = ['category', 'name', 'brand', 'spec', 'function_desc', 'quality_note', 'detail', 'photo_source'];
 const PHOTO_HINT = [
   [/batu gunung/i, 'foto tumpukan batu gunung asli'], [/pasir palu/i, 'foto pasir konstruksi berwarna alami'], [/split/i, 'foto agregat batu split asli'], [/^semen$/i, 'foto produk kemasan semen'],
@@ -3623,8 +3646,8 @@ function setAdMode(m){
 }
 $('ad-modes').addEventListener('click', e => { const b = e.target.closest('button[data-mode]'); if(b) setAdMode(b.dataset.mode); });
 
-const mDirty = () => !!(M.d && (MF.some(k => (M.d[k] == null ? '' : M.d[k]) !== (M.orig[k] == null ? '' : M.orig[k])) || M.blob || M.rm));
-function matReset(){ M.sel = null; M.d = null; M.orig = null; M.blob = null; M.thumb = null; M.rm = false; if(M.prev){ URL.revokeObjectURL(M.prev); M.prev = ''; } }
+const mDirty = () => !!(M.d && (M.gNew.length || JSON.stringify(M.d.gallery || []) !== JSON.stringify(M.orig.gallery || []) || MF.some(k => (M.d[k] == null ? '' : M.d[k]) !== (M.orig[k] == null ? '' : M.orig[k])) || M.blob || M.rm));
+function matReset(){ M.gNew.forEach(g => URL.revokeObjectURL(g.prev)); M.gNew = []; M.sel = null; M.d = null; M.orig = null; M.blob = null; M.thumb = null; M.rm = false; if(M.prev){ URL.revokeObjectURL(M.prev); M.prev = ''; } }
 function matAskDiscard(go){
   openModal('<h3>Perubahan belum disimpan</h3><p class="pg-sub">Material yang sedang diedit memiliki perubahan yang belum disimpan.</p><div class="ad-actions" style="border:0;padding-top:8px"><button class="pbtn danger" id="m-drop" type="button">Buang perubahan</button><button class="pbtn" id="m-cancel" type="button">Kembali</button></div>');
   $('m-cancel').onclick = closeModal; $('m-drop').onclick = () => { closeModal(); go(); };
@@ -3669,18 +3692,25 @@ function matTrySelect(id){
 function matSelect(id){
   matReset(); M.sel = id;
   if(id === 'new'){
-    M.orig = { category: (M.filter === 'ALL' || M.filter === 'NOPHOTO') ? 'A' : M.filter, name: '', brand: '', spec: '', function_desc: '', quality_note: '', detail: '', photo_source: 'proyek', photo_path: null };
+    M.orig = { category: (M.filter === 'ALL' || M.filter === 'NOPHOTO') ? 'A' : M.filter, name: '', brand: '', spec: '', function_desc: '', quality_note: '', detail: '', photo_source: 'proyek', photo_path: null, gallery: [] };
   } else {
     const m = M.items.find(x => x.id === id); if(!m){ matEmpty(); return; }
-    M.orig = {}; MF.forEach(k => { M.orig[k] = m[k] == null ? '' : m[k]; }); M.orig.photo_path = m.photo_path; if(!M.orig.photo_source) M.orig.photo_source = 'proyek';
+    M.orig = {}; MF.forEach(k => { M.orig[k] = m[k] == null ? '' : m[k]; }); M.orig.photo_path = m.photo_path; M.orig.gallery = Array.isArray(m.gallery) ? m.gallery.slice() : []; if(!M.orig.photo_source) M.orig.photo_source = 'proyek';
   }
-  M.d = Object.assign({}, M.orig);
+  M.d = Object.assign({}, M.orig); M.d.gallery = (M.orig.gallery || []).slice();
   matRenderList(); matRenderEditor(); $('mt-cols').classList.add('show-edit');
 }
 function matPhotoBox(){
   const has = M.blob || (M.orig.photo_path && !M.rm);
   const src = M.blob ? M.prev : (M.orig.photo_path && !M.rm ? mUrl(M.orig.photo_path, true) : '');
   return '<div class="pv-img">' + (src ? '<img alt="Foto material" src="' + esc(src) + '">' : 'Foto Material Belum Tersedia') + '</div>';
+}
+function matGalBox(){
+  const ex = (M.d.gallery || []).map((p, i) => '<figure class="gi"><img alt="Foto tambahan ' + (i + 1) + '" src="' + esc(mUrl(p, true)) + '"><button type="button" class="pbtn sm danger" data-grm="' + i + '" aria-label="Hapus foto tambahan ' + (i + 1) + '">Hapus</button></figure>');
+  const nw = M.gNew.map((g, i) => '<figure class="gi new"><img alt="Foto baru ' + (i + 1) + '" src="' + esc(g.prev) + '"><span>Baru</span><button type="button" class="pbtn sm danger" data-gnrm="' + i + '" aria-label="Batalkan foto baru ' + (i + 1) + '">Batal</button></figure>');
+  const all = ex.concat(nw);
+  const hasMain = !!(M.blob || (M.orig.photo_path && !M.rm));
+  return all.length ? '<div class="mt-gl">' + all.join('') + '</div>' : '<p class="pg-hint" style="margin:0 0 10px">' + (hasMain ? 'Belum ada foto tambahan.' : 'Unggah foto utama terlebih dahulu; foto tambahan menyusul.') + '</p>';
 }
 function matRenderEditor(){
   const d = M.d, isNew = M.sel === 'new';
@@ -3704,7 +3734,10 @@ function matRenderEditor(){
     + '<div class="pg-field"><label for="mt-src">Asal foto</label><select class="psel" id="mt-src" data-k="photo_source"><option value="proyek"' + (d.photo_source === 'proyek' ? ' selected' : '') + '>Dokumentasi material proyek (foto sendiri)</option><option value="produsen"' + (d.photo_source === 'produsen' ? ' selected' : '') + '>Foto produk dari produsen / merek resmi</option><option value="referensi"' + (d.photo_source === 'referensi' ? ' selected' : '') + '>Foto referensi material sejenis</option></select></div>'
     + '<div><button class="pbtn sm danger" type="button" id="mt-rmphoto"' + (hasPhoto ? '' : ' hidden') + '>Hapus foto</button></div>'
     + '<p class="pg-hint">Pratinjau kiri memperlihatkan potongan kartu (rasio portrait 4:5, bagian tengah foto). Foto dikompres otomatis (HD ±1600 px + thumbnail) agar halaman cepat dimuat. Foto selain “Dokumentasi proyek” diberi label di halaman publik. Foto tampil setelah menekan “Simpan”.</p></div></div>'
-    + '<div id="mt-perr" class="pg-msg err" role="alert" hidden></div></div>'
+    + '<div id="mt-perr" class="pg-msg err" role="alert" hidden></div>'
+    + '<div class="mt-gal"><div class="pg-lbl">Foto tambahan (galeri di panel “Lihat Detail”)</div><div id="mt-gbox">' + matGalBox() + '</div>'
+    + '<div class="pg-field"><label for="mt-gfile">Tambah foto lain (boleh pilih beberapa; maks. 8 foto tambahan)</label><input class="pin" id="mt-gfile" type="file" multiple accept="image/jpeg,image/png,image/webp"></div>'
+    + '<div id="mt-gerr" class="pg-msg err" role="alert" hidden></div></div></div>'
     + (isNew ? '' : '<div class="ad-actions"><button class="pbtn sm danger" type="button" id="mt-del">Hapus material ini</button></div>');
   matState();
 }
@@ -3719,6 +3752,7 @@ mEd.addEventListener('input', e => { const k = e.target.dataset && e.target.data
 mEd.addEventListener('change', e => {
   const k = e.target.dataset && e.target.dataset.k; if(k === 'category'){ M.d.category = e.target.value; matState(); }
   if(e.target.id === 'mt-file') matPick(e.target.files[0]);
+  if(e.target.id === 'mt-gfile'){ matPickGal(Array.prototype.slice.call(e.target.files)); e.target.value = ''; }
 });
 mEd.addEventListener('click', e => {
   const t = e.target;
@@ -3729,6 +3763,8 @@ mEd.addEventListener('click', e => {
     if(M.orig.photo_path) M.rm = true;
     $('mt-pbox').innerHTML = matPhotoBox(); $('mt-rmphoto').hidden = true; const f = $('mt-file'); if(f) f.value = ''; matState(); return;
   }
+  const gr = t.closest('[data-grm]'); if(gr){ M.d.gallery.splice(+gr.dataset.grm, 1); $('mt-gbox').innerHTML = matGalBox(); matState(); return; }
+  const gn = t.closest('[data-gnrm]'); if(gn){ const g = M.gNew.splice(+gn.dataset.gnrm, 1)[0]; if(g) URL.revokeObjectURL(g.prev); $('mt-gbox').innerHTML = matGalBox(); matState(); return; }
   const del = t.closest('#mt-del'); if(del) return matDelete(del);
 });
 mEd.addEventListener('submit', e => e.preventDefault());
@@ -3771,32 +3807,62 @@ async function matPick(file){
     if(Math.max(r.W, r.H) < 1000 || Math.min(r.W, r.H) < 640) setMsg(err, 'Resolusi foto cukup kecil (' + r.W + '×' + r.H + ' px), hasilnya bisa kurang tajam di kartu besar. Disarankan foto asli minimal ±1200 px.', true);
   }catch(ex){ setMsg(err, errText(ex), true); }
 }
+async function matPickGal(files){
+  const err = $('mt-gerr'); setMsg(err, '', false);
+  const hasMain = !!(M.blob || (M.orig.photo_path && !M.rm));
+  if(!hasMain){ setMsg(err, 'Unggah foto utama terlebih dahulu.', true); return; }
+  const msgs = [];
+  for(const f of files){
+    if((M.d.gallery.length + M.gNew.length) >= 8){ msgs.push('Batas 8 foto tambahan tercapai.'); break; }
+    if(!/^image\/(jpeg|png|webp)$/.test(f.type)){ msgs.push(f.name + ': bukan JPG/PNG/WebP.'); continue; }
+    if(f.size > 25 * 1024 * 1024){ msgs.push(f.name + ': lebih dari 25 MB.'); continue; }
+    try{ const r = await prepPhoto(f); M.gNew.push({ blob: r.full, thumb: r.thumb, prev: URL.createObjectURL(r.thumb) }); }
+    catch(ex){ msgs.push(f.name + ': ' + errText(ex)); }
+  }
+  $('mt-gbox').innerHTML = matGalBox(); matState();
+  if(msgs.length) setMsg(err, msgs.join(' '), true);
+}
 async function matSave(){
   const c = await client(), d = M.d, isNew = M.sel === 'new';
   const name = d.name.trim(); if(!name) throw new Error('Nama material wajib diisi.');
   const clean = v => { v = String(v == null ? '' : v).trim(); return v === '' ? null : v; };
   const row = { category: d.category, name: name, brand: clean(d.brand), spec: clean(d.spec), function_desc: clean(d.function_desc), quality_note: clean(d.quality_note), detail: clean(d.detail) };
-  const willHave = !!(M.blob || (M.orig.photo_path && !M.rm));
-  row.photo_source = willHave ? (d.photo_source || 'proyek') : null;
   const id = isNew ? uuid() : M.sel;
   const maxIn = cat => M.items.filter(x => x.category === cat && x.id !== id).reduce((a, x) => Math.max(a, x.sort_order || 0), 0);
   if(isNew || d.category !== M.orig.category) row.sort_order = maxIn(d.category) + 10;
   const store = c.storage.from(BUCKET_M), thumbOf = p => p.replace(/\.jpg$/, '_t.jpg');
-  let newPath = null;
-  if(M.blob){
-    newPath = id + '-' + Date.now().toString(36) + '.jpg';
-    const u1 = await store.upload(newPath, M.blob, { contentType: 'image/jpeg', upsert: false, cacheControl: '31536000' });
-    if(u1.error) throw u1.error;
-    const u2 = await store.upload(thumbOf(newPath), M.thumb, { contentType: 'image/jpeg', upsert: false, cacheControl: '31536000' });
-    if(u2.error){ try{ await store.remove([newPath]); }catch(x){} throw u2.error; }
-    row.photo_path = newPath;
-  } else if(M.rm) row.photo_path = null;
+  let newPath = null; const gUp = [];
+  let gal = (d.gallery || []).slice();
+  const rollback = async () => { const l = []; gUp.forEach(p => { l.push(p, thumbOf(p)); }); if(newPath) l.push(newPath, thumbOf(newPath)); if(l.length){ try{ await store.remove(l); }catch(x){} } };
   try{
+    if(M.blob){
+      newPath = id + '-' + Date.now().toString(36) + '.jpg';
+      const u1 = await store.upload(newPath, M.blob, { contentType: 'image/jpeg', upsert: false, cacheControl: '31536000' }); if(u1.error) throw u1.error;
+      const u2 = await store.upload(thumbOf(newPath), M.thumb, { contentType: 'image/jpeg', upsert: false, cacheControl: '31536000' }); if(u2.error) throw u2.error;
+      row.photo_path = newPath;
+    } else if(M.rm){
+      row.photo_path = gal.length ? gal.shift() : null;   // foto utama dihapus: foto tambahan pertama naik jadi utama
+    }
+    const main = row.photo_path !== undefined ? row.photo_path : M.orig.photo_path;
+    if(!main){ gal = []; }
+    else {
+      for(let k = 0; k < M.gNew.length; k++){
+        const g = M.gNew[k], pth = id + '-g' + Date.now().toString(36) + k + '.jpg';
+        const a1 = await store.upload(pth, g.blob, { contentType: 'image/jpeg', upsert: false, cacheControl: '31536000' }); if(a1.error) throw a1.error;
+        gUp.push(pth);
+        const b1 = await store.upload(thumbOf(pth), g.thumb, { contentType: 'image/jpeg', upsert: false, cacheControl: '31536000' }); if(b1.error) throw b1.error;
+        gal.push(pth);
+      }
+    }
+    row.gallery = gal;
+    row.photo_source = main ? (d.photo_source || 'proyek') : null;
     if(isNew){ row.id = id; const r = await c.from('materials').insert(row); if(r.error) throw r.error; }
     else { const r = await c.from('materials').update(row).eq('id', id).select('id'); if(r.error) throw r.error; if(!r.data || !r.data.length) throw new Error('Perubahan ditolak server. Pastikan akun Anda terdaftar sebagai admin.'); }
-  }catch(ex){ if(newPath){ try{ await store.remove([newPath, thumbOf(newPath)]); }catch(x){} } throw ex; }
-  const old = M.orig.photo_path;
-  if(old && (newPath || M.rm)){ try{ await store.remove([old, thumbOf(old)]); }catch(x){} }
+  }catch(ex){ await rollback(); throw ex; }
+  const old = M.orig.photo_path, keep = new Set([row.photo_path].concat(row.gallery || [])), gone = [];
+  if(old && (newPath || M.rm) && !keep.has(old)) gone.push(old, thumbOf(old));
+  (M.orig.gallery || []).forEach(p => { if(!keep.has(p)){ gone.push(p, thumbOf(p)); } });
+  if(gone.length){ try{ await store.remove(gone); }catch(x){} }
   matReset(); await matLoad(); matSelect(id); toast(isNew ? 'Material ditambahkan' : 'Perubahan tersimpan');
 }
 function matDelete(btn){
@@ -3805,7 +3871,7 @@ function matDelete(btn){
     const c = await client(), id = M.sel, m = M.items.find(x => x.id === id);
     const { data, error } = await c.from('materials').delete().eq('id', id).select('id');
     if(error) throw error; if(!data || !data.length) throw new Error('Material tidak dapat dihapus.');
-    if(m && m.photo_path){ try{ await c.storage.from(BUCKET_M).remove([m.photo_path, m.photo_path.replace(/\.jpg$/, '_t.jpg')]); }catch(x){} }
+    if(m && m.photo_path){ const l = [m.photo_path].concat(m.gallery || []); try{ await c.storage.from(BUCKET_M).remove(l.concat(l.map(p => p.replace(/\.jpg$/, '_t.jpg')))); }catch(x){} }
     matReset(); await matLoad(); matEmpty(); $('mt-cols').classList.remove('show-edit'); toast('Material dihapus');
   })();
 }
