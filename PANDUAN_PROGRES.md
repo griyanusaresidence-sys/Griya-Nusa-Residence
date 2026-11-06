@@ -68,7 +68,8 @@ Yang **ditiru** dalam uji lokal: layanan Auth (GoTrue) dan Storage Supabase (ben
 3. Di jendela penyamaran: buka `#progres/D-9` → ringkasan dan foto tampil.
 4. Di jendela yang sama pastikan tidak ada tombol/ubah apa pun; hanya login admin yang bisa mengedit.
 Jika ada yang gagal, kirimkan pesan galatnya ke saya.
-\n\n## 7. Spesifikasi Bahan Bangunan (halaman publik + dashboard material)
+
+## 7. Spesifikasi Bahan Bangunan (halaman publik + dashboard material)
 
 Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan material per kategori A–G, galeri foto, dan poin keunggulan. Datanya dikelola dari dashboard admin yang sama dengan Progres.
 
