@@ -71,7 +71,7 @@ Jika ada yang gagal, kirimkan pesan galatnya ke saya.
 
 ## 7. Spesifikasi Bahan Bangunan (halaman publik + dashboard material)
 
-Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan material per kategori A–G, galeri foto, dan poin keunggulan. Datanya dikelola dari dashboard admin yang sama dengan Progres.
+Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan **carousel 3D sinematik** (kartu portrait: 5 kartu di desktop, 3 di tablet, 1 + intipan di HP), filter kategori A–G + Galeri, panel detail, dan poin keunggulan. Background halaman memburamkan foto material yang sedang aktif. Datanya dikelola dari dashboard admin yang sama dengan Progres.
 
 **Pasang (sekali saja, setelah langkah 1–7 di atas):**
 1. SQL Editor → tempel seluruh isi `sql/materials.sql` → **Run**. Aman dijalankan ulang; 33 daftar material awal hanya diisi bila tabel masih kosong.
@@ -80,7 +80,7 @@ Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan material per kategori
 
 **Pemakaian harian:** buka `#admin` → login → tab **Spesifikasi Material**.
 - **+ Tambah material**, atau pilih material di daftar lalu ubah nama, kategori, merek, spesifikasi/ukuran, fungsi, keterangan kualitas, informasi lengkap (isi pop-up “Lihat Detail”).
-- **Foto**: pilih JPG/PNG/WebP; otomatis dikompres (versi besar ±1280 px + thumbnail untuk kartu agar cepat dimuat). Foto baru tampil setelah menekan **Simpan**. Foto yang sudah masuk tampil otomatis juga di **Galeri Material**.
+- **Foto**: pilih JPG/PNG/WebP; otomatis dikompres (versi besar ±1280 px + thumbnail untuk kartu agar cepat dimuat). Foto baru tampil setelah menekan **Simpan**. Foto yang sudah masuk juga muncul di kategori **Galeri** (hanya material berfoto). Gunakan foto **portrait/vertikal** agar pas di kartu (bagian tengah foto yang paling terlihat).
 - **Urutan**: tombol panah ↑↓ di daftar (urutan per kategori).
 - **Hapus material** perlu dua kali klik (konfirmasi); foto di penyimpanan ikut terhapus.
 - Perubahan langsung terbaca halaman publik pada muat berikutnya, tanpa deploy ulang.
@@ -89,4 +89,4 @@ Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan material per kategori
 
 **Bila tabel belum dibuat**, dashboard menampilkan petunjuk menjalankan `sql/materials.sql`, dan halaman publik memakai daftar bawaan (tanpa foto) dengan catatan pratinjau.
 
-**Pengujian bagian ini (lokal, PostgreSQL 16 + PostgREST sungguhan):** tambah/ubah/ubah kategori/urutkan/hapus material, unggah & hapus foto (penuh + thumbnail), hak editor vs non-admin vs anonim (anonim tidak bisa menulis/menghapus), halaman publik ikut berubah, galeri & lightbox, tampilan HP. Storage ditiru seperti di bagian 6, jadi cek di Supabase asli: tambah 1 material + 1 foto, lalu buka `#spesifikasi` di jendela penyamaran.
+**Pengujian bagian ini (lokal, PostgreSQL 16 + PostgREST sungguhan):** tambah/ubah/ubah kategori/urutkan/hapus material, unggah & hapus foto (penuh + thumbnail), hak editor vs non-admin vs anonim (anonim tidak bisa menulis/menghapus), halaman publik ikut berubah (carousel, filter, Galeri, background mengikuti foto, panel detail), geser/swipe di HP. Storage ditiru seperti di bagian 6, jadi cek di Supabase asli: tambah 1 material + 1 foto, lalu buka `#spesifikasi` di jendela penyamaran.
