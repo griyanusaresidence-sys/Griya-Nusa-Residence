@@ -68,3 +68,24 @@ Yang **ditiru** dalam uji lokal: layanan Auth (GoTrue) dan Storage Supabase (ben
 3. Di jendela penyamaran: buka `#progres/D-9` → ringkasan dan foto tampil.
 4. Di jendela yang sama pastikan tidak ada tombol/ubah apa pun; hanya login admin yang bisa mengedit.
 Jika ada yang gagal, kirimkan pesan galatnya ke saya.
+\n\n## 7. Spesifikasi Bahan Bangunan (halaman publik + dashboard material)
+
+Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan material per kategori A–G, galeri foto, dan poin keunggulan. Datanya dikelola dari dashboard admin yang sama dengan Progres.
+
+**Pasang (sekali saja, setelah langkah 1–7 di atas):**
+1. SQL Editor → tempel seluruh isi `sql/materials.sql` → **Run**. Aman dijalankan ulang; 33 daftar material awal hanya diisi bila tabel masih kosong.
+   Ini membuat tabel `materials` (publik hanya boleh **membaca**, hanya admin yang boleh menulis) dan bucket foto **publik** `material-photos` (maks 2 MB/berkas, JPEG).
+2. Tidak ada kunci/konfigurasi baru: memakai `progress-config.js` yang sama.
+
+**Pemakaian harian:** buka `#admin` → login → tab **Spesifikasi Material**.
+- **+ Tambah material**, atau pilih material di daftar lalu ubah nama, kategori, merek, spesifikasi/ukuran, fungsi, keterangan kualitas, informasi lengkap (isi pop-up “Lihat Detail”).
+- **Foto**: pilih JPG/PNG/WebP; otomatis dikompres (versi besar ±1280 px + thumbnail untuk kartu agar cepat dimuat). Foto baru tampil setelah menekan **Simpan**. Foto yang sudah masuk tampil otomatis juga di **Galeri Material**.
+- **Urutan**: tombol panah ↑↓ di daftar (urutan per kategori).
+- **Hapus material** perlu dua kali klik (konfirmasi); foto di penyimpanan ikut terhapus.
+- Perubahan langsung terbaca halaman publik pada muat berikutnya, tanpa deploy ulang.
+
+**Prinsip data:** merek, ukuran, dan spesifikasi yang belum diisi tampil sebagai *“Segera dilengkapi”*, tidak diisi karangan. Data awal hanya memuat yang diberikan pengembang (mis. merek **TASO** untuk rangka baja ringan, warna **Black Matte** untuk spandek) plus deskripsi fungsi yang bersifat umum, silakan koreksi bila perlu. Kartu tanpa foto menampilkan “Foto belum diunggah”.
+
+**Bila tabel belum dibuat**, dashboard menampilkan petunjuk menjalankan `sql/materials.sql`, dan halaman publik memakai daftar bawaan (tanpa foto) dengan catatan pratinjau.
+
+**Pengujian bagian ini (lokal, PostgreSQL 16 + PostgREST sungguhan):** tambah/ubah/ubah kategori/urutkan/hapus material, unggah & hapus foto (penuh + thumbnail), hak editor vs non-admin vs anonim (anonim tidak bisa menulis/menghapus), halaman publik ikut berubah, galeri & lightbox, tampilan HP. Storage ditiru seperti di bagian 6, jadi cek di Supabase asli: tambah 1 material + 1 foto, lalu buka `#spesifikasi` di jendela penyamaran.

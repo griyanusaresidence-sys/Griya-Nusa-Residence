@@ -383,13 +383,13 @@ tbody tr.sel{background:var(--row-sel);box-shadow:inset 3px 0 0 var(--accent)}
 .mnav a:last-child{border-bottom:0}
 .mnav a[aria-current="page"]{color:var(--gold)}
 .nav{position:relative}
-@media (max-width:900px){
+@media (max-width:1120px){
   .nav-links{display:none}
   .burger{display:inline-flex}
   .nav-cta{margin-left:auto}
 }
 @media (max-width:420px){ .nav-in{gap:10px} .nav-cta{padding:0 12px;font-size:13px} .nav-cta svg{display:none} }
-@media (min-width:901px){ .mnav{display:none!important} }
+@media (min-width:1121px){ .mnav{display:none!important} }
 .nav-links a.is-new{position:relative}
 
 /* mode halaman */
@@ -655,6 +655,167 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 .pc-uchip:hover{border-color:var(--gold)}
 .pc-uchip i{font-style:normal;font-weight:800;color:var(--r-ink)}
 
+/* ================= SPESIFIKASI BAHAN BANGUNAN (halaman publik + pengelola material) ================= */
+.spec{
+  --sp-g:#0E3B2D; --sp-g2:#165B42; --sp-gt:#0E3B2D; --sp-gs:#E7F2EB; --sp-gl:#CFE5D8; --sp-gold:#C7A56A; --sp-goldt:#7A5A1E;
+  background:var(--band);color:var(--ink);min-height:70vh;font-family:var(--f-body);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .spec{ --sp-gt:#8FD6B0; --sp-gs:#14301F; --sp-gl:#24503A; --sp-goldt:#E2C892; } }
+:root[data-theme="dark"] .spec{ --sp-gt:#8FD6B0; --sp-gs:#14301F; --sp-gl:#24503A; --sp-goldt:#E2C892; }
+.spec :where(h1,h2,h3,h4,p){margin:0}
+
+/* hero */
+.sp-hero{position:relative;overflow:hidden;isolation:isolate;color:#fff;padding-block:52px 64px;background:linear-gradient(135deg,#082A20 0%,#0E3B2D 52%,#165B42 100%)}
+.sp-hero::before{content:"";position:absolute;right:-90px;top:-110px;width:420px;height:420px;border-radius:50%;z-index:-1;border:1.5px solid rgba(226,200,146,.3);box-shadow:0 0 0 44px rgba(226,200,146,.05),0 0 0 96px rgba(226,200,146,.035)}
+.sp-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,#C7A56A,transparent);opacity:.8}
+.sp-kicker{display:inline-flex;align-items:center;gap:10px;font:700 12px/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:#E2C892}
+.sp-kicker::before{content:"";width:28px;height:2px;border-radius:2px;background:#E2C892}
+.sp-hero h1{margin-top:16px;max-width:18ch;font:800 clamp(32px,5.4vw,56px)/1.06 var(--f-display);letter-spacing:-.025em;text-transform:uppercase;text-wrap:balance}
+.sp-lede{margin-top:16px;max-width:56ch;font-size:17px;line-height:1.65;color:rgba(255,255,255,.86)}
+.sp-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.sp-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid rgba(226,200,146,.45);background:rgba(255,255,255,.06);font-weight:700;font-size:13.5px;color:#F3E4C3}
+.sp-pill b{font-weight:800;font-size:16px;color:#fff;font-variant-numeric:tabular-nums}
+
+/* navigasi kategori (menempel) */
+.sp-tabs{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--rule);box-shadow:var(--shadow-sm)}
+.sp-tabs-in{display:flex;gap:8px;overflow-x:auto;padding-block:12px;scrollbar-width:none;scroll-behavior:smooth}
+.sp-tabs-in::-webkit-scrollbar{display:none}
+.sp-tab{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px 0 8px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);color:var(--ink);font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.sp-tab i{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--sp-gs);color:var(--sp-gt);font:800 12px/1 var(--f-body);font-style:normal}
+.sp-tab:hover{border-color:var(--sp-g2)}
+.sp-tab[aria-current="true"]{background:var(--sp-g);border-color:var(--sp-g);color:#fff}
+.sp-tab[aria-current="true"] i{background:var(--sp-gold);color:#0B2630}
+.sp-tab:focus-visible,.sp-btn:focus-visible,.sp-photo:focus-visible,.sp-gchip:focus-visible,.sp-x:focus-visible{outline:3px solid var(--sp-gold);outline-offset:2px}
+
+.sp-body{padding-block:36px 56px}
+.sp-notice{margin-bottom:20px}
+.sp-cat{padding-top:8px;margin-bottom:44px;scroll-margin-top:72px}
+.sp-cat-h{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.sp-letter{flex:0 0 auto;display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:var(--sp-g);color:var(--sp-gold);font:800 22px/1 var(--f-display)}
+.sp-cat-h h2{font:800 clamp(20px,2.6vw,26px)/1.2 var(--f-display);letter-spacing:-.015em;color:var(--ink)}
+.sp-cat-h small{display:block;margin-top:2px;font-weight:600;font-size:13px;color:var(--ink-2)}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+
+/* kartu material */
+.sp-card{display:flex;flex-direction:column;min-width:0;overflow:hidden;background:var(--surface);border:1px solid var(--rule);border-radius:18px;box-shadow:var(--shadow-sm);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.sp-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--sp-gl)}
+.sp-im{position:relative;aspect-ratio:4/3;background:var(--sp-gs);overflow:hidden}
+.sp-im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.sp-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px;text-align:center;color:var(--sp-gt);background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(14,59,45,.045) 14px 15px)}
+.sp-ph svg{width:34px;height:34px;opacity:.55}
+.sp-ph span{font-weight:600;font-size:12.5px;opacity:.8}
+.sp-cb{display:flex;flex-direction:column;flex:1;gap:12px;padding:16px 16px 18px}
+.sp-cb h3{font:800 17px/1.3 var(--f-display);letter-spacing:-.01em;color:var(--ink)}
+.sp-dl{display:grid;gap:9px;margin:0}
+.sp-dl div{display:grid;grid-template-columns:86px minmax(0,1fr);gap:8px;align-items:baseline}
+.sp-dl dt{font-weight:700;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2)}
+.sp-dl dd{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink);overflow-wrap:anywhere}
+.sp-dl dd.sp-clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sp-na{color:var(--ink-2);font-style:italic;opacity:.85}
+.sp-btn{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 16px;border:1.5px solid var(--sp-g2);border-radius:12px;background:transparent;color:var(--sp-gt);font-weight:700;font-size:14px;cursor:pointer}
+.sp-btn:hover{background:var(--sp-g);border-color:var(--sp-g);color:#fff}
+.sp-btn.solid{background:var(--sp-g);border-color:var(--sp-g);color:#fff}
+.sp-btn.solid:hover{filter:brightness(1.15)}
+.sp-btn.wa{background:#1E8E5A;border-color:#1E8E5A;color:#fff;text-decoration:none}
+.sp-btn.wa:hover{filter:brightness(1.1);background:#1E8E5A}
+
+/* galeri */
+.sp-gal{margin-bottom:48px;scroll-margin-top:72px}
+.sp-sec-h{margin-bottom:6px;font:800 clamp(22px,3vw,30px)/1.2 var(--f-display);letter-spacing:-.02em}
+.sp-sec-p{max-width:62ch;font-size:15px;line-height:1.6;color:var(--ink-2)}
+.sp-gchips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.sp-gchip{height:36px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);color:var(--ink);font-weight:700;font-size:13px;cursor:pointer}
+.sp-gchip[aria-pressed="true"]{background:var(--sp-g);border-color:var(--sp-g);color:#fff}
+.sp-gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.sp-photo{position:relative;display:block;padding:0;border:0;border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:var(--sp-gs);cursor:zoom-in}
+.sp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.sp-photo:hover img{transform:scale(1.05)}
+.sp-photo span{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;text-align:left;font-weight:700;font-size:13.5px;line-height:1.3;color:#fff;background:linear-gradient(180deg,transparent,rgba(8,30,22,.82))}
+.sp-photo small{display:block;margin-top:2px;font-weight:600;font-size:11.5px;color:rgba(255,255,255,.75)}
+.sp-empty{display:grid;place-items:center;gap:6px;padding:34px 18px;text-align:center;border:1.5px dashed var(--rule);border-radius:16px;color:var(--ink-2);font-size:14px;line-height:1.55;background:var(--surface)}
+.sp-empty b{color:var(--ink);font-size:15px}
+
+/* keunggulan */
+.sp-why{position:relative;overflow:hidden;isolation:isolate;margin-top:8px;padding:40px 36px;border-radius:24px;color:#fff;background:linear-gradient(135deg,#082A20,#0E3B2D 55%,#165B42)}
+.sp-why::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,#C7A56A,transparent)}
+.sp-why h2{max-width:24ch;font:800 clamp(22px,3.2vw,34px)/1.15 var(--f-display);letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
+.sp-why .sp-kicker{margin-bottom:14px}
+.sp-pts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:28px 0 0;padding:0;list-style:none}
+.sp-pts li{display:flex;flex-direction:column;gap:12px;padding:20px;border:1px solid rgba(226,200,146,.28);border-radius:16px;background:rgba(255,255,255,.06);font-weight:600;font-size:15px;line-height:1.5}
+.sp-pts svg{width:28px;height:28px;color:#E2C892}
+.sp-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;margin-top:28px;padding:22px 26px;border:1px solid var(--rule);border-radius:18px;background:var(--surface)}
+.sp-cta b{display:block;font:800 18px/1.3 var(--f-display)}
+.sp-cta span{display:block;margin-top:2px;font-size:14px;color:var(--ink-2)}
+
+/* pop-up detail + lightbox */
+.spmodal{position:fixed;inset:0;z-index:75;display:flex;align-items:flex-end;justify-content:center;background:rgba(6,20,15,.66)}
+.spmodal-in{width:min(760px,100%);max-height:94vh;overflow:auto;border-radius:22px 22px 0 0;background:var(--surface);color:var(--ink);box-shadow:0 -10px 40px rgba(0,0,0,.35)}
+.spm-top{position:relative;aspect-ratio:16/9;background:var(--sp-gs);overflow:hidden}
+.spm-top img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sp-x{position:absolute;right:12px;top:12px;z-index:2;display:grid;place-items:center;width:42px;height:42px;border:0;border-radius:50%;background:rgba(8,30,22,.72);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.spm-b{padding:22px 24px calc(26px + env(safe-area-inset-bottom,0px))}
+.spm-cat{display:inline-flex;align-items:center;gap:8px;font:700 11.5px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--sp-goldt)}
+.spm-b h3{margin-top:8px;font:800 clamp(22px,3vw,28px)/1.2 var(--f-display);letter-spacing:-.02em}
+.spm-dl{display:grid;gap:0;margin:18px 0 0}
+.spm-dl div{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:4px 16px;padding:12px 0;border-top:1px solid var(--rule)}
+.spm-dl dt{font-weight:700;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2)}
+.spm-dl dd{margin:0;font-size:15px;line-height:1.6;white-space:pre-line;overflow-wrap:anywhere}
+.spm-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.splb{position:fixed;inset:0;z-index:78;display:flex;flex-direction:column;background:rgba(6,16,12,.95);color:#fff;padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.splb .sp-top{display:flex;justify-content:flex-end}
+.splb .sp-x{position:static}
+.splb-img{flex:1;min-height:0;display:grid;place-items:center}
+.splb-img img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.splb-cap{padding:10px 4px 4px;text-align:center}
+.splb-cap b{display:block;font-weight:700;font-size:15px}
+.splb-cap span{display:block;margin-top:3px;font-size:13px;color:rgba(255,255,255,.72)}
+.splb-nav{display:flex;justify-content:center;gap:10px;padding-top:8px}
+.splb-nav .sp-btn{color:#fff;border-color:rgba(255,255,255,.35)}
+.splb-nav .sp-btn:hover{background:rgba(255,255,255,.14)}
+.splb-nav .sp-btn[disabled]{opacity:.4;cursor:not-allowed}
+@media (min-width:700px){ .spmodal{align-items:center;padding:24px} .spmodal-in{border-radius:22px} }
+@media (max-width:640px){
+  .sp-hero{padding-block:34px 48px}
+  .sp-lede{font-size:15.5px}
+  .sp-grid{grid-template-columns:minmax(0,1fr)}
+  .sp-gg{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .sp-why{padding:30px 20px;border-radius:20px}
+  .sp-cta{padding:18px}
+  .sp-cta .sp-btn{width:100%}
+  .spm-dl div{grid-template-columns:minmax(0,1fr)}
+  .spm-b{padding-inline:18px}
+}
+
+/* animasi muncul saat digulir (hanya aktif bila JS mendukung; dimatikan untuk prefers-reduced-motion) */
+.sp-anim .sp-rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.sp-anim .sp-rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .sp-anim .sp-rv{opacity:1;transform:none;transition:none}
+  .sp-card,.sp-photo img{transition:none}
+  .sp-card:hover{transform:none}
+  .sp-tabs-in{scroll-behavior:auto}
+}
+
+/* ---------- admin: pengelola material ---------- */
+.ad-modes{display:inline-flex;padding:4px;gap:2px;border-radius:999px;background:#0B2630;border:1px solid rgba(255,255,255,.28)}
+.ad-modes button{height:36px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:rgba(255,255,255,.85);font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.ad-modes button[aria-pressed="true"]{background:#fff;color:#0B2630}
+.ad-modes button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.mt-grp{margin:14px 0 6px;font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.mt-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:stretch}
+.mt-row .ad-item{grid-template-columns:44px minmax(0,1fr);gap:2px 10px;align-items:center}
+.mt-row .ad-item .th{grid-row:1 / span 2;width:44px;height:44px;border-radius:10px;overflow:hidden;background:var(--row-sel);display:grid;place-items:center;color:var(--ink-2);font-size:11px;font-weight:800}
+.mt-row .ad-item .th img{width:100%;height:100%;object-fit:cover;display:block}
+.mt-row .ad-item small{grid-column:2}
+.mt-mv{display:flex;flex-direction:column;gap:4px}
+.mt-mv .pbtn{min-height:0;height:100%;padding:0 10px;font-size:13px}
+.mt-photo{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+.mt-photo .pv-img{width:200px;max-width:100%;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:var(--row-sel);display:grid;place-items:center;text-align:center;font-size:12.5px;color:var(--ink-2);padding:8px}
+.mt-photo .pv-img img{width:100%;height:100%;object-fit:cover;display:block}
+.mt-photo .ctl{display:grid;gap:10px;flex:1;min-width:220px}
+.pta.s{min-height:72px}
+
+
 </style>
 
 <header class="nav">
@@ -665,6 +826,7 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
       <a href="#siteplan" id="nav-list">Daftar Kavling</a>
       <a href="#lokasi" id="nav-loc">Lokasi</a>
       <a href="#progres" id="nav-prog">Progres Pembangunan</a>
+      <a href="#spesifikasi" id="nav-spec">Spesifikasi Bangunan</a>
     </nav>
     <a class="nav-cta" id="nav-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>Hubungi Marketing</a>
     <button class="burger" id="nav-burger" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mnav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -675,6 +837,7 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
       <a href="#siteplan" id="m-list">Daftar Kavling</a>
       <a href="#lokasi" id="m-loc">Lokasi</a>
       <a href="#progres" id="m-prog">Progres Pembangunan</a>
+      <a href="#spesifikasi" id="m-spec">Spesifikasi Bangunan</a>
       <a href="#" id="m-wa" target="_blank" rel="noopener">Hubungi Marketing</a>
     </div>
   </div>
@@ -970,6 +1133,7 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
       <div id="ad-app" hidden>
         <div class="ad-top">
           <div class="ad-user"><span id="ad-user"></span><span class="pchip gold" id="ad-role"></span></div>
+          <div class="ad-modes" id="ad-modes" role="group" aria-label="Bagian dashboard"><button type="button" data-mode="progres" aria-pressed="true">Progres</button><button type="button" data-mode="material" aria-pressed="false">Spesifikasi Material</button></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button class="pbtn sm" id="ad-tmpl" type="button" hidden>Template tahap</button>
             <a class="pbtn sm" href="#progres">Tampilan customer</a>
@@ -991,6 +1155,19 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
           </aside>
           <section class="pg-card ad-edit" id="ad-edit" aria-live="polite"></section>
         </div>
+        <div id="ad-mat" hidden>
+          <div class="ad-cols" id="mt-cols">
+            <aside class="pg-card ad-list" aria-label="Daftar material">
+              <h3>Material <span class="pchip" id="mt-count">0</span></h3>
+              <div class="ad-list-tools">
+                <select class="psel sm" id="mt-filter" aria-label="Filter kategori"></select>
+                <button class="pbtn sm" id="mt-add" type="button">+ Tambah material</button>
+              </div>
+              <ul class="ad-units" id="mt-list"></ul>
+            </aside>
+            <section class="pg-card ad-edit" id="mt-edit" aria-live="polite"></section>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1003,6 +1180,55 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
   <div class="plb-nav"><button class="pbtn sm" id="plb-prev" type="button">‹ Sebelumnya</button><button class="pbtn sm" id="plb-next" type="button">Berikutnya ›</button></div>
 </div>
 <div id="pg-toast" class="ptoast" hidden role="status"></div>
+
+<section class="spec" id="spesifikasi" hidden aria-label="Spesifikasi Bahan Bangunan">
+  <div class="sp-hero">
+    <div class="wrap">
+      <p class="sp-kicker">Griya Nusa Residence</p>
+      <h1>Spesifikasi Bahan Bangunan</h1>
+      <p class="sp-lede">Komitmen kami menghadirkan hunian berkualitas melalui pemilihan material bangunan yang tepat, kuat, dan terpercaya.</p>
+      <div class="sp-pills" id="sp-pills" aria-live="polite"></div>
+    </div>
+  </div>
+  <nav class="sp-tabs" aria-label="Kategori material"><div class="wrap"><div class="sp-tabs-in" id="sp-tabs"></div></div></nav>
+  <div class="wrap sp-body" id="sp-body">
+    <div class="sp-notice" id="sp-notice" hidden></div>
+    <div id="sp-cats"></div>
+
+    <section class="sp-gal sp-rv" id="sp-gal" aria-labelledby="sp-gal-h">
+      <h2 class="sp-sec-h" id="sp-gal-h">Galeri Material</h2>
+      <p class="sp-sec-p">Dokumentasi foto material yang digunakan dalam pembangunan Griya Nusa Residence, dikelompokkan berdasarkan kategori.</p>
+      <div class="sp-gchips" id="sp-gchips" role="group" aria-label="Filter galeri"></div>
+      <div class="sp-gg" id="sp-gg"></div>
+    </section>
+
+    <section class="sp-why sp-rv" id="sp-why" aria-labelledby="sp-why-h">
+      <p class="sp-kicker">Keunggulan material</p>
+      <h2 id="sp-why-h">Mengutamakan kualitas dalam setiap pembangunan</h2>
+      <ul class="sp-pts">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8 11l2.2 2.2L14.5 9"/></svg>Pemilihan material bangunan yang diperhatikan.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 19 6-10 4 6 2-3 6 7z"/><circle cx="17" cy="6" r="1.6"/></svg>Penggunaan pasir dan batu split Palu.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12 12 4l9 8M6 10v9h12v-9M9 19v-5h6v5"/></svg>Penggunaan rangka baja ringan TASO.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg>Material disesuaikan dengan kebutuhan konstruksi.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/><path d="m9 12 2.2 2.2L15 10"/></svg>Pembangunan memperhatikan kualitas dan ketahanan bangunan.</li>
+      </ul>
+    </section>
+
+    <div class="sp-cta sp-rv">
+      <div><b>Ingin tahu lebih jauh tentang material rumah Anda?</b><span>Tim marketing kami siap menjelaskan melalui WhatsApp.</span></div>
+      <a class="sp-btn wa" id="sp-wa" href="#" target="_blank" rel="noopener">Hubungi Marketing</a>
+    </div>
+  </div>
+</section>
+
+<div class="spmodal" id="sp-modal" hidden role="dialog" aria-modal="true" aria-labelledby="spm-title"><div class="spmodal-in" id="sp-modal-in"></div></div>
+<div class="splb" id="sp-lb" hidden role="dialog" aria-modal="true" aria-label="Foto material">
+  <div class="sp-top"><button class="sp-x" id="splb-x" type="button" aria-label="Tutup">&times;</button></div>
+  <div class="splb-img"><img id="splb-img" alt=""></div>
+  <div class="splb-cap"><b id="splb-cap"></b><span id="splb-meta"></span></div>
+  <div class="splb-nav"><button class="sp-btn" id="splb-prev" type="button">&lsaquo; Sebelumnya</button><button class="sp-btn" id="splb-next" type="button">Berikutnya &rsaquo;</button></div>
+</div>
+
 
 
 <footer class="foot">
@@ -2276,6 +2502,7 @@ function errText(e){
   if(/failed to fetch|networkerror|load failed|network request failed|fetch failed/i.test(m) || (e && e.name === 'TypeError')) return 'Tidak dapat terhubung ke server. Periksa koneksi internet Anda lalu coba lagi.';
   if(e && (e.code === '42501' || /row-level security|permission denied|Tidak berwenang/i.test(m))) return 'Anda tidak memiliki wewenang untuk tindakan ini.';
   if(e && e.code === '23505') return 'Data tersebut sudah ada.';
+  if(e && (e.code === 'PGRST205' || e.code === '42P01' || /schema cache|relation .*materials/i.test(m))) return 'Tabel material belum dibuat di Supabase. Jalankan berkas sql/materials.sql (lihat PANDUAN_PROGRES.md).';
   if(/invalid login credentials/i.test(m)) return 'Email atau kata sandi salah.';
   return m || 'Terjadi kesalahan. Silakan coba lagi.';
 }
@@ -2342,31 +2569,34 @@ function notConfigured(who){
 const body = document.body;
 let inProg = false;
 function setNavCurrent(on){
-  const np = $('nav-prog'), mp = $('m-prog');
-  if(np) np.setAttribute('aria-current', on ? 'page' : 'false');
-  if(mp) mp.setAttribute('aria-current', on ? 'page' : 'false');
+  const np = $('nav-prog'), mp = $('m-prog'), ns = $('nav-spec'), ms = $('m-spec');
+  if(np) np.setAttribute('aria-current', on === 'prog' ? 'page' : 'false');
+  if(mp) mp.setAttribute('aria-current', on === 'prog' ? 'page' : 'false');
+  if(ns) ns.setAttribute('aria-current', on === 'spec' ? 'page' : 'false');
+  if(ms) ms.setAttribute('aria-current', on === 'spec' ? 'page' : 'false');
   if(on){ ['nav-map','nav-list'].forEach(i => { const e = $(i); if(e) e.setAttribute('aria-current', 'false'); }); }
   else if(G.syncNav) G.syncNav();
 }
 function showPane(which, unitHint){
   $('pane-cust').hidden = which !== 'cust'; $('pane-admin').hidden = which !== 'admin';
-  $('pg-h1').textContent = which === 'admin' ? 'Dashboard Admin Progres' : 'Progres Pembangunan Rumah';
-  $('pg-lede').textContent = which === 'admin'
-    ? 'Kelola unit, tahapan pekerjaan, foto dokumentasi, dan terbitkan pembaruan untuk customer.'
-    : 'Pantau perkembangan pembangunan unit Anda secara online: tahapan pekerjaan, persentase progres, dan foto dokumentasi asli dari lapangan.';
-  if(which === 'admin') adminEnter(); else custEnter(unitHint);
+  $('pg-h1').textContent = 'Progres Pembangunan Rumah';
+  $('pg-lede').textContent = 'Pantau perkembangan pembangunan unit Anda secara online: tahapan pekerjaan, persentase progres, dan foto dokumentasi asli dari lapangan.';
+  if(which === 'admin'){ adMode = unitHint === 'material' ? 'material' : 'progres'; applyAdMode(); adminEnter(); } else custEnter(unitHint);
 }
 function route(){
-  const m = /^#(progres|admin)(?:\/([A-Za-z0-9-]{1,10}))?$/.exec(location.hash || '');
+  const m = /^#(progres|admin|spesifikasi)(?:\/([A-Za-z0-9-]{1,10}))?$/.exec(location.hash || '');
   const mn = $('mnav'); if(mn) mn.hidden = true;
   if(m){
-    inProg = true; body.classList.add('prog-mode'); $('progres').hidden = false;
-    setNavCurrent(true); showPane(m[1] === 'admin' ? 'admin' : 'cust', m[2]);
+    const spec = m[1] === 'spesifikasi';
+    spLeave(); inProg = true; body.classList.add('prog-mode');
+    $('progres').hidden = spec; $('spesifikasi').hidden = !spec;
+    setNavCurrent(spec ? 'spec' : 'prog');
+    if(spec) spEnter(); else showPane(m[1] === 'admin' ? 'admin' : 'cust', m[2]);
     window.scrollTo(0, 0);
   } else if(inProg){ leaveProg(); }
 }
 function leaveProg(){
-  inProg = false; body.classList.remove('prog-mode'); $('progres').hidden = true; setNavCurrent(false);
+  inProg = false; body.classList.remove('prog-mode'); $('progres').hidden = true; $('spesifikasi').hidden = true; spLeave(); setNavCurrent(null);
   window.dispatchEvent(new Event('resize'));
 }
 window.addEventListener('hashchange', route);
@@ -2376,17 +2606,17 @@ function goProg(hash){
 document.addEventListener('click', e => {
   const a = e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
   const href = a.getAttribute('href');
-  if(/^#(progres|admin)/.test(href)){ e.preventDefault(); goProg(href); return; }
+  if(/^#(progres|admin|spesifikasi)/.test(href)){ e.preventDefault(); goProg(href); return; }
   if(inProg){
     leaveProg();
-    if(/^#(progres|admin)/.test(location.hash)){ try{ history.replaceState(null, '', href); }catch(x){} }
+    if(/^#(progres|admin|spesifikasi)/.test(location.hash)){ try{ history.replaceState(null, '', href); }catch(x){} }
   }
 }, true);
 /* menu mobile */
 const burger = $('nav-burger'), mnav = $('mnav');
 burger.addEventListener('click', () => { const open = mnav.hidden; mnav.hidden = !open; burger.setAttribute('aria-expanded', String(open)); });
 mnav.addEventListener('click', e => { if(e.target.closest('a')){ mnav.hidden = true; burger.setAttribute('aria-expanded', 'false'); } });
-window.addEventListener('resize', () => { if(window.innerWidth > 900 && !mnav.hidden){ mnav.hidden = true; burger.setAttribute('aria-expanded', 'false'); } });
+window.addEventListener('resize', () => { if(window.innerWidth > 1120 && !mnav.hidden){ mnav.hidden = true; burger.setAttribute('aria-expanded', 'false'); } });
 $('m-map').addEventListener('click', e => { if(G.navTo){ if(inProg) leaveProg(); G.navTo('map', e); } });
 $('m-list').addEventListener('click', e => { if(G.navTo){ if(inProg) leaveProg(); G.navTo('list', e); } });
 $('m-wa').href = waLink('Halo, saya ingin bertanya tentang Griya Nusa Residence.');
@@ -2633,7 +2863,7 @@ async function adminAfterLogin(user){
   A.user = user; A.role = data.role;
   $('ad-login').hidden = true; $('ad-app').hidden = false;
   $('ad-user').textContent = user.email || data.email; $('ad-role').textContent = data.role === 'owner' ? 'Owner' : 'Editor';
-  $('ad-tmpl').hidden = !isOwner();
+  applyAdMode();
   await guard(loadUnits)();
 }
 
@@ -3011,10 +3241,383 @@ $('ad-tmpl').addEventListener('click', guard(async () => {
   };
 }));
 
+/* ================= SPESIFIKASI BAHAN BANGUNAN =================
+   Bagian ini dipasang di dalam modul Progres (memakai klien layanan, sesi admin, dan helper yang sama).
+   Halaman publik membaca tabel `materials` (publik, hanya-baca) dan foto dari bucket publik `material-photos`.
+   Bila layanan belum terhubung, tampil daftar standar bawaan (tanpa foto, tanpa merek/ukuran yang dikarang). */
+const BUCKET_M = 'material-photos';
+const SP_CATS = [
+  { k: 'A', short: 'Pondasi & Struktur', title: 'Material Pondasi dan Struktur' },
+  { k: 'B', short: 'Dinding', title: 'Material Dinding' },
+  { k: 'C', short: 'Atap', title: 'Material Atap' },
+  { k: 'D', short: 'Plafon', title: 'Material Plafon' },
+  { k: 'E', short: 'Instalasi Listrik', title: 'Material Instalasi Listrik' },
+  { k: 'F', short: 'Instalasi Air', title: 'Material Instalasi Air' },
+  { k: 'G', short: 'Finishing', title: 'Material Finishing' }
+];
+const SEED = [{"category": "A", "name": "Batu Gunung", "brand": "", "spec": "", "function_desc": "Bahan pasangan pondasi yang menyalurkan beban bangunan ke tanah.", "sort_order": 10}, {"category": "A", "name": "Pasir Palu", "brand": "", "spec": "", "function_desc": "Bahan campuran beton dan adukan untuk pekerjaan pondasi dan struktur.", "sort_order": 20}, {"category": "A", "name": "Batu Split Palu", "brand": "", "spec": "", "function_desc": "Agregat kasar campuran beton untuk pekerjaan struktur.", "sort_order": 30}, {"category": "A", "name": "Semen", "brand": "", "spec": "", "function_desc": "Bahan pengikat untuk beton dan adukan.", "sort_order": 40}, {"category": "A", "name": "Besi Beton", "brand": "", "spec": "", "function_desc": "Tulangan yang memperkuat beton pada elemen struktur.", "sort_order": 50}, {"category": "A", "name": "Kawat Bendrat", "brand": "", "spec": "", "function_desc": "Pengikat tulangan besi sebelum pengecoran.", "sort_order": 60}, {"category": "B", "name": "Batako", "brand": "", "spec": "", "function_desc": "Bahan pasangan dinding.", "sort_order": 70}, {"category": "B", "name": "Semen Pasang", "brand": "", "spec": "", "function_desc": "Bahan pengikat adukan pasangan dinding.", "sort_order": 80}, {"category": "B", "name": "Pasir Pasang", "brand": "", "spec": "", "function_desc": "Bahan campuran adukan pasangan dinding.", "sort_order": 90}, {"category": "B", "name": "Acian Putih", "brand": "", "spec": "", "function_desc": "Lapisan penghalus permukaan dinding sebelum pengecatan.", "sort_order": 100}, {"category": "C", "name": "Rangka Baja Ringan TASO", "brand": "TASO", "spec": "", "function_desc": "Rangka penopang penutup atap.", "sort_order": 110}, {"category": "C", "name": "Canal", "brand": "", "spec": "", "function_desc": "Profil baja ringan sebagai bagian rangka atap.", "sort_order": 120}, {"category": "C", "name": "Reng", "brand": "", "spec": "", "function_desc": "Rangka pendukung yang menahan penutup atap.", "sort_order": 130}, {"category": "C", "name": "Spandek Black Matte", "brand": "", "spec": "Warna Black Matte", "function_desc": "Penutup atap.", "sort_order": 140}, {"category": "D", "name": "GRC Board", "brand": "", "spec": "", "function_desc": "Lembaran penutup plafon.", "sort_order": 150}, {"category": "D", "name": "Rangka plafon", "brand": "", "spec": "", "function_desc": "Rangka penahan lembaran plafon.", "sort_order": 160}, {"category": "D", "name": "Aksesori pemasangan plafon", "brand": "", "spec": "", "function_desc": "Perlengkapan pendukung pemasangan plafon.", "sort_order": 170}, {"category": "E", "name": "Kabel listrik", "brand": "", "spec": "", "function_desc": "Penghantar listrik di dalam rumah.", "sort_order": 180}, {"category": "E", "name": "Pipa instalasi listrik", "brand": "", "spec": "", "function_desc": "Pelindung jalur kabel listrik.", "sort_order": 190}, {"category": "E", "name": "Saklar", "brand": "", "spec": "", "function_desc": "Pengatur penyalaan lampu.", "sort_order": 200}, {"category": "E", "name": "Stop kontak", "brand": "", "spec": "", "function_desc": "Titik sambungan peralatan listrik.", "sort_order": 210}, {"category": "E", "name": "Lampu", "brand": "", "spec": "", "function_desc": "Penerangan ruangan.", "sort_order": 220}, {"category": "F", "name": "Pipa PVC", "brand": "", "spec": "", "function_desc": "Saluran air bersih dan air buangan.", "sort_order": 230}, {"category": "F", "name": "Sambungan pipa", "brand": "", "spec": "", "function_desc": "Penghubung dan pengarah jalur pipa.", "sort_order": 240}, {"category": "F", "name": "Instalasi air bersih", "brand": "", "spec": "", "function_desc": "Jalur penyaluran air bersih ke titik pemakaian.", "sort_order": 250}, {"category": "F", "name": "Instalasi pembuangan air kotor", "brand": "", "spec": "", "function_desc": "Jalur pembuangan air kotor dari rumah.", "sort_order": 260}, {"category": "G", "name": "Keramik lantai", "brand": "", "spec": "", "function_desc": "Penutup dan finishing lantai.", "sort_order": 270}, {"category": "G", "name": "Keramik kamar mandi", "brand": "", "spec": "", "function_desc": "Penutup lantai dan dinding kamar mandi.", "sort_order": 280}, {"category": "G", "name": "Cat interior", "brand": "", "spec": "", "function_desc": "Pelapis dinding bagian dalam.", "sort_order": 290}, {"category": "G", "name": "Cat eksterior", "brand": "", "spec": "", "function_desc": "Pelapis dinding bagian luar.", "sort_order": 300}, {"category": "G", "name": "Pintu dan jendela", "brand": "", "spec": "", "function_desc": "Akses keluar-masuk serta jalur udara dan cahaya.", "sort_order": 310}, {"category": "G", "name": "Kusen", "brand": "", "spec": "", "function_desc": "Rangka pemasangan pintu dan jendela.", "sort_order": 320}, {"category": "G", "name": "Perlengkapan sanitasi", "brand": "", "spec": "", "function_desc": "Perlengkapan kamar mandi.", "sort_order": 330}];
+const SP = { items: [], at: 0, loading: false, mode: null, galCat: 'ALL', lb: [], lbI: 0, io: null, ioCat: null, prevFocus: null };
+const catOf = k => SP_CATS.find(c => c.k === k) || SP_CATS[0];
+const NA = '<span class="sp-na">Segera dilengkapi</span>';
+const dd = v => (v && String(v).trim()) ? esc(v) : NA;
+function mUrl(p, thumb){
+  if(!p || !configured) return '';
+  return CFG.url.replace(/\/+$/, '') + '/storage/v1/object/public/' + BUCKET_M + '/' + (thumb ? p.replace(/\.jpg$/, '_t.jpg') : p);
+}
+const seedItems = () => SEED.map((m, i) => ({ id: 'seed-' + i, category: m.category, name: m.name, brand: m.brand || null, spec: m.spec || null, function_desc: m.function_desc || null, quality_note: null, detail: null, photo_path: null, sort_order: m.sort_order }));
+const PH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2"/><path d="m21 16-5-4.5L8 19"/></svg>';
+const PH = '<div class="sp-ph">' + PH_SVG + '<span>Foto belum diunggah</span></div>';
+const reduceM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+async function fetchMaterials(){
+  const url = CFG.url.replace(/\/+$/, '') + '/rest/v1/materials?select=id,category,name,brand,spec,function_desc,quality_note,detail,photo_path,sort_order&order=category.asc,sort_order.asc,name.asc';
+  const r = await fetch(url, { headers: { apikey: CFG.anonKey, Authorization: 'Bearer ' + CFG.anonKey }, cache: 'no-store' });
+  if(!r.ok) throw new Error('Gagal memuat data material (' + r.status + ')');
+  const rows = await r.json();
+  if(!Array.isArray(rows)) throw new Error('Format data tidak dikenali');
+  return rows;
+}
+async function spEnter(){
+  if(!reduceM && window.IntersectionObserver) $('spesifikasi').classList.add('sp-anim');
+  $('sp-wa').href = waLink('Halo, saya ingin bertanya tentang spesifikasi bahan bangunan di Griya Nusa Residence.');
+  if(SP.items.length && Date.now() - SP.at < 15000){ spRender(); return; }
+  if(SP.loading) return;
+  SP.loading = true; setMsg($('sp-notice'), '', false);
+  if(!SP.items.length) $('sp-cats').innerHTML = '<div class="sp-empty" style="margin-bottom:40px"><b>Memuat spesifikasi material…</b></div>';
+  try{
+    if(!configured){ SP.items = seedItems(); SP.mode = ENV === 'artifact' ? 'artifact' : 'seed'; }
+    else { SP.items = await fetchMaterials(); SP.mode = 'live'; }
+  }catch(e){ SP.items = seedItems(); SP.mode = 'error'; }
+  SP.at = Date.now(); SP.loading = false;
+  spRender();
+}
+function spNotice(){
+  const n = $('sp-notice');
+  if(SP.mode === 'error'){ n.hidden = false; n.innerHTML = '<div class="pg-msg warn"><div><b>Data terbaru belum dapat dimuat.</b> Menampilkan daftar material standar tanpa foto.</div><button class="pbtn sm" type="button" id="sp-retry">Coba lagi</button></div>'; $('sp-retry').onclick = () => { SP.at = 0; SP.items = []; spEnter(); }; }
+  else if(SP.mode === 'artifact'){ n.hidden = false; n.innerHTML = '<div class="pg-msg warn"><div><b>Pratinjau.</b> Foto, merek, dan spesifikasi diisi oleh admin dan tampil di situs resmi Griya Nusa Residence.</div></div>'; }
+  else n.hidden = true;
+}
+function spCard(m, i){
+  const th = mUrl(m.photo_path, true);
+  return '<article class="sp-card sp-rv" style="--d:' + ((i % 4) * 0.06).toFixed(2) + 's"><div class="sp-im">'
+    + (th ? '<img loading="lazy" decoding="async" src="' + esc(th) + '" alt="Foto ' + esc(m.name) + '">' : PH) + '</div>'
+    + '<div class="sp-cb"><h3>' + esc(m.name) + '</h3><dl class="sp-dl">'
+    + '<div><dt>Merek</dt><dd>' + dd(m.brand) + '</dd></div>'
+    + '<div><dt>Spesifikasi</dt><dd>' + dd(m.spec) + '</dd></div>'
+    + '<div><dt>Fungsi</dt><dd class="sp-clamp">' + dd(m.function_desc) + '</dd></div>'
+    + '<div><dt>Kualitas</dt><dd class="sp-clamp">' + dd(m.quality_note) + '</dd></div></dl>'
+    + '<button class="sp-btn" type="button" data-detail="' + esc(m.id) + '">Lihat Detail</button></div></article>';
+}
+function spRender(){
+  spNotice();
+  const items = SP.items, by = {};
+  SP_CATS.forEach(c => { by[c.k] = items.filter(m => m.category === c.k); });
+  const cats = SP_CATS.filter(c => by[c.k].length), withPhoto = items.filter(m => m.photo_path);
+  $('sp-pills').innerHTML = '<span class="sp-pill"><b>' + items.length + '</b> material</span><span class="sp-pill"><b>' + cats.length + '</b> kategori</span>' + (withPhoto.length ? '<span class="sp-pill"><b>' + withPhoto.length + '</b> foto dokumentasi</span>' : '');
+  $('sp-tabs').innerHTML = cats.map(c => '<button class="sp-tab" type="button" data-go="sp-cat-' + c.k + '"><i>' + c.k + '</i>' + esc(c.short) + '</button>').join('')
+    + '<button class="sp-tab" type="button" data-go="sp-gal"><i>&#9679;</i>Galeri</button>';
+  $('sp-cats').innerHTML = cats.length ? cats.map(c =>
+    '<section class="sp-cat" id="sp-cat-' + c.k + '" aria-labelledby="sp-h-' + c.k + '"><div class="sp-cat-h sp-rv"><span class="sp-letter" aria-hidden="true">' + c.k + '</span><div><h2 id="sp-h-' + c.k + '">' + esc(c.title) + '</h2><small>' + by[c.k].length + ' material</small></div></div>'
+    + '<div class="sp-grid">' + by[c.k].map(spCard).join('') + '</div></section>').join('')
+    : '<div class="sp-empty" style="margin-bottom:40px"><b>Belum ada material yang ditampilkan</b><span>Daftar spesifikasi sedang disiapkan oleh tim proyek.</span></div>';
+  spGallery();
+  spObserve();
+}
+function spGallery(){
+  const ph = SP.items.filter(m => m.photo_path);
+  const have = SP_CATS.filter(c => ph.some(m => m.category === c.k));
+  if(SP.galCat !== 'ALL' && !have.some(c => c.k === SP.galCat)) SP.galCat = 'ALL';
+  $('sp-gchips').hidden = have.length < 2;
+  $('sp-gchips').innerHTML = [['ALL', 'Semua']].concat(have.map(c => [c.k, c.short])).map(x => '<button class="sp-gchip" type="button" data-g="' + x[0] + '" aria-pressed="' + (SP.galCat === x[0]) + '">' + esc(x[1]) + '</button>').join('');
+  const list = ph.filter(m => SP.galCat === 'ALL' || m.category === SP.galCat); SP.lb = list;
+  $('sp-gg').innerHTML = list.length ? list.map((m, i) =>
+    '<button class="sp-photo" type="button" data-lb="' + i + '" aria-label="Perbesar foto ' + esc(m.name) + '"><img loading="lazy" decoding="async" src="' + esc(mUrl(m.photo_path, true)) + '" alt="' + esc(m.name) + '"><span>' + esc(m.name) + '<small>' + esc(catOf(m.category).short) + '</small></span></button>').join('')
+    : '<div class="sp-empty" style="grid-column:1/-1"><b>Foto dokumentasi material belum diunggah</b><span>Foto asli material yang dipakai di proyek akan tampil di sini setelah diunggah oleh admin.</span></div>';
+}
+function spObserve(){
+  if(SP.io){ SP.io.disconnect(); SP.io = null; } if(SP.ioCat){ SP.ioCat.disconnect(); SP.ioCat = null; }
+  const root = $('spesifikasi'), els = root.querySelectorAll('.sp-rv');
+  if(!window.IntersectionObserver || reduceM){ els.forEach(e => e.classList.add('in')); }
+  else {
+    SP.io = new IntersectionObserver(en => { en.forEach(x => { if(x.isIntersecting){ x.target.classList.add('in'); SP.io.unobserve(x.target); } }); }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(e => SP.io.observe(e));
+  }
+  if(window.IntersectionObserver){
+    SP.ioCat = new IntersectionObserver(en => {
+      en.forEach(x => { if(x.isIntersecting){ setTab(x.target.id); } });
+    }, { rootMargin: '-25% 0px -65% 0px' });
+    root.querySelectorAll('.sp-cat,.sp-gal').forEach(e => SP.ioCat.observe(e));
+  }
+}
+function setTab(id){
+  const box = $('sp-tabs'); let on = null;
+  box.querySelectorAll('.sp-tab').forEach(b => { const a = b.dataset.go === id; b.setAttribute('aria-current', a ? 'true' : 'false'); if(a) on = b; });
+  if(on){ const l = on.offsetLeft - (box.clientWidth - on.offsetWidth) / 2; box.scrollLeft = Math.max(0, l); }
+}
+$('sp-tabs').addEventListener('click', e => {
+  const b = e.target.closest('.sp-tab'); if(!b) return;
+  const t = $(b.dataset.go); if(t) t.scrollIntoView({ behavior: reduceM ? 'auto' : 'smooth', block: 'start' });
+});
+$('sp-gchips').addEventListener('click', e => { const b = e.target.closest('.sp-gchip'); if(b){ SP.galCat = b.dataset.g; spGallery(); } });
+$('sp-gg').addEventListener('click', e => { const b = e.target.closest('.sp-photo'); if(b) spLB(+b.dataset.lb); });
+$('sp-cats').addEventListener('click', e => { const b = e.target.closest('[data-detail]'); if(b) spOpen(b.dataset.detail); });
+function imgFail(e){
+  const t = e.target; if(!t || t.tagName !== 'IMG') return;
+  const box = t.parentNode; if(box.classList.contains('sp-im')){ t.remove(); box.insertAdjacentHTML('beforeend', PH); }
+  else if(box.classList.contains('sp-photo')){ box.remove(); }
+}
+$('sp-cats').addEventListener('error', imgFail, true); $('sp-gg').addEventListener('error', imgFail, true);
+
+function spLock(on){ document.body.style.overflow = on ? 'hidden' : ''; }
+function spOpen(id){
+  const m = SP.items.find(x => x.id === id); if(!m) return;
+  const c = catOf(m.category), full = mUrl(m.photo_path, false);
+  SP.prevFocus = document.activeElement;
+  $('sp-modal-in').innerHTML =
+    '<div class="spm-top"><button class="sp-x" type="button" data-close aria-label="Tutup">&times;</button>' + (full ? '<img src="' + esc(full) + '" alt="Foto ' + esc(m.name) + '">' : PH) + '</div>'
+    + '<div class="spm-b"><p class="spm-cat">' + esc(c.k) + ' &middot; ' + esc(c.title) + '</p><h3 id="spm-title">' + esc(m.name) + '</h3><dl class="spm-dl">'
+    + '<div><dt>Merek / produsen</dt><dd>' + dd(m.brand) + '</dd></div>'
+    + '<div><dt>Spesifikasi / ukuran</dt><dd>' + dd(m.spec) + '</dd></div>'
+    + '<div><dt>Fungsi penggunaan</dt><dd>' + dd(m.function_desc) + '</dd></div>'
+    + '<div><dt>Keterangan kualitas</dt><dd>' + dd(m.quality_note) + '</dd></div>'
+    + (m.detail ? '<div><dt>Informasi lengkap</dt><dd>' + esc(m.detail) + '</dd></div>' : '')
+    + '</dl><div class="spm-act"><a class="sp-btn wa" target="_blank" rel="noopener" href="' + esc(waLink('Halo, saya ingin bertanya tentang material ' + m.name + ' yang digunakan di Griya Nusa Residence.')) + '">Tanya via WhatsApp</a><button class="sp-btn" type="button" data-close>Tutup</button></div></div>';
+  $('sp-modal').hidden = false; spLock(true);
+  const x = $('sp-modal-in').querySelector('[data-close]'); if(x) x.focus();
+}
+function spClose(){ if($('sp-modal').hidden) return; $('sp-modal').hidden = true; $('sp-modal-in').innerHTML = ''; spLock(false); if(SP.prevFocus && SP.prevFocus.isConnected) SP.prevFocus.focus(); }
+$('sp-modal').addEventListener('click', e => { if(e.target.id === 'sp-modal' || e.target.closest('[data-close]')) spClose(); });
+function spLB(i){
+  const m = SP.lb[i]; if(!m) return; SP.lbI = i; SP.prevFocus = SP.prevFocus || document.activeElement;
+  $('splb-img').src = mUrl(m.photo_path, false); $('splb-img').alt = m.name;
+  $('splb-cap').textContent = m.name;
+  $('splb-meta').textContent = catOf(m.category).short + (m.brand ? ' · ' + m.brand : '') + '  (' + (i + 1) + '/' + SP.lb.length + ')';
+  $('splb-prev').disabled = i === 0; $('splb-next').disabled = i === SP.lb.length - 1;
+  $('sp-lb').hidden = false; spLock(true); $('splb-x').focus();
+}
+function spLBClose(){ if($('sp-lb').hidden) return; $('sp-lb').hidden = true; $('splb-img').removeAttribute('src'); spLock(false); if(SP.prevFocus && SP.prevFocus.isConnected) SP.prevFocus.focus(); SP.prevFocus = null; }
+$('splb-x').addEventListener('click', spLBClose);
+$('sp-lb').addEventListener('click', e => { if(e.target.id === 'sp-lb' || e.target.classList.contains('splb-img')) spLBClose(); });
+$('splb-prev').addEventListener('click', () => spLB(SP.lbI - 1));
+$('splb-next').addEventListener('click', () => spLB(SP.lbI + 1));
+document.addEventListener('keydown', e => {
+  if(!$('sp-lb').hidden){
+    if(e.key === 'Escape') spLBClose(); else if(e.key === 'ArrowLeft' && SP.lbI > 0) spLB(SP.lbI - 1); else if(e.key === 'ArrowRight' && SP.lbI < SP.lb.length - 1) spLB(SP.lbI + 1);
+  } else if(!$('sp-modal').hidden && e.key === 'Escape') spClose();
+});
+function spLeave(){ spClose(); spLBClose(); }
+
+/* ================= ADMIN: pengelola material ================= */
+const M = { items: [], sel: null, orig: null, d: null, blob: null, thumb: null, prev: '', rm: false, filter: 'ALL', loaded: false };
+const MF = ['category', 'name', 'brand', 'spec', 'function_desc', 'quality_note', 'detail'];
+let adMode = 'progres';
+function applyAdMode(){
+  const mat = adMode === 'material';
+  $('ad-cols').hidden = mat; $('ad-mat').hidden = !mat;
+  $('ad-tmpl').hidden = mat || !isOwner();
+  document.querySelectorAll('#ad-modes button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === adMode)));
+  adTitle();
+  if(mat && A.user) guard(matLoad)();
+}
+function adTitle(){
+  if($('pane-admin').hidden) return;
+  $('pg-h1').textContent = adMode === 'material' ? 'Dashboard Admin Spesifikasi Material' : 'Dashboard Admin Progres';
+  $('pg-lede').textContent = adMode === 'material'
+    ? 'Kelola material bangunan: foto, merek, spesifikasi, fungsi, kategori, dan urutan tampilan. Perubahan langsung tampil di halaman Spesifikasi Bangunan.'
+    : 'Kelola unit, tahapan pekerjaan, foto dokumentasi, dan terbitkan pembaruan untuk customer.';
+}
+function setAdMode(m){
+  if(m === adMode) return;
+  if(adMode === 'material' && mDirty()){ matAskDiscard(() => { matReset(); setAdMode(m); }); return; }
+  if(adMode === 'progres' && A.u && isDirty()){ toast('Simpan atau buang perubahan unit terlebih dahulu', true); return; }
+  adMode = m; applyAdMode();
+  try{ history.replaceState(null, '', m === 'material' ? '#admin/material' : '#admin'); }catch(e){}
+}
+$('ad-modes').addEventListener('click', e => { const b = e.target.closest('button[data-mode]'); if(b) setAdMode(b.dataset.mode); });
+
+const mDirty = () => !!(M.d && (MF.some(k => (M.d[k] == null ? '' : M.d[k]) !== (M.orig[k] == null ? '' : M.orig[k])) || M.blob || M.rm));
+function matReset(){ M.sel = null; M.d = null; M.orig = null; M.blob = null; M.thumb = null; M.rm = false; if(M.prev){ URL.revokeObjectURL(M.prev); M.prev = ''; } }
+function matAskDiscard(go){
+  openModal('<h3>Perubahan belum disimpan</h3><p class="pg-sub">Material yang sedang diedit memiliki perubahan yang belum disimpan.</p><div class="ad-actions" style="border:0;padding-top:8px"><button class="pbtn danger" id="m-drop" type="button">Buang perubahan</button><button class="pbtn" id="m-cancel" type="button">Kembali</button></div>');
+  $('m-cancel').onclick = closeModal; $('m-drop').onclick = () => { closeModal(); go(); };
+}
+async function matLoad(){
+  const c = await client();
+  const { data, error } = await c.from('materials').select('*').order('category').order('sort_order').order('name');
+  if(error) throw error;
+  M.items = data || []; M.loaded = true; SP.at = 0;
+  matFilterOpts(); matRenderList();
+  if(!M.sel) matEmpty();
+}
+function matFilterOpts(){
+  const f = $('mt-filter'); if(f.options.length) return;
+  f.innerHTML = '<option value="ALL">Semua kategori</option>' + SP_CATS.map(c => '<option value="' + c.k + '">' + c.k + ' · ' + esc(c.short) + '</option>').join('');
+}
+function matRenderList(){
+  $('mt-count').textContent = String(M.items.length);
+  const html = SP_CATS.filter(c => M.filter === 'ALL' || M.filter === c.k).map(c => {
+    const arr = M.items.filter(m => m.category === c.k);
+    return '<li class="mt-grp">' + c.k + '. ' + esc(c.short) + ' (' + arr.length + ')</li>' + arr.map((m, i) =>
+      '<li class="mt-row"><button class="ad-item' + (m.id === M.sel ? ' sel' : '') + '" type="button" data-id="' + m.id + '"><span class="th">' + (m.photo_path ? '<img loading="lazy" alt="" src="' + esc(mUrl(m.photo_path, true)) + '">' : 'Foto') + '</span><b>' + esc(m.name) + '</b><small>' + esc(m.brand || 'Merek belum diisi') + '</small></button>'
+      + '<div class="mt-mv"><button class="pbtn sm" type="button" data-mv="-1" data-id="' + m.id + '"' + (i === 0 ? ' disabled' : '') + ' aria-label="Naikkan ' + esc(m.name) + '">&uarr;</button><button class="pbtn sm" type="button" data-mv="1" data-id="' + m.id + '"' + (i === arr.length - 1 ? ' disabled' : '') + ' aria-label="Turunkan ' + esc(m.name) + '">&darr;</button></div></li>').join('');
+  }).join('');
+  $('mt-list').innerHTML = html || '<li class="pg-hint" style="padding:10px">Belum ada material. Tekan “Tambah material”.</li>';
+}
+function matEmpty(){ $('mt-edit').innerHTML = '<div class="pg-empty"><b>Pilih material di daftar</b><span>Atau tambahkan material baru. Urutan tampil diatur dengan tombol panah di daftar.</span></div>'; }
+$('mt-filter').addEventListener('change', () => { M.filter = $('mt-filter').value; matRenderList(); });
+$('mt-list').addEventListener('click', e => {
+  const mv = e.target.closest('[data-mv]'); if(mv){ guard(() => matMove(mv.dataset.id, +mv.dataset.mv))(); return; }
+  const b = e.target.closest('.ad-item'); if(b) matTrySelect(b.dataset.id);
+});
+$('mt-add').addEventListener('click', () => matTrySelect('new'));
+function matTrySelect(id){
+  if(id === M.sel){ $('mt-cols').classList.add('show-edit'); return; }
+  if(mDirty()){ matAskDiscard(() => matSelect(id)); return; }
+  matSelect(id);
+}
+function matSelect(id){
+  matReset(); M.sel = id;
+  if(id === 'new'){
+    M.orig = { category: M.filter === 'ALL' ? 'A' : M.filter, name: '', brand: '', spec: '', function_desc: '', quality_note: '', detail: '', photo_path: null };
+  } else {
+    const m = M.items.find(x => x.id === id); if(!m){ matEmpty(); return; }
+    M.orig = {}; MF.forEach(k => { M.orig[k] = m[k] == null ? '' : m[k]; }); M.orig.photo_path = m.photo_path;
+  }
+  M.d = Object.assign({}, M.orig);
+  matRenderList(); matRenderEditor(); $('mt-cols').classList.add('show-edit');
+}
+function matPhotoBox(){
+  const has = M.blob || (M.orig.photo_path && !M.rm);
+  const src = M.blob ? M.prev : (M.orig.photo_path && !M.rm ? mUrl(M.orig.photo_path, true) : '');
+  return '<div class="pv-img">' + (src ? '<img alt="Foto material" src="' + esc(src) + '">' : 'Belum ada foto') + '</div>';
+}
+function matRenderEditor(){
+  const d = M.d, isNew = M.sel === 'new';
+  const catOpts = SP_CATS.map(c => '<option value="' + c.k + '"' + (d.category === c.k ? ' selected' : '') + '>' + c.k + ' · ' + esc(c.title) + '</option>').join('');
+  const hasPhoto = !!(M.blob || (M.orig.photo_path && !M.rm));
+  $('mt-edit').innerHTML =
+    '<div class="ad-head"><div><button class="pbtn sm ad-back" type="button" id="mt-back" style="margin-bottom:10px">‹ Daftar material</button><h3>' + (isNew ? 'Material baru' : esc(M.orig.name || 'Material')) + '</h3></div>'
+    + '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pbtn primary" type="button" id="mt-save">Simpan</button></div></div>'
+    + '<div class="ad-live" id="mt-state"></div>'
+    + '<div class="ad-grid" style="margin-top:18px">'
+    + '<div class="pg-field full"><label for="mt-name">Nama material (wajib)</label><input class="pin" id="mt-name" data-k="name" maxlength="120" value="' + esc(d.name) + '" placeholder="Contoh: Batu Gunung"></div>'
+    + '<div class="pg-field"><label for="mt-cat">Kategori</label><select class="psel" id="mt-cat" data-k="category">' + catOpts + '</select></div>'
+    + '<div class="pg-field"><label for="mt-brand">Merek / produsen</label><input class="pin" id="mt-brand" data-k="brand" maxlength="120" value="' + esc(d.brand) + '" placeholder="Kosongkan bila belum diketahui"></div>'
+    + '<div class="pg-field full"><label for="mt-spec">Spesifikasi / ukuran</label><textarea class="pta s" id="mt-spec" data-k="spec" maxlength="400" placeholder="Isi sesuai data asli dari supplier atau pembelian">' + esc(d.spec) + '</textarea></div>'
+    + '<div class="pg-field full"><label for="mt-fn">Fungsi penggunaan dalam pembangunan</label><textarea class="pta s" id="mt-fn" data-k="function_desc" maxlength="500">' + esc(d.function_desc) + '</textarea></div>'
+    + '<div class="pg-field full"><label for="mt-q">Keterangan kualitas</label><textarea class="pta s" id="mt-q" data-k="quality_note" maxlength="500" placeholder="Hanya isi hal yang benar dan dapat dipertanggungjawabkan">' + esc(d.quality_note) + '</textarea></div>'
+    + '<div class="pg-field full"><label for="mt-detail">Informasi lengkap (tampil di pop-up “Lihat Detail”)</label><textarea class="pta" id="mt-detail" data-k="detail" maxlength="2000">' + esc(d.detail) + '</textarea></div>'
+    + '</div>'
+    + '<div class="ad-up" style="margin-top:18px"><div class="pg-lbl">Foto material (foto asli yang dipakai di proyek)</div><div class="mt-photo"><div id="mt-pbox">' + matPhotoBox() + '</div><div class="ctl">'
+    + '<div class="pg-field"><label for="mt-file">Pilih foto (JPG, PNG, atau WebP)</label><input class="pin" id="mt-file" type="file" accept="image/jpeg,image/png,image/webp"></div>'
+    + '<div><button class="pbtn sm danger" type="button" id="mt-rmphoto"' + (hasPhoto ? '' : ' hidden') + '>Hapus foto</button></div>'
+    + '<p class="pg-hint">Foto dikompres otomatis (versi besar dan thumbnail) agar halaman cepat dimuat. Foto tampil di halaman publik setelah menekan “Simpan”.</p></div></div>'
+    + '<div id="mt-perr" class="pg-msg err" role="alert" hidden></div></div>'
+    + (isNew ? '' : '<div class="ad-actions"><button class="pbtn sm danger" type="button" id="mt-del">Hapus material ini</button></div>');
+  matState();
+}
+function matState(){
+  const el = $('mt-state'); if(!el) return;
+  const dirty = mDirty();
+  el.innerHTML = '<span>Tampil di halaman publik sebagai</span><b>' + esc(catOf(M.d.category).k) + ' · ' + esc(M.d.name.trim() || '(belum ada nama)') + '</b>' + (dirty ? '<span class="ad-flag draft">Belum disimpan</span>' : '<span class="ad-flag live">Tersimpan</span>');
+  const sv = $('mt-save'); if(sv) sv.disabled = !dirty || !M.d.name.trim();
+}
+const mEd = $('mt-edit');
+mEd.addEventListener('input', e => { const k = e.target.dataset && e.target.dataset.k; if(k){ M.d[k] = e.target.value; matState(); } });
+mEd.addEventListener('change', e => {
+  const k = e.target.dataset && e.target.dataset.k; if(k === 'category'){ M.d.category = e.target.value; matState(); }
+  if(e.target.id === 'mt-file') matPick(e.target.files[0]);
+});
+mEd.addEventListener('click', e => {
+  const t = e.target;
+  if(t.closest('#mt-back')){ $('mt-cols').classList.remove('show-edit'); return; }
+  if(t.closest('#mt-save')) return void guard(() => withBusy($('mt-save'), 'Menyimpan…', matSave))();
+  if(t.closest('#mt-rmphoto')){
+    M.blob = null; M.thumb = null; if(M.prev){ URL.revokeObjectURL(M.prev); M.prev = ''; }
+    if(M.orig.photo_path) M.rm = true;
+    $('mt-pbox').innerHTML = matPhotoBox(); $('mt-rmphoto').hidden = true; const f = $('mt-file'); if(f) f.value = ''; matState(); return;
+  }
+  const del = t.closest('#mt-del'); if(del) return matDelete(del);
+});
+mEd.addEventListener('submit', e => e.preventDefault());
+
+async function compressTo(file, max, q){
+  const { im, url } = await loadImg(file);
+  try{
+    const sc = Math.min(1, max / Math.max(im.naturalWidth, im.naturalHeight));
+    const w = Math.max(1, Math.round(im.naturalWidth * sc)), h = Math.max(1, Math.round(im.naturalHeight * sc));
+    const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+    const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, w, h); cx.drawImage(im, 0, 0, w, h);
+    let blob = null, qq = q;
+    for(let i = 0; i < 4; i++){ blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', qq)); if(!blob) throw new Error('Gagal memproses foto.'); if(blob.size <= 1.8 * 1024 * 1024) break; qq -= 0.15; }
+    return blob;
+  } finally { URL.revokeObjectURL(url); }
+}
+async function matPick(file){
+  const err = $('mt-perr'); setMsg(err, '', false);
+  if(!file) return;
+  if(!/^image\/(jpeg|png|webp)$/.test(file.type)){ setMsg(err, 'Pilih file foto JPG, PNG, atau WebP.', true); return; }
+  if(file.size > 25 * 1024 * 1024){ setMsg(err, 'Ukuran foto terlalu besar (maks 25 MB).', true); return; }
+  try{
+    const [full, th] = await Promise.all([compressTo(file, 1280, 0.82), compressTo(file, 480, 0.78)]);
+    if(M.prev) URL.revokeObjectURL(M.prev);
+    M.blob = full; M.thumb = th; M.rm = false; M.prev = URL.createObjectURL(full);
+    $('mt-pbox').innerHTML = matPhotoBox(); $('mt-rmphoto').hidden = false; matState();
+  }catch(ex){ setMsg(err, errText(ex), true); }
+}
+async function matSave(){
+  const c = await client(), d = M.d, isNew = M.sel === 'new';
+  const name = d.name.trim(); if(!name) throw new Error('Nama material wajib diisi.');
+  const clean = v => { v = String(v == null ? '' : v).trim(); return v === '' ? null : v; };
+  const row = { category: d.category, name: name, brand: clean(d.brand), spec: clean(d.spec), function_desc: clean(d.function_desc), quality_note: clean(d.quality_note), detail: clean(d.detail) };
+  const id = isNew ? uuid() : M.sel;
+  const maxIn = cat => M.items.filter(x => x.category === cat && x.id !== id).reduce((a, x) => Math.max(a, x.sort_order || 0), 0);
+  if(isNew || d.category !== M.orig.category) row.sort_order = maxIn(d.category) + 10;
+  const store = c.storage.from(BUCKET_M), thumbOf = p => p.replace(/\.jpg$/, '_t.jpg');
+  let newPath = null;
+  if(M.blob){
+    newPath = id + '-' + Date.now().toString(36) + '.jpg';
+    const u1 = await store.upload(newPath, M.blob, { contentType: 'image/jpeg', upsert: false, cacheControl: '31536000' });
+    if(u1.error) throw u1.error;
+    const u2 = await store.upload(thumbOf(newPath), M.thumb, { contentType: 'image/jpeg', upsert: false, cacheControl: '31536000' });
+    if(u2.error){ try{ await store.remove([newPath]); }catch(x){} throw u2.error; }
+    row.photo_path = newPath;
+  } else if(M.rm) row.photo_path = null;
+  try{
+    if(isNew){ row.id = id; const r = await c.from('materials').insert(row); if(r.error) throw r.error; }
+    else { const r = await c.from('materials').update(row).eq('id', id).select('id'); if(r.error) throw r.error; if(!r.data || !r.data.length) throw new Error('Perubahan ditolak server. Pastikan akun Anda terdaftar sebagai admin.'); }
+  }catch(ex){ if(newPath){ try{ await store.remove([newPath, thumbOf(newPath)]); }catch(x){} } throw ex; }
+  const old = M.orig.photo_path;
+  if(old && (newPath || M.rm)){ try{ await store.remove([old, thumbOf(old)]); }catch(x){} }
+  matReset(); await matLoad(); matSelect(id); toast(isNew ? 'Material ditambahkan' : 'Perubahan tersimpan');
+}
+function matDelete(btn){
+  if(!btn.dataset.armed){ btn.dataset.armed = '1'; btn.textContent = 'Yakin hapus permanen?'; setTimeout(() => { if(btn.isConnected){ delete btn.dataset.armed; btn.textContent = 'Hapus material ini'; } }, 3500); return; }
+  guard(async () => {
+    const c = await client(), id = M.sel, m = M.items.find(x => x.id === id);
+    const { data, error } = await c.from('materials').delete().eq('id', id).select('id');
+    if(error) throw error; if(!data || !data.length) throw new Error('Material tidak dapat dihapus.');
+    if(m && m.photo_path){ try{ await c.storage.from(BUCKET_M).remove([m.photo_path, m.photo_path.replace(/\.jpg$/, '_t.jpg')]); }catch(x){} }
+    matReset(); await matLoad(); matEmpty(); $('mt-cols').classList.remove('show-edit'); toast('Material dihapus');
+  })();
+}
+async function matMove(id, dir){
+  const c = await client(), m = M.items.find(x => x.id === id); if(!m) return;
+  const arr = M.items.filter(x => x.category === m.category), i = arr.findIndex(x => x.id === id), j = i + dir;
+  if(j < 0 || j >= arr.length) return;
+  const order = arr.slice(); order.splice(i, 1); order.splice(j, 0, m);
+  const jobs = [];
+  order.forEach((x, n) => { const so = (n + 1) * 10; if(x.sort_order !== so){ jobs.push(c.from('materials').update({ sort_order: so }).eq('id', x.id).select('id').then(r => { if(r.error) throw r.error; if(!r.data || !r.data.length) throw new Error('Urutan ditolak server.'); x.sort_order = so; })); } });
+  await Promise.all(jobs);
+  M.items.sort((a, b) => a.category.localeCompare(b.category) || a.sort_order - b.sort_order || a.name.localeCompare(b.name));
+  SP.at = 0; matRenderList();
+}
+
+
 /* init */
 window.addEventListener('beforeunload', e => { if(inProg && A.u && isDirty()){ e.preventDefault(); e.returnValue = ''; } });
 route();
-window.__GNR_PROG = { configured, normUnit, calcPct, calcLabel };
+window.__GNR_PROG = { configured, normUnit, calcPct, calcLabel, spec: { SP, SP_CATS, seedItems, mUrl } };
 })();
 
 </script>
