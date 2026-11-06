@@ -19,6 +19,11 @@ create table if not exists public.materials (
   updated_at    timestamptz not null default now(),
   updated_by    uuid
 );
+-- Asal foto (jujur ke pengunjung): 'proyek' = dokumentasi material proyek; 'produsen' = foto produk dari produsen/merek;
+-- 'referensi' = foto referensi sejenis. Foto selain 'proyek' diberi label di halaman publik.
+alter table public.materials add column if not exists photo_source text;
+alter table public.materials drop constraint if exists materials_photo_source_chk;
+alter table public.materials add constraint materials_photo_source_chk check (photo_source is null or photo_source in ('proyek','produsen','referensi'));
 create index if not exists materials_cat_sort on public.materials (category, sort_order);
 
 create or replace function public.trg_materials_touch() returns trigger

@@ -85,6 +85,12 @@ Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan **carousel 3D sinemat
 - **Hapus material** perlu dua kali klik (konfirmasi); foto di penyimpanan ikut terhapus.
 - Perubahan langsung terbaca halaman publik pada muat berikutnya, tanpa deploy ulang.
 
+**Foto asli (penting):** situs ini **tidak memuat foto bawaan**; semua foto berasal dari unggahan admin. Kartu tanpa foto menampilkan “Foto Material Belum Tersedia”. Urutan sumber yang disarankan: (1) foto Anda sendiri di lokasi/gudang proyek, (2) foto produk dari produsen/merek resmi (pastikan boleh dipakai), (3) foto referensi sejenis.
+- Di editor ada pilihan **Asal foto**: *Dokumentasi material proyek* / *Foto produk dari produsen* / *Foto referensi*. Foto selain dokumentasi proyek otomatis diberi label (“Foto produk”, “Foto referensi”) dan keterangan di panel detail, sehingga tidak diklaim sebagai material yang terpasang di proyek.
+- Kartu carousel berasio **portrait 4:5** (`object-fit: cover`). Foto diunggah dipotong tengah menjadi thumbnail 640×800 dan versi besar maksimal 1600 px. Pakai foto vertikal/portrait, objek di tengah, minimal ±1200 px agar tajam; admin akan memberi peringatan bila resolusi kecil.
+- Editor menampilkan **petunjuk foto yang dibutuhkan** per material (mis. “foto tumpukan batu gunung asli”). Daftar kiri menampilkan hitungan “Foto: x dari y material” dan filter **Belum ada foto** untuk memantau yang tersisa.
+- Jalankan ulang `sql/materials.sql` bila Anda sudah memasangnya sebelumnya (menambah kolom `photo_source`; aman diulang). Tanpa itu, simpan di dashboard memberi pesan petunjuk dan halaman publik tetap tampil normal.
+
 **Prinsip data:** merek, ukuran, dan spesifikasi yang belum diisi tampil sebagai *“Segera dilengkapi”*, tidak diisi karangan. Data awal hanya memuat yang diberikan pengembang (mis. merek **TASO** untuk rangka baja ringan, warna **Black Matte** untuk spandek) plus deskripsi fungsi yang bersifat umum, silakan koreksi bila perlu. Kartu tanpa foto menampilkan “Foto belum diunggah”.
 
 **Bila tabel belum dibuat**, dashboard menampilkan petunjuk menjalankan `sql/materials.sql`, dan halaman publik memakai daftar bawaan (tanpa foto) dengan catatan pratinjau.

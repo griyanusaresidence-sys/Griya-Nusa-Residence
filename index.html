@@ -696,10 +696,10 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 .spx .pg-msg.warn .pbtn{background:#fff;color:#0B2630}
 
 /* carousel */
-.spx-stage{position:relative;margin-top:14px;outline-offset:6px;--cw:clamp(250px,23vw,330px)}
-.spx-track{position:relative;height:calc(var(--cw) * 1.42 + 56px);perspective:1500px;perspective-origin:50% 42%;overflow:hidden;touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
+.spx-stage{position:relative;margin-top:14px;outline-offset:6px;--cw:clamp(250px,25vw,350px)}
+.spx-track{position:relative;height:calc(var(--cw) * 1.25 + 56px);perspective:1500px;perspective-origin:50% 42%;overflow:hidden;touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
 .spx-track.drag{cursor:grabbing}
-.spx-c{position:absolute;left:50%;top:28px;width:var(--cw);height:calc(var(--cw) * 1.42);margin-left:calc(var(--cw) / -2);transform-style:preserve-3d;will-change:transform,opacity;transition:transform .75s cubic-bezier(.22,.8,.2,1),opacity .55s ease;backface-visibility:hidden}
+.spx-c{position:absolute;left:50%;top:28px;width:var(--cw);height:calc(var(--cw) * 1.25);margin-left:calc(var(--cw) / -2);transform-style:preserve-3d;will-change:transform,opacity;transition:transform .75s cubic-bezier(.22,.8,.2,1),opacity .55s ease;backface-visibility:hidden}
 .spx-track.drag .spx-c{transition:none}
 .spx-c[data-hide="1"]{pointer-events:none;visibility:hidden;transition:transform .75s cubic-bezier(.22,.8,.2,1),opacity .55s ease,visibility 0s .75s}
 .spx-card{position:relative;width:100%;height:100%;border-radius:22px;overflow:hidden;background:linear-gradient(165deg,var(--c1),var(--c2));border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 60px -20px rgba(0,0,0,.75),0 0 0 1px rgba(0,0,0,.25);transition:box-shadow .4s ease,border-color .4s ease,transform .45s cubic-bezier(.22,.8,.2,1)}
@@ -708,10 +708,11 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 .spx-c:not(.act){cursor:pointer}
 .spx-im{position:absolute;inset:0;overflow:hidden}
 .spx-im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform .9s cubic-bezier(.22,.8,.2,1)}
-.spx-ph{position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 16px,rgba(255,255,255,.035) 16px 17px),radial-gradient(80% 50% at 80% 0%,rgba(255,255,255,.16),transparent 70%)}
-.spx-ph b{position:absolute;right:-6%;top:-4%;font:800 clamp(150px,18vw,230px)/1 var(--f-display);color:transparent;-webkit-text-stroke:1.5px rgba(226,200,146,.4);letter-spacing:-.05em}
-.spx-ph span{position:absolute;left:18px;top:16px;font-weight:600;font-size:11.5px;letter-spacing:.04em;color:rgba(255,255,255,.62);display:inline-flex;align-items:center;gap:6px}
-.spx-ph svg{width:15px;height:15px}
+.spx-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px 20px 30%;text-align:center;color:rgba(255,255,255,.72);background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,0))}
+.spx-ph svg{width:40px;height:40px;opacity:.7;color:#E2C892}
+.spx-ph strong{font:700 15px/1.3 var(--f-body);color:#fff}
+.spx-ph small{font-size:12.5px;color:rgba(255,255,255,.6)}
+.spx-src{position:absolute;right:12px;top:12px;z-index:2;padding:5px 10px;border-radius:999px;background:rgba(3,13,9,.7);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(226,200,146,.5);color:#F3E4C3;font:700 10.5px/1 var(--f-body);letter-spacing:.04em}
 .spx-sh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,transparent 30%,rgba(3,13,9,.55) 62%,rgba(3,13,9,.94) 100%)}
 .spx-dim{position:absolute;inset:0;background:#030d09;opacity:var(--dim,0);pointer-events:none;transition:opacity .6s ease}
 .spx-tx{position:absolute;left:0;right:0;bottom:0;padding:18px 18px 20px;display:grid;gap:7px}
@@ -776,11 +777,13 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 
 /* panel detail (sinematik) */
 .spmodal{position:fixed;inset:0;z-index:75;display:flex;align-items:flex-end;justify-content:center;background:rgba(3,13,9,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.spmodal-in{width:min(880px,100%);max-height:94vh;overflow:auto;border-radius:24px 24px 0 0;background:linear-gradient(170deg,#0E2A20,#06150F);color:#fff;border:1px solid rgba(226,200,146,.28);box-shadow:0 -10px 60px rgba(0,0,0,.6)}
-.spm-top{position:relative;aspect-ratio:16/9;background:linear-gradient(165deg,var(--c1,#14503a),var(--c2,#06211a));overflow:hidden}
+.spmodal-in{width:min(980px,100%);max-height:94vh;overflow:auto;border-radius:24px 24px 0 0;background:linear-gradient(170deg,#0E2A20,#06150F);color:#fff;border:1px solid rgba(226,200,146,.28);box-shadow:0 -10px 60px rgba(0,0,0,.6)}
+.spm-top{position:relative;aspect-ratio:4/5;max-height:58vh;width:100%;background:linear-gradient(165deg,var(--c1,#14503a),var(--c2,#06211a));overflow:hidden}
 .spm-top img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.spm-top .spx-ph b{font-size:clamp(160px,30vw,300px)}
 .sp-x{position:absolute;right:12px;top:12px;z-index:2;display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:rgba(3,13,9,.7);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.spm-src{margin:0;padding:12px 16px;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.7);background:rgba(255,255,255,.05);border-top:1px solid rgba(255,255,255,.1)}
+.spm-src b{color:#E2C892}
+.spm-l{min-width:0}
 .spm-b{padding:22px 26px calc(26px + env(safe-area-inset-bottom,0px))}
 .spm-cat{display:inline-flex;align-items:center;gap:8px;font:700 11.5px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:#E2C892}
 .spm-b h3{margin-top:8px;font:800 clamp(24px,3.4vw,34px)/1.15 var(--f-display);letter-spacing:-.02em}
@@ -793,6 +796,7 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 .spm-act .sp-btn:not(.wa){color:#fff;border-color:rgba(255,255,255,.4)}
 .spm-act .sp-btn:not(.wa):hover{background:rgba(255,255,255,.14)}
 @media (min-width:700px){ .spmodal{align-items:center;padding:24px} .spmodal-in{border-radius:24px} }
+@media (min-width:820px){ .spmodal-in{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr)} .spm-top{max-height:none;height:auto} .spm-b{align-self:center} }
 
 /* responsif: tablet = 3 kartu, HP = 1 kartu + sebagian kartu berikutnya */
 @media (max-width:1000px){
@@ -802,7 +806,7 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 @media (max-width:640px){
   .spx-in{padding-block:30px 28px}
   .spx-stage{--cw:min(68vw,290px)}
-  .spx-track{-webkit-mask-image:none;mask-image:none;height:calc(var(--cw) * 1.42 + 40px)}
+  .spx-track{-webkit-mask-image:none;mask-image:none;height:calc(var(--cw) * 1.25 + 40px)}
   .spx-c{top:20px}
   .spx-stage{padding-bottom:62px}
   .spx-nav{top:auto;bottom:4px;margin:0;width:50px;height:50px}
@@ -843,7 +847,7 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
 .mt-mv{display:flex;flex-direction:column;gap:4px}
 .mt-mv .pbtn{min-height:0;height:100%;padding:0 10px;font-size:13px}
 .mt-photo{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
-.mt-photo .pv-img{width:200px;max-width:100%;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:var(--row-sel);display:grid;place-items:center;text-align:center;font-size:12.5px;color:var(--ink-2);padding:8px}
+.mt-photo .pv-img{width:180px;max-width:100%;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:var(--row-sel);display:grid;place-items:center;text-align:center;font-size:12.5px;color:var(--ink-2);padding:8px}
 .mt-photo .pv-img img{width:100%;height:100%;object-fit:cover;display:block}
 .mt-photo .ctl{display:grid;gap:10px;flex:1;min-width:220px}
 .pta.s{min-height:72px}
@@ -1193,6 +1197,7 @@ html[data-theme="dark"] .pg-link{color:var(--gold)}
             <aside class="pg-card ad-list" aria-label="Daftar material">
               <h3>Material <span class="pchip" id="mt-count">0</span></h3>
               <div class="ad-list-tools">
+                <div class="pg-hint" id="mt-photos" style="margin:0 0 8px"></div>
                 <select class="psel sm" id="mt-filter" aria-label="Filter kategori"></select>
                 <button class="pbtn sm" id="mt-add" type="button">+ Tambah material</button>
               </div>
@@ -2538,6 +2543,7 @@ function errText(e){
   if(e && (e.code === '42501' || /row-level security|permission denied|Tidak berwenang/i.test(m))) return 'Anda tidak memiliki wewenang untuk tindakan ini.';
   if(e && e.code === '23505') return 'Data tersebut sudah ada.';
   if(e && (e.code === 'PGRST205' || e.code === '42P01' || /schema cache|relation .*materials/i.test(m))) return 'Tabel material belum dibuat di Supabase. Jalankan berkas sql/materials.sql (lihat PANDUAN_PROGRES.md).';
+  if(e && (e.code === 'PGRST204' || /photo_source/i.test(m))) return 'Basis data belum diperbarui untuk fitur asal foto. Jalankan ulang berkas sql/materials.sql di Supabase (aman diulang).';
   if(/invalid login credentials/i.test(m)) return 'Email atau kata sandi salah.';
   return m || 'Terjadi kesalahan. Silakan coba lagi.';
 }
@@ -3306,12 +3312,17 @@ function mUrl(p, thumb){
 }
 const seedItems = () => SEED.map((m, i) => ({ id: 'seed-' + i, category: m.category, name: m.name, brand: m.brand || null, spec: m.spec || null, function_desc: m.function_desc || null, quality_note: null, detail: null, photo_path: null, sort_order: m.sort_order }));
 const PH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2"/><path d="m21 16-5-4.5L8 19"/></svg>';
-const phHtml = m => '<div class="spx-ph"><b aria-hidden="true">' + esc(m.category) + '</b><span>' + PH_ICON + 'Foto belum diunggah</span></div>';
+const phHtml = m => '<div class="spx-ph">' + PH_ICON + '<strong>Foto Material Belum Tersedia</strong><small>' + esc(m.name) + '</small></div>';
+const SRC_LBL = { proyek: 'Foto dokumentasi proyek', produsen: 'Foto produk dari produsen', referensi: 'Foto referensi sejenis' };
+const SRC_NOTE = { proyek: 'Foto asli material yang digunakan di proyek Griya Nusa Residence.', produsen: 'Foto produk dari produsen/merek; bukan dokumentasi material di lokasi proyek.', referensi: 'Foto referensi material sejenis; bukan dokumentasi material di lokasi proyek.' };
 const reduceM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 async function fetchMaterials(){
-  const url = CFG.url.replace(/\/+$/, '') + '/rest/v1/materials?select=id,category,name,brand,spec,function_desc,quality_note,detail,photo_path,sort_order&order=category.asc,sort_order.asc,name.asc';
-  const r = await fetch(url, { headers: { apikey: CFG.anonKey, Authorization: 'Bearer ' + CFG.anonKey }, cache: 'no-store' });
+  const base = CFG.url.replace(/\/+$/, '') + '/rest/v1/materials?select=', ord = '&order=category.asc,sort_order.asc,name.asc';
+  const cols = 'id,category,name,brand,spec,function_desc,quality_note,detail,photo_path,sort_order';
+  const h = { apikey: CFG.anonKey, Authorization: 'Bearer ' + CFG.anonKey };
+  let r = await fetch(base + cols + ',photo_source' + ord, { headers: h, cache: 'no-store' });
+  if(r.status === 400) r = await fetch(base + cols + ord, { headers: h, cache: 'no-store' });   // basis data lama tanpa kolom photo_source
   if(!r.ok) throw new Error('Gagal memuat data material (' + r.status + ')');
   const rows = await r.json();
   if(!Array.isArray(rows)) throw new Error('Format data tidak dikenali');
@@ -3347,7 +3358,7 @@ function spList(){
 function spCardHtml(m, i, n){
   const cat = catOf(m.category);
   return '<article class="spx-c" data-i="' + i + '" style="' + colStyle(m.category) + '" role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' dari ' + n + '">'
-    + '<div class="spx-card"><div class="spx-im">' + (m.photo_path && configured ? '<img alt="Foto ' + esc(m.name) + '" decoding="async" draggable="false">' : phHtml(m)) + '</div><div class="spx-sh"></div>'
+    + '<div class="spx-card"><div class="spx-im">' + (m.photo_path && configured ? '<img alt="Foto ' + esc(m.name) + '" decoding="async" draggable="false">' : phHtml(m)) + '</div>' + (m.photo_path && configured && m.photo_source && m.photo_source !== 'proyek' ? '<span class="spx-src">' + (m.photo_source === 'produsen' ? 'Foto produk' : 'Foto referensi') + '</span>' : '') + '<div class="spx-sh"></div>'
     + '<div class="spx-tx"><span class="spx-ct">' + esc(cat.k) + ' &middot; ' + esc(cat.short) + '</span><h3>' + esc(m.name) + '</h3><p>' + (m.function_desc ? esc(m.function_desc) : 'Spesifikasi lengkap segera dilengkapi.') + '</p></div><div class="spx-dim"></div></div>'
     + '<span class="spx-hint">Klik untuk melihat detail</span></article>';
 }
@@ -3549,7 +3560,8 @@ function spOpen(id){
   const c = catOf(m.category), full = mUrl(m.photo_path, false);
   SP.prevFocus = document.activeElement;
   $('sp-modal-in').innerHTML =
-    '<div class="spm-top" style="' + colStyle(m.category) + '"><button class="sp-x" type="button" data-close aria-label="Tutup">&times;</button>' + (full ? '<img src="' + esc(full) + '" alt="Foto ' + esc(m.name) + '">' : phHtml(m)) + '</div>'
+    '<div class="spm-l"><div class="spm-top" style="' + colStyle(m.category) + '"><button class="sp-x" type="button" data-close aria-label="Tutup">&times;</button>' + (full ? '<img src="' + esc(full) + '" alt="Foto ' + esc(m.name) + '">' : phHtml(m)) + '</div>'
+    + (full ? '<p class="spm-src"><b>' + esc(SRC_LBL[m.photo_source] || SRC_LBL.proyek) + '.</b> ' + esc(SRC_NOTE[m.photo_source] || SRC_NOTE.proyek) + '</p>' : '') + '</div>'
     + '<div class="spm-b"><p class="spm-cat">' + esc(c.k) + ' &middot; ' + esc(c.title) + '</p><h3 id="spm-title">' + esc(m.name) + '</h3><dl class="spm-dl">'
     + '<div><dt>Merek / produsen</dt><dd>' + dd(m.brand) + '</dd></div>'
     + '<div><dt>Spesifikasi / ukuran</dt><dd>' + dd(m.spec) + '</dd></div>'
@@ -3576,7 +3588,16 @@ function spLeave(){ spClose(); spWatch(false); SP.hover = false; }
 
 /* ================= ADMIN: pengelola material ================= */
 const M = { items: [], sel: null, orig: null, d: null, blob: null, thumb: null, prev: '', rm: false, filter: 'ALL', loaded: false };
-const MF = ['category', 'name', 'brand', 'spec', 'function_desc', 'quality_note', 'detail'];
+const MF = ['category', 'name', 'brand', 'spec', 'function_desc', 'quality_note', 'detail', 'photo_source'];
+const PHOTO_HINT = [
+  [/batu gunung/i, 'foto tumpukan batu gunung asli'], [/pasir palu/i, 'foto pasir konstruksi berwarna alami'], [/split/i, 'foto agregat batu split asli'], [/^semen$/i, 'foto produk kemasan semen'],
+  [/besi beton/i, 'foto besi beton asli'], [/bendrat/i, 'foto gulungan kawat bendrat'], [/batako/i, 'foto batako asli'], [/semen pasang/i, 'foto material semen pasang'], [/pasir pasang/i, 'foto pasir pasang'], [/acian/i, 'foto produk acian putih'],
+  [/baja ringan|taso/i, 'foto produk rangka baja ringan asli'], [/canal/i, 'foto profil baja ringan canal'], [/^reng/i, 'foto profil baja ringan reng'], [/spandek/i, 'foto lembaran atap spandek hitam doff'],
+  [/grc/i, 'foto lembaran GRC asli'], [/rangka plafon/i, 'foto rangka plafon asli'], [/kabel/i, 'foto kabel instalasi asli'], [/pipa instalasi listrik|pipa listrik/i, 'foto pipa listrik'], [/saklar/i, 'foto produk saklar'], [/stop kontak/i, 'foto produk stop kontak'],
+  [/pipa pvc/i, 'foto pipa PVC asli'], [/sambungan/i, 'foto sambungan pipa PVC'], [/air bersih/i, 'foto instalasi pipa air'], [/pembuangan/i, 'foto pipa pembuangan'],
+  [/keramik kamar mandi/i, 'foto keramik kamar mandi'], [/keramik lantai/i, 'foto keramik asli'], [/cat interior/i, 'foto produk cat interior'], [/cat eksterior/i, 'foto produk cat eksterior'], [/pintu|jendela/i, 'foto produk pintu/jendela asli'], [/kusen/i, 'foto kusen'], [/sanitasi/i, 'foto perlengkapan kamar mandi']
+];
+const photoHint = n => { const h = PHOTO_HINT.find(x => x[0].test(n || '')); return h ? h[1] : ''; };
 let adMode = 'progres';
 function applyAdMode(){
   const mat = adMode === 'material';
@@ -3618,17 +3639,20 @@ async function matLoad(){
 }
 function matFilterOpts(){
   const f = $('mt-filter'); if(f.options.length) return;
-  f.innerHTML = '<option value="ALL">Semua kategori</option>' + SP_CATS.map(c => '<option value="' + c.k + '">' + c.k + ' · ' + esc(c.short) + '</option>').join('');
+  f.innerHTML = '<option value="ALL">Semua kategori</option><option value="NOPHOTO">Belum ada foto</option>' + SP_CATS.map(c => '<option value="' + c.k + '">' + c.k + ' · ' + esc(c.short) + '</option>').join('');
 }
 function matRenderList(){
+  const np = M.filter === 'NOPHOTO', withPh = M.items.filter(m => m.photo_path).length;
   $('mt-count').textContent = String(M.items.length);
-  const html = SP_CATS.filter(c => M.filter === 'ALL' || M.filter === c.k).map(c => {
-    const arr = M.items.filter(m => m.category === c.k);
+  $('mt-photos').textContent = 'Foto: ' + withPh + ' dari ' + M.items.length + ' material';
+  const html = SP_CATS.filter(c => M.filter === 'ALL' || np || M.filter === c.k).map(c => {
+    const arr = M.items.filter(m => m.category === c.k && (!np || !m.photo_path));
+    if(np && !arr.length) return '';
     return '<li class="mt-grp">' + c.k + '. ' + esc(c.short) + ' (' + arr.length + ')</li>' + arr.map((m, i) =>
-      '<li class="mt-row"><button class="ad-item' + (m.id === M.sel ? ' sel' : '') + '" type="button" data-id="' + m.id + '"><span class="th">' + (m.photo_path ? '<img loading="lazy" alt="" src="' + esc(mUrl(m.photo_path, true)) + '">' : 'Foto') + '</span><b>' + esc(m.name) + '</b><small>' + esc(m.brand || 'Merek belum diisi') + '</small></button>'
-      + '<div class="mt-mv"><button class="pbtn sm" type="button" data-mv="-1" data-id="' + m.id + '"' + (i === 0 ? ' disabled' : '') + ' aria-label="Naikkan ' + esc(m.name) + '">&uarr;</button><button class="pbtn sm" type="button" data-mv="1" data-id="' + m.id + '"' + (i === arr.length - 1 ? ' disabled' : '') + ' aria-label="Turunkan ' + esc(m.name) + '">&darr;</button></div></li>').join('');
+      '<li class="mt-row"><button class="ad-item' + (m.id === M.sel ? ' sel' : '') + '" type="button" data-id="' + m.id + '"><span class="th">' + (m.photo_path ? '<img loading="lazy" alt="" src="' + esc(mUrl(m.photo_path, true)) + '">' : 'Foto') + '</span><b>' + esc(m.name) + '</b><small>' + esc(m.brand || 'Merek belum diisi') + (m.photo_path ? '' : ' · foto belum ada') + '</small></button>'
+      + '<div class="mt-mv"><button class="pbtn sm" type="button" data-mv="-1" data-id="' + m.id + '"' + (np || i === 0 ? ' disabled' : '') + ' aria-label="Naikkan ' + esc(m.name) + '">&uarr;</button><button class="pbtn sm" type="button" data-mv="1" data-id="' + m.id + '"' + (np || i === arr.length - 1 ? ' disabled' : '') + ' aria-label="Turunkan ' + esc(m.name) + '">&darr;</button></div></li>').join('');
   }).join('');
-  $('mt-list').innerHTML = html || '<li class="pg-hint" style="padding:10px">Belum ada material. Tekan “Tambah material”.</li>';
+  $('mt-list').innerHTML = html || '<li class="pg-hint" style="padding:10px">' + (np ? 'Semua material sudah punya foto.' : 'Belum ada material. Tekan “Tambah material”.') + '</li>';
 }
 function matEmpty(){ $('mt-edit').innerHTML = '<div class="pg-empty"><b>Pilih material di daftar</b><span>Atau tambahkan material baru. Urutan tampil diatur dengan tombol panah di daftar.</span></div>'; }
 $('mt-filter').addEventListener('change', () => { M.filter = $('mt-filter').value; matRenderList(); });
@@ -3645,10 +3669,10 @@ function matTrySelect(id){
 function matSelect(id){
   matReset(); M.sel = id;
   if(id === 'new'){
-    M.orig = { category: M.filter === 'ALL' ? 'A' : M.filter, name: '', brand: '', spec: '', function_desc: '', quality_note: '', detail: '', photo_path: null };
+    M.orig = { category: (M.filter === 'ALL' || M.filter === 'NOPHOTO') ? 'A' : M.filter, name: '', brand: '', spec: '', function_desc: '', quality_note: '', detail: '', photo_source: 'proyek', photo_path: null };
   } else {
     const m = M.items.find(x => x.id === id); if(!m){ matEmpty(); return; }
-    M.orig = {}; MF.forEach(k => { M.orig[k] = m[k] == null ? '' : m[k]; }); M.orig.photo_path = m.photo_path;
+    M.orig = {}; MF.forEach(k => { M.orig[k] = m[k] == null ? '' : m[k]; }); M.orig.photo_path = m.photo_path; if(!M.orig.photo_source) M.orig.photo_source = 'proyek';
   }
   M.d = Object.assign({}, M.orig);
   matRenderList(); matRenderEditor(); $('mt-cols').classList.add('show-edit');
@@ -3656,7 +3680,7 @@ function matSelect(id){
 function matPhotoBox(){
   const has = M.blob || (M.orig.photo_path && !M.rm);
   const src = M.blob ? M.prev : (M.orig.photo_path && !M.rm ? mUrl(M.orig.photo_path, true) : '');
-  return '<div class="pv-img">' + (src ? '<img alt="Foto material" src="' + esc(src) + '">' : 'Belum ada foto') + '</div>';
+  return '<div class="pv-img">' + (src ? '<img alt="Foto material" src="' + esc(src) + '">' : 'Foto Material Belum Tersedia') + '</div>';
 }
 function matRenderEditor(){
   const d = M.d, isNew = M.sel === 'new';
@@ -3675,10 +3699,11 @@ function matRenderEditor(){
     + '<div class="pg-field full"><label for="mt-q">Keterangan kualitas</label><textarea class="pta s" id="mt-q" data-k="quality_note" maxlength="500" placeholder="Hanya isi hal yang benar dan dapat dipertanggungjawabkan">' + esc(d.quality_note) + '</textarea></div>'
     + '<div class="pg-field full"><label for="mt-detail">Informasi lengkap (tampil di pop-up “Lihat Detail”)</label><textarea class="pta" id="mt-detail" data-k="detail" maxlength="2000">' + esc(d.detail) + '</textarea></div>'
     + '</div>'
-    + '<div class="ad-up" style="margin-top:18px"><div class="pg-lbl">Foto material (foto asli yang dipakai di proyek)</div><div class="mt-photo"><div id="mt-pbox">' + matPhotoBox() + '</div><div class="ctl">'
+    + '<div class="ad-up" style="margin-top:18px"><div class="pg-lbl">Foto material</div>' + (photoHint(d.name) ? '<p class="pg-hint" style="margin:0 0 10px"><b>Foto yang dibutuhkan:</b> ' + esc(photoHint(d.name)) + '. Gunakan foto asli, tajam, dan sesuai nama material.</p>' : '<p class="pg-hint" style="margin:0 0 10px">Gunakan foto asli, tajam, dan sesuai nama material.</p>') + '<div class="mt-photo"><div id="mt-pbox">' + matPhotoBox() + '</div><div class="ctl">'
     + '<div class="pg-field"><label for="mt-file">Pilih foto (JPG, PNG, atau WebP)</label><input class="pin" id="mt-file" type="file" accept="image/jpeg,image/png,image/webp"></div>'
+    + '<div class="pg-field"><label for="mt-src">Asal foto</label><select class="psel" id="mt-src" data-k="photo_source"><option value="proyek"' + (d.photo_source === 'proyek' ? ' selected' : '') + '>Dokumentasi material proyek (foto sendiri)</option><option value="produsen"' + (d.photo_source === 'produsen' ? ' selected' : '') + '>Foto produk dari produsen / merek resmi</option><option value="referensi"' + (d.photo_source === 'referensi' ? ' selected' : '') + '>Foto referensi material sejenis</option></select></div>'
     + '<div><button class="pbtn sm danger" type="button" id="mt-rmphoto"' + (hasPhoto ? '' : ' hidden') + '>Hapus foto</button></div>'
-    + '<p class="pg-hint">Foto dikompres otomatis (versi besar dan thumbnail) agar halaman cepat dimuat. Foto tampil di halaman publik setelah menekan “Simpan”.</p></div></div>'
+    + '<p class="pg-hint">Pratinjau kiri memperlihatkan potongan kartu (rasio portrait 4:5, bagian tengah foto). Foto dikompres otomatis (HD ±1600 px + thumbnail) agar halaman cepat dimuat. Foto selain “Dokumentasi proyek” diberi label di halaman publik. Foto tampil setelah menekan “Simpan”.</p></div></div>'
     + '<div id="mt-perr" class="pg-msg err" role="alert" hidden></div></div>'
     + (isNew ? '' : '<div class="ad-actions"><button class="pbtn sm danger" type="button" id="mt-del">Hapus material ini</button></div>');
   matState();
@@ -3720,16 +3745,30 @@ async function compressTo(file, max, q){
     return blob;
   } finally { URL.revokeObjectURL(url); }
 }
+async function prepPhoto(file){
+  const { im, url } = await loadImg(file);
+  try{
+    const W = im.naturalWidth, H = im.naturalHeight;
+    const enc = async (cv, q) => { let blob = null, qq = q; for(let i = 0; i < 4; i++){ blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', qq)); if(!blob) throw new Error('Gagal memproses foto.'); if(blob.size <= 1.8 * 1024 * 1024) break; qq -= 0.15; } return blob; };
+    const sc = Math.min(1, 1600 / Math.max(W, H)), fw = Math.max(1, Math.round(W * sc)), fh = Math.max(1, Math.round(H * sc));
+    const c1 = document.createElement('canvas'); c1.width = fw; c1.height = fh; let x = c1.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, fw, fh); x.drawImage(im, 0, 0, fw, fh);
+    // thumbnail portrait 4:5 (potong tengah) untuk kartu carousel
+    const tw = 640, th = 800, c2 = document.createElement('canvas'); c2.width = tw; c2.height = th; x = c2.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, tw, th);
+    const k = Math.max(tw / W, th / H), sw = tw / k, sh = th / k; x.imageSmoothingQuality = 'high'; x.drawImage(im, (W - sw) / 2, (H - sh) / 2, sw, sh, 0, 0, tw, th);
+    return { full: await enc(c1, 0.84), thumb: await enc(c2, 0.8), W: W, H: H };
+  } finally { URL.revokeObjectURL(url); }
+}
 async function matPick(file){
   const err = $('mt-perr'); setMsg(err, '', false);
   if(!file) return;
   if(!/^image\/(jpeg|png|webp)$/.test(file.type)){ setMsg(err, 'Pilih file foto JPG, PNG, atau WebP.', true); return; }
   if(file.size > 25 * 1024 * 1024){ setMsg(err, 'Ukuran foto terlalu besar (maks 25 MB).', true); return; }
   try{
-    const [full, th] = await Promise.all([compressTo(file, 1280, 0.82), compressTo(file, 480, 0.78)]);
+    const r = await prepPhoto(file);
     if(M.prev) URL.revokeObjectURL(M.prev);
-    M.blob = full; M.thumb = th; M.rm = false; M.prev = URL.createObjectURL(full);
+    M.blob = r.full; M.thumb = r.thumb; M.rm = false; M.prev = URL.createObjectURL(r.thumb);
     $('mt-pbox').innerHTML = matPhotoBox(); $('mt-rmphoto').hidden = false; matState();
+    if(Math.max(r.W, r.H) < 1000 || Math.min(r.W, r.H) < 640) setMsg(err, 'Resolusi foto cukup kecil (' + r.W + '×' + r.H + ' px), hasilnya bisa kurang tajam di kartu besar. Disarankan foto asli minimal ±1200 px.', true);
   }catch(ex){ setMsg(err, errText(ex), true); }
 }
 async function matSave(){
@@ -3737,6 +3776,8 @@ async function matSave(){
   const name = d.name.trim(); if(!name) throw new Error('Nama material wajib diisi.');
   const clean = v => { v = String(v == null ? '' : v).trim(); return v === '' ? null : v; };
   const row = { category: d.category, name: name, brand: clean(d.brand), spec: clean(d.spec), function_desc: clean(d.function_desc), quality_note: clean(d.quality_note), detail: clean(d.detail) };
+  const willHave = !!(M.blob || (M.orig.photo_path && !M.rm));
+  row.photo_source = willHave ? (d.photo_source || 'proyek') : null;
   const id = isNew ? uuid() : M.sel;
   const maxIn = cat => M.items.filter(x => x.category === cat && x.id !== id).reduce((a, x) => Math.max(a, x.sort_order || 0), 0);
   if(isNew || d.category !== M.orig.category) row.sort_order = maxIn(d.category) + 10;
