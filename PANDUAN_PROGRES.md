@@ -74,7 +74,7 @@ Jika ada yang gagal, kirimkan pesan galatnya ke saya.
 Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan **carousel 3D sinematik** (kartu portrait: 5 kartu di desktop, 3 di tablet, 1 + intipan di HP), filter kategori A–G + Galeri, panel detail, dan poin keunggulan. Background halaman memburamkan foto material yang sedang aktif. Datanya dikelola dari dashboard admin yang sama dengan Progres.
 
 **Pasang (sekali saja, setelah langkah 1–7 di atas):**
-1. SQL Editor → tempel seluruh isi `sql/materials.sql` → **Run**. Aman dijalankan ulang; 33 daftar material awal hanya diisi bila tabel masih kosong.
+1. SQL Editor → tempel seluruh isi `sql/materials.sql` → **Run**. Aman dijalankan ulang; 34 daftar material awal hanya diisi bila tabel masih kosong.
    Ini membuat tabel `materials` (publik hanya boleh **membaca**, hanya admin yang boleh menulis) dan bucket foto **publik** `material-photos` (maks 2 MB/berkas, JPEG).
 2. Tidak ada kunci/konfigurasi baru: memakai `progress-config.js` yang sama.
 
@@ -91,7 +91,7 @@ Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan **carousel 3D sinemat
 |---|---|
 | Pasir Palu, Batu Split Palu, Rangka Baja Ringan TASO, Instalasi pembuangan air kotor | dokumentasi proyek (tanpa label) |
 | Kabel listrik, Saklar, Stop kontak, Lampu, Semen, Semen Pasang, Besi Beton (+1 foto tambahan), Acian Putih, Reng, Cat interior, Cat eksterior | “Foto produk” |
-| Batu Gunung, Batako, Pasir Pasang, Canal, Spandek Black Matte, GRC Board, Aksesori pemasangan plafon, Rangka plafon, Pintu dan jendela, Kusen, Keramik lantai, Keramik kamar mandi, Kawat Bendrat, Pipa PVC, Sambungan pipa, Pipa instalasi listrik | “Foto referensi” |
+| Batu Gunung, Batako, Pasir Pasang, Canal, Spandek Black Matte, GRC Board, Aksesori pemasangan plafon, Rangka plafon, Gypsum Knauf, Pintu dan jendela, Kusen, Keramik lantai, Keramik kamar mandi, Kawat Bendrat, Pipa PVC, Sambungan pipa, Pipa instalasi listrik | “Foto referensi” |
 
 Menambah foto bawaan baru: simpan `slug.jpg` + `slug_t.jpg` (4:5) di `foto-material/`, lalu daftarkan di `PH_RULES` dan di daftar foto saat build.
 

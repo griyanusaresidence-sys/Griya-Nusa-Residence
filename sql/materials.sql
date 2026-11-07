@@ -96,6 +96,7 @@ from (values
   ('C','Reng','','','Rangka pendukung yang menahan penutup atap.',130),
   ('C','Spandek Black Matte','','Warna Black Matte','Penutup atap.',140),
   ('D','GRC Board','','','Lembaran penutup plafon.',150),
+  ('D','Gypsum Knauf','Knauf','','Lembaran penutup plafon.',155),
   ('D','Rangka plafon','','','Rangka penahan lembaran plafon.',160),
   ('D','Aksesori pemasangan plafon','','','Perlengkapan pendukung pemasangan plafon.',170),
   ('E','Kabel listrik','','','Penghantar listrik di dalam rumah.',180),
