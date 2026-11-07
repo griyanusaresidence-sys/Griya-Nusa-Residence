@@ -89,8 +89,8 @@ Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan **carousel 3D sinemat
 
 | Material | Label di kartu |
 |---|---|
-| Pasir Palu, Batu Split Palu, Rangka Baja Ringan TASO | dokumentasi proyek (tanpa label) |
-| Semen, Semen Pasang, Besi Beton (+1 foto tambahan), Acian Putih, Reng, Cat interior, Cat eksterior | “Foto produk” |
+| Pasir Palu, Batu Split Palu, Rangka Baja Ringan TASO, Instalasi pembuangan air kotor | dokumentasi proyek (tanpa label) |
+| Aksesori pemasangan plafon, Semen, Semen Pasang, Besi Beton (+1 foto tambahan), Acian Putih, Reng, Cat interior, Cat eksterior | “Foto produk” |
 | Batu Gunung, Batako, Pasir Pasang, Canal, Spandek Black Matte, GRC Board, Rangka plafon, Kawat Bendrat | “Foto referensi” |
 
 Menambah foto bawaan baru: simpan `slug.jpg` + `slug_t.jpg` (4:5) di `foto-material/`, lalu daftarkan di `PH_RULES` dan di daftar foto saat build.
