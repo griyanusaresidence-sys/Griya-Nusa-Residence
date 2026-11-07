@@ -85,7 +85,15 @@ Menu **Spesifikasi Bangunan** (`#spesifikasi`) menampilkan **carousel 3D sinemat
 - **Hapus material** perlu dua kali klik (konfirmasi); foto di penyimpanan ikut terhapus.
 - Perubahan langsung terbaca halaman publik pada muat berikutnya, tanpa deploy ulang.
 
-**Foto bawaan (statis):** folder `foto-material/` di repo ini berisi foto yang sudah dipasang permanen (nama `slug.jpg` = foto penuh, `slug_t.jpg` = thumbnail 640×800, rasio 4:5). Foto-foto ini tampil otomatis di carousel, panel detail, dan latar blur **tanpa Supabase**, untuk material yang belum punya foto unggahan admin: Batu Gunung, Pasir Palu, Batu Split Palu, Semen (Rajawali), Besi Beton (+1 foto tambahan) dan Batako. **Foto yang diunggah lewat admin selalu diutamakan** dan menggantikan foto bawaan. Foto Pasir Palu dan Batu Split Palu berlabel dokumentasi proyek; foto besi dan semen berlabel “Foto produk”; Batu Gunung dan Batako berlabel “Foto referensi”.
+**Foto bawaan (statis):** folder `foto-material/` di repo ini berisi foto yang sudah dipasang permanen (`slug.jpg` = foto penuh, `slug_t.jpg` = thumbnail 640×800, rasio 4:5). Foto ini tampil otomatis di carousel, panel detail, dan latar blur **tanpa Supabase**, untuk material yang belum punya foto unggahan admin. **Foto yang diunggah lewat admin selalu diutamakan** dan menggantikan foto bawaan. Pencocokan memakai nama material (aturan `PH_RULES` di kode), jadi bila nama diubah di admin, foto bawaan tidak lagi muncul untuk baris itu.
+
+| Material | Label di kartu |
+|---|---|
+| Pasir Palu, Batu Split Palu | dokumentasi proyek (tanpa label) |
+| Semen, Besi Beton (+1 foto tambahan), Acian Putih, Reng, Cat interior, Cat eksterior | “Foto produk” |
+| Batu Gunung, Batako, Pasir Pasang, Canal, Spandek Black Matte, GRC Board | “Foto referensi” |
+
+Menambah foto bawaan baru: simpan `slug.jpg` + `slug_t.jpg` (4:5) di `foto-material/`, lalu daftarkan di `PH_RULES` dan di daftar foto saat build.
 
 **Foto asli (penting):** selain foto bawaan di atas, foto berasal dari unggahan admin. Kartu tanpa foto menampilkan “Foto Material Belum Tersedia”. Urutan sumber yang disarankan: (1) foto Anda sendiri di lokasi/gudang proyek, (2) foto produk dari produsen/merek resmi (pastikan boleh dipakai), (3) foto referensi sejenis.
 - Di editor ada pilihan **Asal foto**: *Dokumentasi material proyek* / *Foto produk dari produsen* / *Foto referensi*. Foto selain dokumentasi proyek otomatis diberi label (“Foto produk”, “Foto referensi”) dan keterangan di panel detail, sehingga tidak diklaim sebagai material yang terpasang di proyek.
